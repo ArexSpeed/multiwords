@@ -1,3 +1,4 @@
+import { useEffect, useCallback, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -19,10 +20,36 @@ import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 import BorderAllIcon from '@material-ui/icons/BorderAll';
 
 export default function Home() {
+  const [currentHelloIndex, setCurrentHelloIndex] = useState<number>(0);
   const count = useAppSelector((state) => state.counter.value);
   const dispatch = useAppDispatch();
 
-  const flags = [eng, fra, ger, ita, ned, pol, spa];
+  const flags = [eng, pol, ger, ned, spa, ita, fra];
+  const hellos = [
+    'Hello! What language do you want to learn today?',
+    'Witaj! Jakiego języka chcesz się dzis nauczyć?',
+    'Hallo! Welche Sprache möchtest du heute lernen?',
+    'Hallo! Welke taal wil je vandaag leren?',
+    '¡Hola! ¿Qué idioma quieres aprender hoy?',
+    'Ciao! Che lingua vuoi imparare oggi?',
+    "Bonjour! Quelle langue voulez-vous apprendre aujourd'hui ?"
+  ];
+
+  const helloSwitch = useCallback(() => {
+    if (currentHelloIndex < hellos.length - 1) {
+      setCurrentHelloIndex(currentHelloIndex + 1);
+    } else {
+      setCurrentHelloIndex(0);
+    }
+  }, [currentHelloIndex]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      helloSwitch();
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, [helloSwitch]);
 
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo">
@@ -41,7 +68,7 @@ export default function Home() {
           </h2>
         </section>
         <section className="flex flex-col justify-center items-center">
-          <h3>Hello! What language want you learn today?</h3>
+          <h3 className="text-md md:text-lg">{hellos[currentHelloIndex]}</h3>
           <article className="flex flex-row justify-center items-center">
             {flags.map((flag, i) => (
               <div className="w-lg h-lg m-2 rounded-full overflow-hidden" key={i}>
