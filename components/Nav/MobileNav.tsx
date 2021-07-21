@@ -11,31 +11,31 @@ const MobileNav = () => {
     <section className="fixed bottom-0 inset-x-0 z-10 w-full h-20 px-4 mx-auto mb-2">
       <nav className="w-full h-20 bg-primary bg-opacity-25 backdrop-filter backdrop-blur-sm shadow-md rounded-lg overflow-hidden">
         <ul className="flex flex-row justify-around items-center w-full h-full">
-          <Link href="/">
+          <Link href="/learn" passHref>
             <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
               <SchoolIcon />
               <p className="font-semibold">Learn</p>
             </li>
           </Link>
-          <Link href="/">
+          <Link href="/games" passHref>
             <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
               <GamesIcon />
               <p className="font-semibold">Games</p>
             </li>
           </Link>
-          <Link href="/">
+          <Link href="/mywords" passHref>
             <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
               <BookmarksIcon />
               <p className="font-semibold">My Words</p>
             </li>
           </Link>
-          <Link href="/">
+          <Link href="/dictonary" passHref>
             <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
               <ImportContactsIcon />
               <p className="font-semibold">Dico</p>
             </li>
           </Link>
-          <Link href="/">
+          <Link href="/settings" passHref>
             <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
               <SettingsIcon />
               <p className="font-semibold">Settings</p>
