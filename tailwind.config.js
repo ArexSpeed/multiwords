@@ -6,7 +6,11 @@ module.exports = {
     extend: {
       colors: {
         primary: '#FE2BE9',
-        secondary: '#516AF0'
+        secondary: 'rgb(81, 106, 240)',
+        primary25: 'rgba(254, 43, 233, 0.5)',
+        primary50: 'rgba(254, 43, 233, 0.25)',
+        secondary25: 'rgba(81, 106, 240, 0.25)',
+        secondary50: 'rgba(81, 106, 240, 0.5)'
       },
       width: {
         sm: '8px',

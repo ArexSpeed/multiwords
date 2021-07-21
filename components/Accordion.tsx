@@ -39,7 +39,7 @@ const Accordion = ({ title, children }: Props) => {
         </svg>
       </button>
 
-      <div ref={contentRef} className="overflow-hidden transition-all ease-in">
+      <div ref={contentRef} className="overflow-hidden transition-all ease-in -mt-2 mb-2">
         {children}
       </div>
     </div>

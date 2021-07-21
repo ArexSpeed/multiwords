@@ -1,9 +1,14 @@
 import React from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import MobileNav from '../components/Nav/MobileNav';
 import Search from '../components/Search';
 import Accordion from '../components/Accordion';
 import SettingsIcon from '@material-ui/icons/Settings';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import EditIcon from '@material-ui/icons/Edit';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { levels, categories } from '../data';
 
 const LearnPage = () => {
   return (
@@ -21,17 +26,43 @@ const LearnPage = () => {
             <SettingsIcon />
           </div>
         </section>
-        <section className="flex flex-col w-full p-3 justify-between items-center">
-          <Accordion title="Level 1">
-            <p>Hello from Accordion</p>
-            <p>Hello from Accordion</p>
-            <p>Hello from Accordion</p>
-            <p>Hello from Accordion</p>
-            <p>Hello from Accordion</p>
-          </Accordion>
-          <Accordion title="Level 2">
-            <p>Second accordion</p>
-          </Accordion>
+        <section className="flex flex-col w-full p-3 justify-between items-center pb-24">
+          {levels.map((level) => (
+            <Accordion title={level.title} key={level.id}>
+              {categories
+                .filter((category) => category.lvl === level.id)
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex flex-row justify-between items-center p-2 border-b-2 border-secondary border-opacity-20">
+                    <p className="text-lg">{item.name}</p>
+                    <div className="flex flex-row justify-around items-center">
+                      <Link href="/learn/words" passHref>
+                        <button
+                          className="p-2 hover:bg-primary25 rounded-full"
+                          onClick={() => console.log(item.name)}>
+                          <ImportContactsIcon />
+                        </button>
+                      </Link>
+                      <Link href="/learn/words" passHref>
+                        <button
+                          className="p-2 hover:bg-primary25 rounded-full"
+                          onClick={() => console.log(item.name)}>
+                          <EditIcon />
+                        </button>
+                      </Link>
+                      <Link href="/learn/words" passHref>
+                        <button
+                          className="p-2 hover:bg-primary25 rounded-full"
+                          onClick={() => console.log(item.name)}>
+                          <VisibilityOffIcon />
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+            </Accordion>
+          ))}
         </section>
         <MobileNav />
       </main>
