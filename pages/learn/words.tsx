@@ -35,7 +35,7 @@ const WordsPage = () => {
     ita: true
   };
   return (
-    <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo">
+    <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
       <main className="w-full max-h-screen">
         <Search />

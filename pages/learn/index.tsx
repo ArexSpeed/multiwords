@@ -12,7 +12,7 @@ import { levels, categories } from 'data';
 
 const LearnPage = () => {
   return (
-    <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo">
+    <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
       <main className="w-full max-h-screen">
         <Search />
@@ -22,7 +22,7 @@ const LearnPage = () => {
             <SettingsIcon />
           </div>
         </section>
-        <section className="flex flex-col w-full p-3 justify-between items-center pb-24">
+        <section className="flex flex-col w-full p-3 justify-between items-center pb-24 dark:bg-gray-700">
           {levels.map((level) => (
             <Accordion title={level.title} key={level.id}>
               {categories

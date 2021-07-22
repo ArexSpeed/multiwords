@@ -46,7 +46,7 @@ export default function Home() {
   }, [helloSwitch]);
 
   return (
-    <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo">
+    <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
       <main className="w-full max-h-screen">
         <Search />
@@ -66,16 +66,16 @@ export default function Home() {
           </article>
         </section>
         <section className="flex flex-col justify-center items-center">
-          <h3 className="text-gray-600">Learn your favorite language by</h3>
+          <h3 className="text-gray-600 dark:text-gray-300">Learn your favorite language by</h3>
           <article className="flex flex-row justify-around items-center">
             <Link href="/learn" passHref>
-              <div className="w-[100px] h-[100px] m-4 bg-gray-100 flex flex-col justify-between items-center rounded-sm shadow-sm">
+              <div className="w-[100px] h-[100px] m-4 bg-gray-100 dark:bg-gray-800 flex flex-col justify-between items-center rounded-sm shadow-sm">
                 <MenuBookIcon style={{ fontSize: '60px' }} />
                 <h5>Read</h5>
               </div>
             </Link>
             <Link href="/learn" passHref>
-              <div className="w-[100px] h-[100px] m-4 bg-gray-100 flex flex-col justify-between items-center rounded-sm shadow-sm">
+              <div className="w-[100px] h-[100px] m-4 bg-gray-100 dark:bg-gray-800 flex flex-col justify-between items-center rounded-sm shadow-sm">
                 <SpellcheckIcon style={{ fontSize: '60px' }} />
                 <h5>Write</h5>
               </div>
@@ -83,13 +83,13 @@ export default function Home() {
           </article>
           <article className="flex flex-row justify-around items-center">
             <Link href="/game" passHref>
-              <div className="w-[100px] h-[100px] m-4 bg-gray-100 flex flex-col justify-between items-center rounded-sm shadow-sm">
+              <div className="w-[100px] h-[100px] m-4 bg-gray-100 dark:bg-gray-800 flex flex-col justify-between items-center rounded-sm shadow-sm">
                 <ViewAgendaIcon style={{ fontSize: '60px' }} />
                 <h5>Memo</h5>
               </div>
             </Link>
             <Link href="/game" passHref>
-              <div className="w-[100px] h-[100px] m-4 bg-gray-100 flex flex-col justify-between items-center rounded-sm shadow-sm">
+              <div className="w-[100px] h-[100px] m-4 bg-gray-100 dark:bg-gray-800 flex flex-col justify-between items-center rounded-sm shadow-sm">
                 <BorderAllIcon style={{ fontSize: '60px' }} />
                 <h5>Find word</h5>
               </div>
