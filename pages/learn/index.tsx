@@ -1,14 +1,14 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import MobileNav from '../components/Nav/MobileNav';
-import Search from '../components/Search';
-import Accordion from '../components/Accordion';
+import MobileNav from 'components/Nav/MobileNav';
+import Search from 'components/Search';
+import Accordion from 'components/Accordion';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import { levels, categories } from '../data';
+import { levels, categories } from 'data';
 
 const LearnPage = () => {
   return (
