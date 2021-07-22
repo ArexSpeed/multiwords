@@ -7,24 +7,18 @@ import { decrement, increment } from 'redux/slices/counterSlice';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
 import logo from 'assets/mwl.png';
-import eng from 'assets/eng.png';
-import fra from 'assets/fra.png';
-import ger from 'assets/ger.png';
-import ita from 'assets/ita.png';
-import ned from 'assets/ned.png';
-import pol from 'assets/pol.png';
-import spa from 'assets/spa.png';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 import BorderAllIcon from '@material-ui/icons/BorderAll';
+import Flag from 'components/Flag';
 
 export default function Home() {
   const [currentHelloIndex, setCurrentHelloIndex] = useState<number>(0);
   const count = useAppSelector((state) => state.counter.value);
   const dispatch = useAppDispatch();
 
-  const flags = [eng, pol, ger, ned, spa, ita, fra];
+  const flags = ['eng', 'pol', 'ger', 'ned', 'spa', 'ita', 'fra'];
   const hellos = [
     'Hello! What language do you want to learn today?',
     'Witaj! Jakiego języka chcesz się dzis nauczyć?',
@@ -71,9 +65,7 @@ export default function Home() {
           <h3 className="text-md md:text-lg">{hellos[currentHelloIndex]}</h3>
           <article className="flex flex-row justify-center items-center">
             {flags.map((flag, i) => (
-              <div className="w-lg h-lg m-2 rounded-full overflow-hidden" key={i}>
-                <Image src={flag} alt="eng" />
-              </div>
+              <Flag flag={flag} key={i} />
             ))}
           </article>
         </section>
