@@ -1,11 +1,14 @@
 import React from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
+import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
-import { levels, categories, words } from 'data';
+import { categories, words } from 'data';
 import Flag from 'components/Flag';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import EditIcon from '@material-ui/icons/Edit';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import SchoolIcon from '@material-ui/icons/School';
 
 // Import Swiper styles
 import 'swiper/swiper.min.css';
@@ -33,11 +36,7 @@ const WordsPage = () => {
   };
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo">
-      <Head>
-        <title>Multiwords</title>
-        <meta name="description" content="Languages learning app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <MetaHead />
       <main className="w-full max-h-screen">
         <Search />
         <section className="flex flex-row w-full p-3 justify-between items-center">
@@ -108,7 +107,39 @@ const WordsPage = () => {
                     )}
                   </SwiperSlide>
                 ))}
-              <SwiperSlide>Slide 4</SwiperSlide>
+              <SwiperSlide className="flex flex-col justify-center items-center">
+                <h3 className="text-lg">What do you want to do next</h3>
+                <div className="flex flex-col justify-center items-center">
+                  <Link href="/learn/write" passHref>
+                    <button
+                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
+                      onClick={() => console.log('')}>
+                      <EditIcon />
+                    </button>
+                  </Link>
+                  <p>Write test</p>
+                </div>
+                <div className="flex flex-col justify-center items-center">
+                  <Link href="/learn/show" passHref>
+                    <button
+                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
+                      onClick={() => console.log('')}>
+                      <VisibilityOffIcon />
+                    </button>
+                  </Link>
+                  <p>Hidden words test</p>
+                </div>
+                <div className="flex flex-col justify-center items-center">
+                  <Link href="/learn" passHref>
+                    <button
+                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
+                      onClick={() => console.log('')}>
+                      <SchoolIcon />
+                    </button>
+                  </Link>
+                  <p>Back to categories</p>
+                </div>
+              </SwiperSlide>
             </Swiper>
           </div>
         </section>

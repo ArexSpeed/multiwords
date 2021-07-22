@@ -1,9 +1,9 @@
 import { useEffect, useCallback, useState } from 'react';
-import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { decrement, increment } from 'redux/slices/counterSlice';
+import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
 import logo from 'assets/mwl.png';
@@ -47,11 +47,7 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo">
-      <Head>
-        <title>Multiwords</title>
-        <meta name="description" content="Languages learning app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <MetaHead />
       <main className="w-full max-h-screen">
         <Search />
         <section className="flex flex-col justify-center items-center">

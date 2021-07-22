@@ -1,6 +1,6 @@
 import React from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
+import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
 import Accordion from 'components/Accordion';
@@ -13,11 +13,7 @@ import { levels, categories } from 'data';
 const LearnPage = () => {
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo">
-      <Head>
-        <title>Multiwords</title>
-        <meta name="description" content="Languages learning app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <MetaHead />
       <main className="w-full max-h-screen">
         <Search />
         <section className="flex flex-row w-full p-3 justify-between items-center">
