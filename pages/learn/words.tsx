@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
-import { levels, categories } from 'data';
+import { levels, categories, words } from 'data';
 import Flag from 'components/Flag';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -20,6 +20,17 @@ SwiperCore.use([Keyboard, Pagination, Navigation]);
 
 const WordsPage = () => {
   const level = '1';
+  const category = 'Calendar';
+  const userMainLang = 'fra';
+  const userLangs = {
+    eng: false,
+    pol: false,
+    ger: true,
+    ned: false,
+    spa: true,
+    fra: false,
+    ita: true
+  };
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo">
       <Head>
@@ -55,48 +66,48 @@ const WordsPage = () => {
               }}
               navigation={true}
               className="w-full h-full">
-              <SwiperSlide className="flex flex-col justify-center items-center">
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="eng" /> <span className="text-lg">Hello</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="pol" /> <span className="text-lg">Cześć</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="ger" /> <span className="text-lg">Hallo</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="spa" /> <span className="text-lg">Hoi</span>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide className="flex flex-col justify-center items-center">
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="eng" /> <span className="text-lg">One</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="pol" /> <span className="text-lg">Jeden</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="ger" /> <span className="text-lg">Ein</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="spa" /> <span className="text-lg">Uno</span>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide className="flex flex-col justify-center items-center">
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="eng" /> <span className="text-lg">Two</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="pol" /> <span className="text-lg">Dwa</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="ger" /> <span className="text-lg">Zwei</span>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <Flag flag="fra" /> <span className="text-lg">Duo</span>
-                </div>
-              </SwiperSlide>
+              {words
+                .filter((word) => word.cat === category)
+                .map((word) => (
+                  <SwiperSlide key={word.id} className="flex flex-col justify-center items-center">
+                    {userMainLang && (
+                      <div className="flex flex-row justify-center items-center">
+                        <Flag flag={userMainLang} />
+                        <span className="text-lg">{word[userMainLang]}</span>
+                      </div>
+                    )}
+                    {userLangs.pol && (
+                      <div className="flex flex-row justify-center items-center">
+                        <Flag flag="pol" /> <span className="text-lg">{word.pol}</span>
+                      </div>
+                    )}
+                    {userLangs.ger && (
+                      <div className="flex flex-row justify-center items-center">
+                        <Flag flag="ger" /> <span className="text-lg">{word.ger}</span>
+                      </div>
+                    )}
+                    {userLangs.ned && (
+                      <div className="flex flex-row justify-center items-center">
+                        <Flag flag="ned" /> <span className="text-lg">{word.ned}</span>
+                      </div>
+                    )}
+                    {userLangs.spa && (
+                      <div className="flex flex-row justify-center items-center">
+                        <Flag flag="spa" /> <span className="text-lg">{word.spa}</span>
+                      </div>
+                    )}
+                    {userLangs.fra && (
+                      <div className="flex flex-row justify-center items-center">
+                        <Flag flag="fra" /> <span className="text-lg">{word.fra}</span>
+                      </div>
+                    )}
+                    {userLangs.ita && (
+                      <div className="flex flex-row justify-center items-center">
+                        <Flag flag="ita" /> <span className="text-lg">{word.ita}</span>
+                      </div>
+                    )}
+                  </SwiperSlide>
+                ))}
               <SwiperSlide>Slide 4</SwiperSlide>
             </Swiper>
           </div>
