@@ -6,8 +6,6 @@ import Search from 'components/Search';
 import { categories, words } from 'data';
 import Flag from 'components/Flag';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import EditIcon from '@material-ui/icons/Edit';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SchoolIcon from '@material-ui/icons/School';
 
 // Import Swiper styles
@@ -566,26 +564,43 @@ const WritePage = () => {
                   </SwiperSlide>
                 ))}
               <SwiperSlide className="flex flex-col justify-center items-center">
-                <h3 className="text-lg">What do you want to do next</h3>
+                <h3 className="text-lg">Your score:</h3>
                 <div className="flex flex-col justify-center items-center">
-                  <Link href="/learn/write" passHref>
-                    <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
-                      onClick={() => console.log('')}>
-                      <EditIcon />
-                    </button>
-                  </Link>
-                  <p>Write test</p>
-                </div>
-                <div className="flex flex-col justify-center items-center">
-                  <Link href="/learn/show" passHref>
-                    <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
-                      onClick={() => console.log('')}>
-                      <VisibilityOffIcon />
-                    </button>
-                  </Link>
-                  <p>Hidden words test</p>
+                  {userLangs.eng && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="eng" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.pol && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="pol" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.ger && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="ger" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.ned && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="ned" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.spa && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="spa" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.fra && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="fra" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.ita && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="ita" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/learn" passHref>
@@ -595,7 +610,7 @@ const WritePage = () => {
                       <SchoolIcon />
                     </button>
                   </Link>
-                  <p>Back to categories</p>
+                  <p>Back to category</p>
                 </div>
               </SwiperSlide>
             </Swiper>
