@@ -252,36 +252,380 @@ const ShowPage = () => {
                     )}
                     {userLangs.pol && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="pol" /> <span className="text-lg">{word.pol}</span>
+                        <Flag flag="pol" />
+                        {showAnswer[i]?.pol.check ? (
+                          <>
+                            <span className="text-lg">{word.pol}</span>
+                            {showAnswer[i]?.pol.correct === null ? (
+                              <>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-green-400"
+                                  onClick={() => checkCorrectAnswer(i, 'pol', true)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-red-400"
+                                  onClick={() => checkCorrectAnswer(i, 'pol', false)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                              </>
+                            ) : showAnswer[i]?.pol.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                          </>
+                        ) : (
+                          <button
+                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            onClick={() => handleShowAnswer(i, 'pol')}>
+                            Show
+                          </button>
+                        )}
                       </div>
                     )}
                     {userLangs.ger && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ger" /> <span className="text-lg">{word.ger}</span>
+                        <Flag flag="ger" />
+                        {showAnswer[i]?.ger.check ? (
+                          <>
+                            <span className="text-lg">{word.ger}</span>
+                            {showAnswer[i]?.ger.correct === null ? (
+                              <>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-green-400"
+                                  onClick={() => checkCorrectAnswer(i, 'ger', true)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-red-400"
+                                  onClick={() => checkCorrectAnswer(i, 'ger', false)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                              </>
+                            ) : showAnswer[i]?.ger.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                          </>
+                        ) : (
+                          <button
+                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            onClick={() => handleShowAnswer(i, 'ger')}>
+                            Show
+                          </button>
+                        )}
                       </div>
                     )}
                     {userLangs.ned && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ned" /> <span className="text-lg">{word.ned}</span>
+                        <Flag flag="ned" />
+                        {showAnswer[i]?.ned.check ? (
+                          <>
+                            <span className="text-lg">{word.ned}</span>
+                            {showAnswer[i]?.ned.correct === null ? (
+                              <>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-green-400"
+                                  onClick={() => checkCorrectAnswer(i, 'ned', true)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-red-400"
+                                  onClick={() => checkCorrectAnswer(i, 'ned', false)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                              </>
+                            ) : showAnswer[i]?.ned.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                          </>
+                        ) : (
+                          <button
+                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            onClick={() => handleShowAnswer(i, 'ned')}>
+                            Show
+                          </button>
+                        )}
                       </div>
                     )}
                     {userLangs.spa && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="spa" /> <span className="text-lg">{word.spa}</span>
+                        <Flag flag="spa" />
+                        {showAnswer[i]?.spa.check ? (
+                          <>
+                            <span className="text-lg">{word.spa}</span>
+                            {showAnswer[i]?.spa.correct === null ? (
+                              <>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-green-400"
+                                  onClick={() => checkCorrectAnswer(i, 'spa', true)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-red-400"
+                                  onClick={() => checkCorrectAnswer(i, 'spa', false)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                              </>
+                            ) : showAnswer[i]?.spa.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                          </>
+                        ) : (
+                          <button
+                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            onClick={() => handleShowAnswer(i, 'spa')}>
+                            Show
+                          </button>
+                        )}
                       </div>
                     )}
                     {userLangs.fra && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="fra" /> <span className="text-lg">{word.fra}</span>
+                        <Flag flag="fra" />
+                        {showAnswer[i]?.fra.check ? (
+                          <>
+                            <span className="text-lg">{word.fra}</span>
+                            {showAnswer[i]?.fra.correct === null ? (
+                              <>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-green-400"
+                                  onClick={() => checkCorrectAnswer(i, 'fra', true)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-red-400"
+                                  onClick={() => checkCorrectAnswer(i, 'fra', false)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                              </>
+                            ) : showAnswer[i]?.fra.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                          </>
+                        ) : (
+                          <button
+                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            onClick={() => handleShowAnswer(i, 'fra')}>
+                            Show
+                          </button>
+                        )}
                       </div>
                     )}
                     {userLangs.ita && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ita" /> <span className="text-lg">{word.ita}</span>
+                        <Flag flag="ita" />
+                        {showAnswer[i]?.ita.check ? (
+                          <>
+                            <span className="text-lg">{word.ita}</span>
+                            {showAnswer[i]?.ita.correct === null ? (
+                              <>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-green-400"
+                                  onClick={() => checkCorrectAnswer(i, 'ita', true)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                                <button
+                                  className="mx-1 flex justify-center items-center text-lg text-red-400"
+                                  onClick={() => checkCorrectAnswer(i, 'ita', false)}>
+                                  <svg
+                                    className="w-6 h-6"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                              </>
+                            ) : showAnswer[i]?.ita.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                          </>
+                        ) : (
+                          <button
+                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            onClick={() => handleShowAnswer(i, 'ita')}>
+                            Show
+                          </button>
+                        )}
                       </div>
                     )}
                   </SwiperSlide>
                 ))}
+              <SwiperSlide className="flex flex-col justify-center items-center">
+                <h3 className="text-lg">Your score:</h3>
+                <div className="flex flex-col justify-center items-center">
+                  {userLangs.eng && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="eng" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.pol && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="pol" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.ger && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="ger" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.ned && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="ned" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.spa && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="spa" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.fra && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="fra" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                  {userLangs.ita && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag="ita" /> <span className="text-lg">10/20</span>
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col justify-center items-center">
+                  <Link href="/learn" passHref>
+                    <button
+                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
+                      onClick={() => console.log('')}>
+                      <SchoolIcon />
+                    </button>
+                  </Link>
+                  <p>Back to category</p>
+                </div>
+              </SwiperSlide>
             </Swiper>
           </div>
         </section>
