@@ -103,19 +103,79 @@ const WritePage = () => {
       );
   }, []);
 
-  const handleAnswer = (e: React.FormEvent, id: number, word: string) => {
+  const handleAnswer = (e: React.FormEvent, id: number, word: string, lang: string) => {
     e.preventDefault();
     const copyShowAnswer = [...showAnswer];
-    copyShowAnswer[id].pol.check = true;
-    copyShowAnswer[id].pol.correct = answerValues.pol === word;
+    switch (lang) {
+      case 'eng':
+        copyShowAnswer[id].eng.check = true;
+        copyShowAnswer[id].eng.correct = answerValues.eng === word;
+        break;
+      case 'pol':
+        copyShowAnswer[id].pol.check = true;
+        copyShowAnswer[id].pol.correct = answerValues.pol === word;
+        break;
+      case 'ger':
+        copyShowAnswer[id].ger.check = true;
+        copyShowAnswer[id].ger.correct = answerValues.ger === word;
+        break;
+      case 'ned':
+        copyShowAnswer[id].ned.check = true;
+        copyShowAnswer[id].ned.correct = answerValues.ned === word;
+        break;
+      case 'spa':
+        copyShowAnswer[id].spa.check = true;
+        copyShowAnswer[id].spa.correct = answerValues.spa === word;
+        break;
+      case 'fra':
+        copyShowAnswer[id].fra.check = true;
+        copyShowAnswer[id].fra.correct = answerValues.fra === word;
+        break;
+      case 'ita':
+        copyShowAnswer[id].ita.check = true;
+        copyShowAnswer[id].ita.correct = answerValues.ita === word;
+        break;
+      default:
+        return;
+    }
     setShowAnswer(copyShowAnswer);
     setAnswerValues(resetAnswerValues);
   };
 
-  const repeatAnswer = (id: number) => {
+  const repeatAnswer = (id: number, lang: string) => {
     const copyShowAnswer = [...showAnswer];
-    copyShowAnswer[id].pol.check = false;
-    copyShowAnswer[id].pol.correct = false;
+    switch (lang) {
+      case 'eng':
+        copyShowAnswer[id].eng.check = false;
+        copyShowAnswer[id].eng.correct = false;
+        break;
+      case 'pol':
+        copyShowAnswer[id].pol.check = false;
+        copyShowAnswer[id].pol.correct = false;
+        break;
+      case 'ger':
+        copyShowAnswer[id].ger.check = false;
+        copyShowAnswer[id].ger.correct = false;
+        break;
+      case 'ned':
+        copyShowAnswer[id].ned.check = false;
+        copyShowAnswer[id].ned.correct = false;
+        break;
+      case 'spa':
+        copyShowAnswer[id].spa.check = false;
+        copyShowAnswer[id].spa.correct = false;
+        break;
+      case 'fra':
+        copyShowAnswer[id].fra.check = false;
+        copyShowAnswer[id].fra.correct = false;
+        break;
+      case 'ita':
+        copyShowAnswer[id].ita.check = false;
+        copyShowAnswer[id].ita.correct = false;
+        break;
+      default:
+        return;
+    }
     setShowAnswer(copyShowAnswer);
     setAnswerValues(resetAnswerValues);
   };
@@ -174,20 +234,20 @@ const WritePage = () => {
                         <span className="text-lg">{word[userMainLang]}</span>
                       </div>
                     )}
-                    {userLangs.pol && (
+                    {userLangs.eng && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="pol" />
-                        {showAnswer[i]?.pol.check ? (
+                        <Flag flag="eng" />
+                        {showAnswer[i]?.eng.check ? (
                           <>
-                            <span className="text-lg">{word.pol}</span>
-                            {showAnswer[i]?.pol.correct ? (
+                            <span className="text-lg">{word.eng}</span>
+                            {showAnswer[i]?.eng.correct ? (
                               <span className="mx-1 text-lg text-green-400">+</span>
                             ) : (
                               <span className="mx-1 text-lg text-red-400">-</span>
                             )}
                             <button
                               className="w-6 h-6 flex justify-center items-center bg-yellow-400 rounded-full"
-                              onClick={() => repeatAnswer(i)}>
+                              onClick={() => repeatAnswer(i, 'eng')}>
                               <svg
                                 className="w-4 h-4 text-white"
                                 fill="currentColor"
@@ -204,7 +264,54 @@ const WritePage = () => {
                         ) : (
                           <form
                             onSubmit={(e) => {
-                              handleAnswer(e, i, word.pol), console.log(showAnswer);
+                              handleAnswer(e, i, word.eng, 'eng');
+                            }}>
+                            <input
+                              type="text"
+                              placeholder="Napisz słowo"
+                              value={answerValues.eng}
+                              onChange={(e) =>
+                                setAnswerValues({ ...answerValues, eng: e.target.value })
+                              }
+                            />
+                            <button type="submit" className="w-6 h-6 bg-green-400 rounded-full">
+                              OK
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    )}
+                    {userLangs.pol && (
+                      <div className="flex flex-row justify-center items-center">
+                        <Flag flag="pol" />
+                        {showAnswer[i]?.pol.check ? (
+                          <>
+                            <span className="text-lg">{word.pol}</span>
+                            {showAnswer[i]?.pol.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                            <button
+                              className="w-6 h-6 flex justify-center items-center bg-yellow-400 rounded-full"
+                              onClick={() => repeatAnswer(i, 'pol')}>
+                              <svg
+                                className="w-4 h-4 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <form
+                            onSubmit={(e) => {
+                              handleAnswer(e, i, word.pol, 'pol');
                             }}>
                             <input
                               type="text"
@@ -223,27 +330,237 @@ const WritePage = () => {
                     )}
                     {userLangs.ger && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ger" /> <span className="text-lg">{word.ger}</span>
+                        <Flag flag="ger" />
+                        {showAnswer[i]?.ger.check ? (
+                          <>
+                            <span className="text-lg">{word.ger}</span>
+                            {showAnswer[i]?.ger.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                            <button
+                              className="w-6 h-6 flex justify-center items-center bg-yellow-400 rounded-full"
+                              onClick={() => repeatAnswer(i, 'ger')}>
+                              <svg
+                                className="w-4 h-4 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <form
+                            onSubmit={(e) => {
+                              handleAnswer(e, i, word.ger, 'ger');
+                            }}>
+                            <input
+                              type="text"
+                              placeholder="Napisz słowo"
+                              value={answerValues.ger}
+                              onChange={(e) =>
+                                setAnswerValues({ ...answerValues, ger: e.target.value })
+                              }
+                            />
+                            <button type="submit" className="w-6 h-6 bg-green-400 rounded-full">
+                              OK
+                            </button>
+                          </form>
+                        )}
                       </div>
                     )}
                     {userLangs.ned && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ned" /> <span className="text-lg">{word.ned}</span>
+                        <Flag flag="ned" />
+                        {showAnswer[i]?.ned.check ? (
+                          <>
+                            <span className="text-lg">{word.ned}</span>
+                            {showAnswer[i]?.ned.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                            <button
+                              className="w-6 h-6 flex justify-center items-center bg-yellow-400 rounded-full"
+                              onClick={() => repeatAnswer(i, 'ned')}>
+                              <svg
+                                className="w-4 h-4 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <form
+                            onSubmit={(e) => {
+                              handleAnswer(e, i, word.ned, 'ned');
+                            }}>
+                            <input
+                              type="text"
+                              placeholder="Napisz słowo"
+                              value={answerValues.ned}
+                              onChange={(e) =>
+                                setAnswerValues({ ...answerValues, ned: e.target.value })
+                              }
+                            />
+                            <button type="submit" className="w-6 h-6 bg-green-400 rounded-full">
+                              OK
+                            </button>
+                          </form>
+                        )}
                       </div>
                     )}
                     {userLangs.spa && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="spa" /> <span className="text-lg">{word.spa}</span>
+                        <Flag flag="spa" />
+                        {showAnswer[i]?.spa.check ? (
+                          <>
+                            <span className="text-lg">{word.spa}</span>
+                            {showAnswer[i]?.spa.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                            <button
+                              className="w-6 h-6 flex justify-center items-center bg-yellow-400 rounded-full"
+                              onClick={() => repeatAnswer(i, 'spa')}>
+                              <svg
+                                className="w-4 h-4 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <form
+                            onSubmit={(e) => {
+                              handleAnswer(e, i, word.spa, 'spa');
+                            }}>
+                            <input
+                              type="text"
+                              placeholder="Napisz słowo"
+                              value={answerValues.spa}
+                              onChange={(e) =>
+                                setAnswerValues({ ...answerValues, spa: e.target.value })
+                              }
+                            />
+                            <button type="submit" className="w-6 h-6 bg-green-400 rounded-full">
+                              OK
+                            </button>
+                          </form>
+                        )}
                       </div>
                     )}
                     {userLangs.fra && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="fra" /> <span className="text-lg">{word.fra}</span>
+                        <Flag flag="fra" />
+                        {showAnswer[i]?.fra.check ? (
+                          <>
+                            <span className="text-lg">{word.fra}</span>
+                            {showAnswer[i]?.fra.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                            <button
+                              className="w-6 h-6 flex justify-center items-center bg-yellow-400 rounded-full"
+                              onClick={() => repeatAnswer(i, 'fra')}>
+                              <svg
+                                className="w-4 h-4 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <form
+                            onSubmit={(e) => {
+                              handleAnswer(e, i, word.fra, 'fra');
+                            }}>
+                            <input
+                              type="text"
+                              placeholder="Napisz słowo"
+                              value={answerValues.fra}
+                              onChange={(e) =>
+                                setAnswerValues({ ...answerValues, fra: e.target.value })
+                              }
+                            />
+                            <button type="submit" className="w-6 h-6 bg-green-400 rounded-full">
+                              OK
+                            </button>
+                          </form>
+                        )}
                       </div>
                     )}
                     {userLangs.ita && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ita" /> <span className="text-lg">{word.ita}</span>
+                        <Flag flag="ita" />
+                        {showAnswer[i]?.ita.check ? (
+                          <>
+                            <span className="text-lg">{word.ita}</span>
+                            {showAnswer[i]?.ita.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                            <button
+                              className="w-6 h-6 flex justify-center items-center bg-yellow-400 rounded-full"
+                              onClick={() => repeatAnswer(i, 'ita')}>
+                              <svg
+                                className="w-4 h-4 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <form
+                            onSubmit={(e) => {
+                              handleAnswer(e, i, word.ita, 'ita');
+                            }}>
+                            <input
+                              type="text"
+                              placeholder="Napisz słowo"
+                              value={answerValues.ita}
+                              onChange={(e) =>
+                                setAnswerValues({ ...answerValues, ita: e.target.value })
+                              }
+                            />
+                            <button type="submit" className="w-6 h-6 bg-green-400 rounded-full">
+                              OK
+                            </button>
+                          </form>
+                        )}
                       </div>
                     )}
                   </SwiperSlide>
