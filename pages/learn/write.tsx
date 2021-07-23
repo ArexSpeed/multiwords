@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
@@ -21,13 +21,111 @@ import SwiperCore, { Keyboard, Pagination, Navigation } from 'swiper/core';
 // install Swiper modules
 SwiperCore.use([Keyboard, Pagination, Navigation]);
 
-const WordsPage = () => {
+//Types
+type CheckAnswer = {
+  check: boolean;
+  correct: boolean;
+};
+
+interface IShowAnswer {
+  wordId: number | null;
+  word: string;
+  eng: CheckAnswer;
+  pol: CheckAnswer;
+  ger: CheckAnswer;
+  ned: CheckAnswer;
+  spa: CheckAnswer;
+  fra: CheckAnswer;
+  ita: CheckAnswer;
+}
+
+const WritePage = () => {
+  const [showAnswer, setShowAnswer] = useState<IShowAnswer[]>([]);
+  const [answerValues, setAnswerValues] = useState({
+    eng: '',
+    pol: '',
+    ger: '',
+    ned: '',
+    spa: '',
+    fra: '',
+    ita: ''
+  });
+
+  const resetAnswerValues = {
+    eng: '',
+    pol: '',
+    ger: '',
+    ned: '',
+    spa: '',
+    fra: '',
+    ita: ''
+  };
+
+  useEffect(() => {
+    words
+      .filter((word) => word.cat === category)
+      .map((word) =>
+        setShowAnswer((prev) => [
+          ...prev,
+          {
+            wordId: Number(word.id),
+            word: word.pol,
+            eng: {
+              check: false,
+              correct: false
+            },
+            pol: {
+              check: false,
+              correct: false
+            },
+            ger: {
+              check: false,
+              correct: false
+            },
+            ned: {
+              check: false,
+              correct: false
+            },
+            spa: {
+              check: false,
+              correct: false
+            },
+            fra: {
+              check: false,
+              correct: false
+            },
+            ita: {
+              check: false,
+              correct: false
+            }
+          }
+        ])
+      );
+  }, []);
+
+  const handleAnswer = (e: React.FormEvent, id: number, word: string) => {
+    e.preventDefault();
+    const copyShowAnswer = [...showAnswer];
+    copyShowAnswer[id].pol.check = true;
+    copyShowAnswer[id].pol.correct = answerValues.pol === word;
+    setShowAnswer(copyShowAnswer);
+    setAnswerValues(resetAnswerValues);
+  };
+
+  const repeatAnswer = (id: number) => {
+    const copyShowAnswer = [...showAnswer];
+    copyShowAnswer[id].pol.check = false;
+    copyShowAnswer[id].pol.correct = false;
+    setShowAnswer(copyShowAnswer);
+    setAnswerValues(resetAnswerValues);
+  };
+
   const level = '1';
   const category = 'Calendar';
   const userMainLang = 'fra';
   const userLangs = {
     eng: false,
-    pol: false,
+    pol: true,
     ger: true,
     ned: false,
     spa: true,
@@ -64,10 +162,11 @@ const WordsPage = () => {
                 type: 'fraction'
               }}
               navigation={true}
-              className="w-full h-full">
+              className="w-full h-full"
+              onSlideChange={() => setAnswerValues(resetAnswerValues)}>
               {words
                 .filter((word) => word.cat === category)
-                .map((word) => (
+                .map((word, i) => (
                   <SwiperSlide key={word.id} className="flex flex-col justify-center items-center">
                     {userMainLang && (
                       <div className="flex flex-row justify-center items-center">
@@ -75,14 +174,51 @@ const WordsPage = () => {
                         <span className="text-lg">{word[userMainLang]}</span>
                       </div>
                     )}
-                    {userLangs.eng && (
-                      <div className="flex flex-row justify-center items-center">
-                        <Flag flag="eng" /> <span className="text-lg">{word.eng}</span>
-                      </div>
-                    )}
                     {userLangs.pol && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="pol" /> <span className="text-lg">{word.pol}</span>
+                        <Flag flag="pol" />
+                        {showAnswer[i]?.pol.check ? (
+                          <>
+                            <span className="text-lg">{word.pol}</span>
+                            {showAnswer[i]?.pol.correct ? (
+                              <span className="mx-1 text-lg text-green-400">+</span>
+                            ) : (
+                              <span className="mx-1 text-lg text-red-400">-</span>
+                            )}
+                            <button
+                              className="w-6 h-6 flex justify-center items-center bg-yellow-400 rounded-full"
+                              onClick={() => repeatAnswer(i)}>
+                              <svg
+                                className="w-4 h-4 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <form
+                            onSubmit={(e) => {
+                              handleAnswer(e, i, word.pol), console.log(showAnswer);
+                            }}>
+                            <input
+                              type="text"
+                              placeholder="Napisz słowo"
+                              value={answerValues.pol}
+                              onChange={(e) =>
+                                setAnswerValues({ ...answerValues, pol: e.target.value })
+                              }
+                            />
+                            <button type="submit" className="w-6 h-6 bg-green-400 rounded-full">
+                              OK
+                            </button>
+                          </form>
+                        )}
                       </div>
                     )}
                     {userLangs.ger && (
@@ -154,4 +290,4 @@ const WordsPage = () => {
   );
 };
 
-export default WordsPage;
+export default WritePage;

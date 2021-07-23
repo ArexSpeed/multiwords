@@ -40,14 +40,14 @@ const LearnPage = () => {
                           <ImportContactsIcon />
                         </button>
                       </Link>
-                      <Link href="/learn/words" passHref>
+                      <Link href="/learn/write" passHref>
                         <button
                           className="p-2 hover:bg-primary25 rounded-full"
                           onClick={() => console.log(item.name)}>
                           <EditIcon />
                         </button>
                       </Link>
-                      <Link href="/learn/words" passHref>
+                      <Link href="/learn/show" passHref>
                         <button
                           className="p-2 hover:bg-primary25 rounded-full"
                           onClick={() => console.log(item.name)}>
