@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './slices/counterSlice';
 import themeReducer from './slices/themeSlice';
 import learnReducer from './slices/learnSlice';
+import settingsReducer from './slices/settingsSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     theme: themeReducer,
-    learn: learnReducer
+    learn: learnReducer,
+    settings: settingsReducer
   }
 });
 

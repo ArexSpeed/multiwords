@@ -4,13 +4,18 @@ import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import MobileNav from 'components/Nav/MobileNav';
 import Flag from 'components/Flag';
+//slice
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { LearningLanguages, UserLanguage, changeUserLanguage } from 'redux/slices/settingsSlice';
 
 const SettingsPage = () => {
+  const userLanguage = useAppSelector(UserLanguage);
   const [mainLang, setMainLang] = useState({
     short: 'eng',
     name: 'English'
   });
   const [openBox, setOpenBox] = useState(false);
+  const dispatch = useAppDispatch();
   const langs = [
     {
       short: 'eng',
