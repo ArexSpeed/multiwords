@@ -3,10 +3,13 @@ import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
-import { categories, words } from 'data';
+import { words } from 'data';
 import Flag from 'components/Flag';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SchoolIcon from '@material-ui/icons/School';
+//import slice
+import { useAppSelector } from 'redux/hooks';
+import { selectCategory } from 'redux/slices/learnSlice';
 
 // Import Swiper styles
 import 'swiper/swiper.min.css';
@@ -15,6 +18,7 @@ import 'swiper/components/navigation/navigation.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Keyboard, Pagination, Navigation } from 'swiper/core';
+import CategorySwitch from 'components/CategorySwitch';
 
 // install Swiper modules
 SwiperCore.use([Keyboard, Pagination, Navigation]);
@@ -38,6 +42,7 @@ interface IShowAnswer {
 }
 
 const ShowPage = () => {
+  const category = useAppSelector(selectCategory);
   const [showAnswer, setShowAnswer] = useState<IShowAnswer[]>([]);
   useEffect(() => {
     words
@@ -141,9 +146,6 @@ const ShowPage = () => {
     setShowAnswer(copyShowAnswer);
   };
 
-  //change to toolkit
-  const level = '1';
-  const category = 'Calendar';
   const userMainLang = 'fra';
   const userLangs = {
     eng: true,
@@ -161,15 +163,7 @@ const ShowPage = () => {
         <Search />
         <section className="flex flex-row w-full p-3 justify-between items-center">
           <div>
-            <select className="text-md outline-none bg-secondary25 rounded-sm px-2">
-              {categories
-                .filter((category) => category.lvl === level)
-                .map((item) => (
-                  <option key={item.id} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-            </select>
+            <CategorySwitch />
           </div>
         </section>
         <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24">

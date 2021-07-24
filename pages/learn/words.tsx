@@ -3,12 +3,15 @@ import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
-import { categories, words } from 'data';
+import { words } from 'data';
 import Flag from 'components/Flag';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SchoolIcon from '@material-ui/icons/School';
+//import slice
+import { useAppSelector } from 'redux/hooks';
+import { selectCategory } from 'redux/slices/learnSlice';
 
 // Import Swiper styles
 import 'swiper/swiper.min.css';
@@ -17,13 +20,14 @@ import 'swiper/components/navigation/navigation.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Keyboard, Pagination, Navigation } from 'swiper/core';
+import CategorySwitch from 'components/CategorySwitch';
 
 // install Swiper modules
 SwiperCore.use([Keyboard, Pagination, Navigation]);
 
 const WordsPage = () => {
-  const level = '1';
-  const category = 'Calendar';
+  const category = useAppSelector(selectCategory);
+
   const userMainLang = 'fra';
   const userLangs = {
     eng: false,
@@ -41,15 +45,7 @@ const WordsPage = () => {
         <Search />
         <section className="flex flex-row w-full p-3 justify-between items-center">
           <div>
-            <select className="text-md outline-none bg-secondary25 rounded-sm px-2">
-              {categories
-                .filter((category) => category.lvl === level)
-                .map((item) => (
-                  <option key={item.id} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-            </select>
+            <CategorySwitch />
           </div>
         </section>
         <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24">
