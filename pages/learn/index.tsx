@@ -9,8 +9,18 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { levels, categories } from 'data';
+//import slice
+import { useAppDispatch } from 'redux/hooks';
+import { setCategory, setLevel } from 'redux/slices/learnSlice';
 
 const LearnPage = () => {
+  const dispatch = useAppDispatch();
+
+  const handleDispatch = (level: number, category: string) => {
+    dispatch(setLevel(level));
+    dispatch(setCategory(category));
+  };
+
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
@@ -36,21 +46,21 @@ const LearnPage = () => {
                       <Link href="/learn/words" passHref>
                         <button
                           className="p-2 hover:bg-primary25 rounded-full"
-                          onClick={() => console.log(item.name)}>
+                          onClick={() => handleDispatch(Number(item.lvl), item.name)}>
                           <ImportContactsIcon />
                         </button>
                       </Link>
                       <Link href="/learn/write" passHref>
                         <button
                           className="p-2 hover:bg-primary25 rounded-full"
-                          onClick={() => console.log(item.name)}>
+                          onClick={() => handleDispatch(Number(item.lvl), item.name)}>
                           <EditIcon />
                         </button>
                       </Link>
                       <Link href="/learn/show" passHref>
                         <button
                           className="p-2 hover:bg-primary25 rounded-full"
-                          onClick={() => console.log(item.name)}>
+                          onClick={() => handleDispatch(Number(item.lvl), item.name)}>
                           <VisibilityOffIcon />
                         </button>
                       </Link>
