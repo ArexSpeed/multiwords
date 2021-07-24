@@ -1,8 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { decrement, increment } from 'redux/slices/counterSlice';
 import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
@@ -15,8 +13,6 @@ import Flag from 'components/Flag';
 
 export default function Home() {
   const [currentHelloIndex, setCurrentHelloIndex] = useState<number>(0);
-  const count = useAppSelector((state) => state.counter.value);
-  const dispatch = useAppDispatch();
 
   const flags = ['eng', 'pol', 'ger', 'ned', 'spa', 'ita', 'fra'];
   const hellos = [
