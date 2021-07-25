@@ -10,7 +10,7 @@ interface LearnState {
 // Define the initial state using that type
 const initialState: LearnState = {
   level: 1,
-  category: 'Number'
+  category: 'Numbers'
 };
 
 export const learnSlice = createSlice({

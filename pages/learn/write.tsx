@@ -10,6 +10,7 @@ import SchoolIcon from '@material-ui/icons/School';
 //import slice
 import { useAppSelector } from 'redux/hooks';
 import { selectCategory } from 'redux/slices/learnSlice';
+import { LearningLanguages, UserLanguage } from 'redux/slices/settingsSlice';
 
 // Import Swiper styles
 import 'swiper/swiper.min.css';
@@ -24,6 +25,16 @@ import CategorySwitch from 'components/CategorySwitch';
 SwiperCore.use([Keyboard, Pagination, Navigation]);
 
 //Types
+type Word = {
+  eng: string;
+  pol: string;
+  ger: string;
+  ned: string;
+  spa: string;
+  fra: string;
+  ita: string;
+};
+
 type CheckAnswer = {
   check: boolean;
   correct: boolean;
@@ -43,6 +54,9 @@ interface IShowAnswer {
 
 const WritePage = () => {
   const category = useAppSelector(selectCategory);
+  const userLanguage = useAppSelector(UserLanguage);
+  const learnLanguages = useAppSelector(LearningLanguages);
+  const keyMainLang = userLanguage.short as keyof Word;
   const [showAnswer, setShowAnswer] = useState<IShowAnswer[]>([]);
   const [answerValues, setAnswerValues] = useState({
     eng: '',
@@ -183,16 +197,6 @@ const WritePage = () => {
     setAnswerValues(resetAnswerValues);
   };
 
-  const userMainLang = 'fra';
-  const userLangs = {
-    eng: false,
-    pol: true,
-    ger: true,
-    ned: false,
-    spa: true,
-    fra: false,
-    ita: true
-  };
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
@@ -221,13 +225,11 @@ const WritePage = () => {
                 .filter((word) => word.cat === category)
                 .map((word, i) => (
                   <SwiperSlide key={word.id} className="flex flex-col justify-center items-center">
-                    {userMainLang && (
-                      <div className="flex flex-row justify-center items-center">
-                        <Flag flag={userMainLang} />
-                        <span className="text-lg">{word[userMainLang]}</span>
-                      </div>
-                    )}
-                    {userLangs.eng && (
+                    <div className="flex flex-row justify-center items-center">
+                      <Flag flag={userLanguage.short} />
+                      <span className="text-lg">{word[keyMainLang]}</span>
+                    </div>
+                    {learnLanguages.eng && userLanguage.short !== 'eng' && (
                       <div className="flex flex-row justify-center items-center">
                         <Flag flag="eng" />
                         {showAnswer[i]?.eng.check ? (
@@ -274,7 +276,7 @@ const WritePage = () => {
                         )}
                       </div>
                     )}
-                    {userLangs.pol && (
+                    {learnLanguages.pol && userLanguage.short !== 'pol' && (
                       <div className="flex flex-row justify-center items-center">
                         <Flag flag="pol" />
                         {showAnswer[i]?.pol.check ? (
@@ -321,7 +323,7 @@ const WritePage = () => {
                         )}
                       </div>
                     )}
-                    {userLangs.ger && (
+                    {learnLanguages.ger && userLanguage.short !== 'ger' && (
                       <div className="flex flex-row justify-center items-center">
                         <Flag flag="ger" />
                         {showAnswer[i]?.ger.check ? (
@@ -368,7 +370,7 @@ const WritePage = () => {
                         )}
                       </div>
                     )}
-                    {userLangs.ned && (
+                    {learnLanguages.ned && userLanguage.short !== 'ned' && (
                       <div className="flex flex-row justify-center items-center">
                         <Flag flag="ned" />
                         {showAnswer[i]?.ned.check ? (
@@ -415,7 +417,7 @@ const WritePage = () => {
                         )}
                       </div>
                     )}
-                    {userLangs.spa && (
+                    {learnLanguages.spa && userLanguage.short !== 'ned' && (
                       <div className="flex flex-row justify-center items-center">
                         <Flag flag="spa" />
                         {showAnswer[i]?.spa.check ? (
@@ -462,7 +464,7 @@ const WritePage = () => {
                         )}
                       </div>
                     )}
-                    {userLangs.fra && (
+                    {learnLanguages.fra && userLanguage.short !== 'fra' && (
                       <div className="flex flex-row justify-center items-center">
                         <Flag flag="fra" />
                         {showAnswer[i]?.fra.check ? (
@@ -509,7 +511,7 @@ const WritePage = () => {
                         )}
                       </div>
                     )}
-                    {userLangs.ita && (
+                    {learnLanguages.ita && userLanguage.short !== 'ita' && (
                       <div className="flex flex-row justify-center items-center">
                         <Flag flag="ita" />
                         {showAnswer[i]?.ita.check ? (
@@ -561,37 +563,37 @@ const WritePage = () => {
               <SwiperSlide className="flex flex-col justify-center items-center">
                 <h3 className="text-lg">Your score:</h3>
                 <div className="flex flex-col justify-center items-center">
-                  {userLangs.eng && (
+                  {learnLanguages.eng && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="eng" /> <span className="text-lg">10/20</span>
                     </div>
                   )}
-                  {userLangs.pol && (
+                  {learnLanguages.pol && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="pol" /> <span className="text-lg">10/20</span>
                     </div>
                   )}
-                  {userLangs.ger && (
+                  {learnLanguages.ger && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ger" /> <span className="text-lg">10/20</span>
                     </div>
                   )}
-                  {userLangs.ned && (
+                  {learnLanguages.ned && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ned" /> <span className="text-lg">10/20</span>
                     </div>
                   )}
-                  {userLangs.spa && (
+                  {learnLanguages.spa && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="spa" /> <span className="text-lg">10/20</span>
                     </div>
                   )}
-                  {userLangs.fra && (
+                  {learnLanguages.fra && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="fra" /> <span className="text-lg">10/20</span>
                     </div>
                   )}
-                  {userLangs.ita && (
+                  {learnLanguages.ita && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ita" /> <span className="text-lg">10/20</span>
                     </div>
