@@ -12,31 +12,31 @@ const MobileNav = () => {
       <nav className="w-full h-20 bg-primary bg-opacity-25 backdrop-filter backdrop-blur-sm shadow-md rounded-lg overflow-hidden">
         <ul className="flex flex-row justify-around items-center w-full h-full">
           <Link href="/learn" passHref>
-            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
+            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700 dark:text-secondaryLight dark:hover:text-gray-300">
               <SchoolIcon />
               <p className="font-semibold">Learn</p>
             </li>
           </Link>
           <Link href="/games" passHref>
-            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
+            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700 dark:text-secondaryLight dark:hover:text-gray-300">
               <GamesIcon />
               <p className="font-semibold">Games</p>
             </li>
           </Link>
           <Link href="/mywords" passHref>
-            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
+            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700 dark:text-secondaryLight dark:hover:text-gray-300">
               <BookmarksIcon />
               <p className="font-semibold">My Words</p>
             </li>
           </Link>
           <Link href="/dictonary" passHref>
-            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
+            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700 dark:text-secondaryLight dark:hover:text-gray-300">
               <ImportContactsIcon />
               <p className="font-semibold">Dico</p>
             </li>
           </Link>
           <Link href="/settings" passHref>
-            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700">
+            <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700 dark:text-secondaryLight dark:hover:text-gray-300">
               <SettingsIcon />
               <p className="font-semibold">Settings</p>
             </li>

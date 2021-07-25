@@ -45,21 +45,21 @@ const LearnPage = () => {
                     <div className="flex flex-row justify-around items-center">
                       <Link href="/learn/words" passHref>
                         <button
-                          className="p-2 hover:bg-primary25 rounded-full"
+                          className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
                           onClick={() => handleDispatch(Number(item.lvl), item.name)}>
                           <ImportContactsIcon />
                         </button>
                       </Link>
                       <Link href="/learn/write" passHref>
                         <button
-                          className="p-2 hover:bg-primary25 rounded-full"
+                          className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
                           onClick={() => handleDispatch(Number(item.lvl), item.name)}>
                           <EditIcon />
                         </button>
                       </Link>
                       <Link href="/learn/show" passHref>
                         <button
-                          className="p-2 hover:bg-primary25 rounded-full"
+                          className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
                           onClick={() => handleDispatch(Number(item.lvl), item.name)}>
                           <VisibilityOffIcon />
                         </button>

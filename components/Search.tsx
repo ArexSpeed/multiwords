@@ -32,7 +32,7 @@ const Search = () => {
           <SearchIcon className="mx-2 text-secondary" />
           <input
             type="text"
-            className="w-full bg-transparent text-gray-700 outline-none placeholder:text-primary"
+            className="w-full bg-transparent text-gray-700 outline-none placeholder:text-primary dark:text-gray-300"
             placeholder="Search a word"
           />
         </div>

@@ -91,11 +91,11 @@ const SettingsPage = () => {
                   </svg>
                 </button>
                 {openBox && (
-                  <div className="absolute flex flex-col max-h-60 bg-secondary25 rounded-sm p-2 overflow-y-auto">
+                  <div className="absolute flex flex-col max-h-60 bg-secondaryLight rounded-sm p-2 overflow-y-auto dark:bg-secondary">
                     {langs.map((lang, i) => (
                       <button
                         key={i}
-                        className="flex flex-row justify-start items-center hover:bg-secondary50"
+                        className="flex flex-row justify-start items-center rounded-sm hover:bg-secondary dark:hover:bg-secondaryDark"
                         onClick={() => changeMainLang(lang.short, lang.name)}>
                         <Flag flag={lang.short} />
                         <span>{lang.name}</span>

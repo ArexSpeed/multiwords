@@ -10,7 +10,7 @@ const CategorySwitch = () => {
   const dispatch = useAppDispatch();
   return (
     <select
-      className="text-md outline-none bg-secondary25 rounded-sm px-2"
+      className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
       onChange={(e) => dispatch(setCategory(e.target.value))}>
       {categories
         .filter((category) => +category.lvl === level)
