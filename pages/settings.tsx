@@ -6,14 +6,17 @@ import MobileNav from 'components/Nav/MobileNav';
 import Flag from 'components/Flag';
 //slice
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { LearningLanguages, UserLanguage, changeUserLanguage } from 'redux/slices/settingsSlice';
+import {
+  LearningLanguages,
+  UserLanguage,
+  changeUserLanguage,
+  changeLearningLanguages
+} from 'redux/slices/settingsSlice';
 
 const SettingsPage = () => {
   const userLanguage = useAppSelector(UserLanguage);
-  const [mainLang, setMainLang] = useState({
-    short: 'eng',
-    name: 'English'
-  });
+  const learnLanguages = useAppSelector(LearningLanguages);
+
   const [openBox, setOpenBox] = useState(false);
   const dispatch = useAppDispatch();
   const langs = [
@@ -48,11 +51,17 @@ const SettingsPage = () => {
   ];
 
   const changeMainLang = (short: string, name: string) => {
-    setMainLang({
-      short,
-      name
-    });
+    dispatch(
+      changeUserLanguage({
+        short,
+        name
+      })
+    );
     setOpenBox(false);
+  };
+
+  const checkLanguage = (lang: string) => {
+    dispatch(changeLearningLanguages(lang));
   };
 
   return (
@@ -68,7 +77,7 @@ const SettingsPage = () => {
                 <button
                   className="flex flex-row justify-center items-center"
                   onClick={() => setOpenBox(!openBox)}>
-                  <Flag flag={mainLang.short} />
+                  <Flag flag={userLanguage.short} />
                   <svg
                     className="w-6 h-6"
                     fill="currentColor"
@@ -103,7 +112,11 @@ const SettingsPage = () => {
                   <label
                     key={i}
                     className="flex flex-row justify-center items-center cursor-pointer">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      defaultChecked={learnLanguages[lang.short]}
+                      onChange={() => checkLanguage(lang.short)}
+                    />
                     <Flag flag={lang.short} />
                   </label>
                 ))}

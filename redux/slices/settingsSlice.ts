@@ -1,21 +1,32 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 
-type Languages = 'eng' | 'pol' | 'ger' | 'ned' | 'spa' | 'fra' | 'ita';
+type UserLanguageType = {
+  short: string;
+  name: string;
+};
+
+type LearnLanguageType = {
+  [key: string]: boolean;
+};
+
 interface SettingsState {
-  userLanguage: Languages;
-  learnLanguages: Object;
+  userLanguage: UserLanguageType;
+  learnLanguages: LearnLanguageType;
 }
 
 const initialState: SettingsState = {
-  userLanguage: 'eng',
+  userLanguage: {
+    short: 'eng',
+    name: 'English'
+  },
   learnLanguages: {
-    eng: false,
-    pol: false,
+    eng: true,
+    pol: true,
     ger: true,
     ned: false,
     spa: true,
-    fra: false,
+    fra: true,
     ita: true
   }
 };
@@ -25,13 +36,17 @@ export const settingsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    changeUserLanguage: (state, action: PayloadAction<Languages>) => {
+    changeUserLanguage: (state, action: PayloadAction<UserLanguageType>) => {
       state.userLanguage = action.payload;
+    },
+    changeLearningLanguages: (state, action: PayloadAction<keyof LearnLanguageType>) => {
+      const lang = action.payload;
+      state.learnLanguages[lang] = !state.learnLanguages[lang];
     }
   }
 });
 
-export const { changeUserLanguage } = settingsSlice.actions;
+export const { changeUserLanguage, changeLearningLanguages } = settingsSlice.actions;
 
 export const UserLanguage = (state: RootState) => state.settings.userLanguage;
 export const LearningLanguages = (state: RootState) => state.settings.learnLanguages;
