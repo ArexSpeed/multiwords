@@ -2,13 +2,11 @@ import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { toogleTheme } from 'redux/slices/themeSlice';
+import { toogleTheme, selectTheme } from 'redux/slices/settingsSlice';
 
 const Search = () => {
-  const theme = useAppSelector((state) => state.theme.theme);
+  const theme = useAppSelector(selectTheme);
   const dispatch = useAppDispatch();
-
-  console.log(theme, 'theme check');
 
   const handleToogle = () => {
     switch (theme) {
