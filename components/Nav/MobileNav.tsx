@@ -29,7 +29,7 @@ const MobileNav = () => {
               <p className="font-semibold">My Words</p>
             </li>
           </Link>
-          <Link href="/dictonary" passHref>
+          <Link href="/dico" passHref>
             <li className="flex flex-col justify-center items-center h-full text-secondary cursor-pointer hover:text-gray-700 dark:text-secondaryLight dark:hover:text-gray-300">
               <ImportContactsIcon />
               <p className="font-semibold">Dico</p>
