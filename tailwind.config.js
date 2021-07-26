@@ -10,7 +10,14 @@ module.exports = {
         primaryLight: '#FFCEFB',
         primaryDark: '#6C4078',
         secondaryLight: '#D4DAFC',
-        secondaryDark: '#3E4B79'
+        secondaryDark: '#3E4B79',
+        eng: '#302bfe',
+        ger: '#000000',
+        pol: '#fe2b38',
+        ned: '#fe902b',
+        spa: '#feeb2b',
+        fra: '#33eefa',
+        ita: '#34d231'
       },
       width: {
         sm: '8px',

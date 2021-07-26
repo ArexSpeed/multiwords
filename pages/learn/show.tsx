@@ -239,9 +239,9 @@ const ShowPage = () => {
                           </>
                         ) : (
                           <button
-                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            className="w-[150px] h-[30px] bg-eng text-white rounded-full"
                             onClick={() => handleShowAnswer(i, 'eng')}>
-                            Show
+                            Reveal
                           </button>
                         )}
                       </div>
@@ -293,9 +293,9 @@ const ShowPage = () => {
                           </>
                         ) : (
                           <button
-                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            className="w-[150px] h-[30px] bg-pol text-white rounded-full"
                             onClick={() => handleShowAnswer(i, 'pol')}>
-                            Show
+                            Pokaż
                           </button>
                         )}
                       </div>
@@ -347,9 +347,9 @@ const ShowPage = () => {
                           </>
                         ) : (
                           <button
-                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            className="w-[150px] h-[30px] bg-ger text-white rounded-full"
                             onClick={() => handleShowAnswer(i, 'ger')}>
-                            Show
+                            Verraten
                           </button>
                         )}
                       </div>
@@ -401,9 +401,9 @@ const ShowPage = () => {
                           </>
                         ) : (
                           <button
-                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            className="w-[150px] h-[30px] bg-ned text-black rounded-full"
                             onClick={() => handleShowAnswer(i, 'ned')}>
-                            Show
+                            Onthul
                           </button>
                         )}
                       </div>
@@ -455,9 +455,9 @@ const ShowPage = () => {
                           </>
                         ) : (
                           <button
-                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            className="w-[150px] h-[30px] bg-spa text-black rounded-full"
                             onClick={() => handleShowAnswer(i, 'spa')}>
-                            Show
+                            Revelar
                           </button>
                         )}
                       </div>
@@ -509,9 +509,9 @@ const ShowPage = () => {
                           </>
                         ) : (
                           <button
-                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            className="w-[150px] h-[30px] bg-fra text-black rounded-full"
                             onClick={() => handleShowAnswer(i, 'fra')}>
-                            Show
+                            Révéler
                           </button>
                         )}
                       </div>
@@ -563,9 +563,9 @@ const ShowPage = () => {
                           </>
                         ) : (
                           <button
-                            className="w-[150px] h-[30px] bg-blue-900 rounded-full"
+                            className="w-[150px] h-[30px] bg-ita text-black rounded-full"
                             onClick={() => handleShowAnswer(i, 'ita')}>
-                            Show
+                            Svelare
                           </button>
                         )}
                       </div>

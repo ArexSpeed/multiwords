@@ -72,41 +72,41 @@ const WordsPage = () => {
                   <SwiperSlide key={word.id} className="flex flex-col justify-center items-center">
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag={userLanguage.short} />
-                      <span className="text-lg">{word[keyMainLang]}</span>
+                      <span className={`text-lg text-${keyMainLang}`}>{word[keyMainLang]}</span>
                     </div>
                     {learnLanguages.eng && userLanguage.short !== 'eng' && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="eng" /> <span className="text-lg">{word.eng}</span>
+                        <Flag flag="eng" /> <span className="text-lg text-eng">{word.eng}</span>
                       </div>
                     )}
                     {learnLanguages.pol && userLanguage.short !== 'pol' && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="pol" /> <span className="text-lg">{word.pol}</span>
+                        <Flag flag="pol" /> <span className="text-lg text-pol">{word.pol}</span>
                       </div>
                     )}
                     {learnLanguages.ger && userLanguage.short !== 'ger' && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ger" /> <span className="text-lg">{word.ger}</span>
+                        <Flag flag="ger" /> <span className="text-lg text-ger">{word.ger}</span>
                       </div>
                     )}
                     {learnLanguages.ned && userLanguage.short !== 'ned' && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ned" /> <span className="text-lg">{word.ned}</span>
+                        <Flag flag="ned" /> <span className="text-lg text-ned">{word.ned}</span>
                       </div>
                     )}
                     {learnLanguages.spa && userLanguage.short !== 'spa' && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="spa" /> <span className="text-lg">{word.spa}</span>
+                        <Flag flag="spa" /> <span className="text-lg text-spa">{word.spa}</span>
                       </div>
                     )}
                     {learnLanguages.fra && userLanguage.short !== 'fra' && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="fra" /> <span className="text-lg">{word.fra}</span>
+                        <Flag flag="fra" /> <span className="text-lg text-fra">{word.fra}</span>
                       </div>
                     )}
                     {learnLanguages.ita && userLanguage.short !== 'ita' && (
                       <div className="flex flex-row justify-center items-center">
-                        <Flag flag="ita" /> <span className="text-lg">{word.ita}</span>
+                        <Flag flag="ita" /> <span className="text-lg text-ita">{word.ita}</span>
                       </div>
                     )}
                   </SwiperSlide>

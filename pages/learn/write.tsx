@@ -264,6 +264,7 @@ const WritePage = () => {
                             <input
                               type="text"
                               placeholder="Napisz słowo"
+                              className="border border-eng px-2 text-black rounded-sm mr-2"
                               value={answerValues.eng}
                               onChange={(e) =>
                                 setAnswerValues({ ...answerValues, eng: e.target.value })
@@ -311,6 +312,7 @@ const WritePage = () => {
                             <input
                               type="text"
                               placeholder="Napisz słowo"
+                              className="border border-pol px-2 text-black rounded-sm mr-2"
                               value={answerValues.pol}
                               onChange={(e) =>
                                 setAnswerValues({ ...answerValues, pol: e.target.value })
@@ -358,6 +360,7 @@ const WritePage = () => {
                             <input
                               type="text"
                               placeholder="Napisz słowo"
+                              className="border border-ger px-2 text-black rounded-sm mr-2"
                               value={answerValues.ger}
                               onChange={(e) =>
                                 setAnswerValues({ ...answerValues, ger: e.target.value })
@@ -405,6 +408,7 @@ const WritePage = () => {
                             <input
                               type="text"
                               placeholder="Napisz słowo"
+                              className="border border-ned px-2 text-black rounded-sm mr-2"
                               value={answerValues.ned}
                               onChange={(e) =>
                                 setAnswerValues({ ...answerValues, ned: e.target.value })
@@ -452,6 +456,7 @@ const WritePage = () => {
                             <input
                               type="text"
                               placeholder="Napisz słowo"
+                              className="border border-spa px-2 text-black rounded-sm mr-2"
                               value={answerValues.spa}
                               onChange={(e) =>
                                 setAnswerValues({ ...answerValues, spa: e.target.value })
@@ -499,6 +504,7 @@ const WritePage = () => {
                             <input
                               type="text"
                               placeholder="Napisz słowo"
+                              className="border border-fra px-2 text-black rounded-sm mr-2"
                               value={answerValues.fra}
                               onChange={(e) =>
                                 setAnswerValues({ ...answerValues, fra: e.target.value })
@@ -546,6 +552,7 @@ const WritePage = () => {
                             <input
                               type="text"
                               placeholder="Napisz słowo"
+                              className="border border-ita px-2 text-black rounded-sm mr-2"
                               value={answerValues.ita}
                               onChange={(e) =>
                                 setAnswerValues({ ...answerValues, ita: e.target.value })
