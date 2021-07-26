@@ -7,15 +7,21 @@ import Flag from 'components/Flag';
 //slice
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import {
-  LearningLanguages,
   UserLanguage,
+  LearningLanguages,
+  DicoLanguages,
   changeUserLanguage,
-  changeLearningLanguages
+  changeLearningLanguages,
+  changeDicoLanguages
 } from 'redux/slices/settingsSlice';
+//icon
+import SchoolIcon from '@material-ui/icons/School';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 const SettingsPage = () => {
   const userLanguage = useAppSelector(UserLanguage);
   const learnLanguages = useAppSelector(LearningLanguages);
+  const dicoLanguages = useAppSelector(DicoLanguages);
 
   const [openBox, setOpenBox] = useState(false);
   const dispatch = useAppDispatch();
@@ -64,13 +70,17 @@ const SettingsPage = () => {
     dispatch(changeLearningLanguages(lang));
   };
 
+  const checkDicoLanguage = (lang: string) => {
+    dispatch(changeDicoLanguages(lang));
+  };
+
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
       <main className="w-full max-h-screen">
         <Search />
-        <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24">
-          <div className="flex flex-col w-full h-full justify-center items-center px-2 border-[1px] border-primary25 rounded-lg">
+        <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24 overflow-hidden">
+          <div className="flex flex-col w-full h-full justify-start items-center px-2 border-[1px] border-primary25 rounded-lg overflow-y-auto">
             <article className="flex flex-row justify-center items-center">
               <h2>Your main language: </h2>
               <div className="relative">
@@ -91,7 +101,7 @@ const SettingsPage = () => {
                   </svg>
                 </button>
                 {openBox && (
-                  <div className="absolute flex flex-col max-h-60 bg-secondaryLight rounded-sm p-2 overflow-y-auto dark:bg-secondary">
+                  <div className="absolute z-10 flex flex-col max-h-60 bg-secondaryLight rounded-sm p-2 overflow-y-auto dark:bg-secondary">
                     {langs.map((lang, i) => (
                       <button
                         key={i}
@@ -106,20 +116,47 @@ const SettingsPage = () => {
               </div>
             </article>
             <article className="my-4">
+              <div className="flex flex-col justify-center items-center overflow-hidden">
+                <div className="flex flex-row">
+                  <SchoolIcon />
+                  <h2 className="ml-2">Language to learn</h2>
+                </div>
+                <div className="flex flex-row justify-start items-center overflow-x-auto">
+                  {langs.map((lang, i) => (
+                    <label
+                      key={i}
+                      className="flex flex-col justify-center items-center cursor-pointer">
+                      <Flag flag={lang.short} />
+                      <input
+                        type="checkbox"
+                        defaultChecked={learnLanguages[lang.short]}
+                        onChange={() => checkLanguage(lang.short)}
+                      />
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </article>
+            <article className="my-4">
               <div className="flex flex-col justify-center items-center">
-                <h2>Language to learn</h2>
-                {langs.map((lang, i) => (
-                  <label
-                    key={i}
-                    className="flex flex-row justify-center items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      defaultChecked={learnLanguages[lang.short]}
-                      onChange={() => checkLanguage(lang.short)}
-                    />
-                    <Flag flag={lang.short} />
-                  </label>
-                ))}
+                <div className="flex flex-row justify-center items-center">
+                  <ImportContactsIcon />
+                  <h2 className="ml-2">Language in Search/Dico</h2>
+                </div>
+                <div className="flex flex-row justify-start items-center overflow-x-auto">
+                  {langs.map((lang, i) => (
+                    <label
+                      key={i}
+                      className="flex flex-col justify-center items-center cursor-pointer">
+                      <Flag flag={lang.short} />
+                      <input
+                        type="checkbox"
+                        defaultChecked={dicoLanguages[lang.short]}
+                        onChange={() => checkDicoLanguage(lang.short)}
+                      />
+                    </label>
+                  ))}
+                </div>
               </div>
             </article>
           </div>

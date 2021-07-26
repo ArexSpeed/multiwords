@@ -16,6 +16,7 @@ interface SettingsState {
   theme: ThemeType;
   userLanguage: UserLanguageType;
   learnLanguages: LearnLanguageType;
+  dicoLanguages: LearnLanguageType;
 }
 
 const initialState: SettingsState = {
@@ -25,6 +26,15 @@ const initialState: SettingsState = {
     name: 'English'
   },
   learnLanguages: {
+    eng: true,
+    pol: true,
+    ger: true,
+    ned: false,
+    spa: true,
+    fra: true,
+    ita: true
+  },
+  dicoLanguages: {
     eng: true,
     pol: true,
     ger: true,
@@ -50,14 +60,20 @@ export const settingsSlice = createSlice({
     changeLearningLanguages: (state, action: PayloadAction<keyof LearnLanguageType>) => {
       const lang = action.payload;
       state.learnLanguages[lang] = !state.learnLanguages[lang];
+    },
+    changeDicoLanguages: (state, action: PayloadAction<keyof LearnLanguageType>) => {
+      const lang = action.payload;
+      state.dicoLanguages[lang] = !state.dicoLanguages[lang];
     }
   }
 });
 
-export const { toogleTheme, changeUserLanguage, changeLearningLanguages } = settingsSlice.actions;
+export const { toogleTheme, changeUserLanguage, changeLearningLanguages, changeDicoLanguages } =
+  settingsSlice.actions;
 
 export const selectTheme = (state: RootState) => state.settings.theme;
 export const UserLanguage = (state: RootState) => state.settings.userLanguage;
 export const LearningLanguages = (state: RootState) => state.settings.learnLanguages;
+export const DicoLanguages = (state: RootState) => state.settings.dicoLanguages;
 
 export default settingsSlice.reducer;
