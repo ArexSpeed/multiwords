@@ -26,7 +26,16 @@ const Search = () => {
     let tempWords: Array<Word> = [];
     if (searchValue.length > 2) {
       words
-        .filter((word) => word.pol.toLowerCase().includes(searchValue.toLowerCase()))
+        .filter(
+          (word) =>
+            word.eng.toLowerCase().includes(searchValue.toLowerCase()) ||
+            word.pol.toLowerCase().includes(searchValue.toLowerCase()) ||
+            word.ger.toLowerCase().includes(searchValue.toLowerCase()) ||
+            word.ned.toLowerCase().includes(searchValue.toLowerCase()) ||
+            word.spa.toLowerCase().includes(searchValue.toLowerCase()) ||
+            word.fra.toLowerCase().includes(searchValue.toLowerCase()) ||
+            word.ita.toLowerCase().includes(searchValue.toLowerCase())
+        )
         .map((item) =>
           tempWords.push({
             eng: item.eng,
@@ -42,8 +51,6 @@ const Search = () => {
     } else {
       setFoundWords([]);
     }
-    console.log(searchValue, 'searchValue');
-    console.log(foundWords, 'word find');
   }, [searchValue]);
 
   const handleToogle = () => {
@@ -86,7 +93,7 @@ const Search = () => {
         <div className="flex flex-col justify-start items-start w-full p-2 bg-secondaryLight rounded-sm overflow-scroll dark:bg-secondaryDark">
           <table>
             <thead>
-              <tr>
+              <tr className="text-[12px]">
                 <td>ENG</td>
                 <td>POL</td>
                 <td>GER</td>

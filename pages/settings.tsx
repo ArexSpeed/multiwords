@@ -141,7 +141,7 @@ const SettingsPage = () => {
               <div className="flex flex-col justify-center items-center">
                 <div className="flex flex-row justify-center items-center">
                   <ImportContactsIcon />
-                  <h2 className="ml-2">Language in Search/Dico</h2>
+                  <h2 className="ml-2">Language in Dictionary</h2>
                 </div>
                 <div className="flex flex-row justify-start items-center overflow-x-auto">
                   {langs.map((lang, i) => (
