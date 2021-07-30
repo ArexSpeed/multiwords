@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
+import {
+  themeStorage,
+  userStorage,
+  learnLanguageStorage,
+  dicoLanguageStorage
+} from '../storage/settingsStorage';
 
 type ThemeType = 'light' | 'dark';
 
@@ -19,77 +25,6 @@ interface SettingsState {
   dicoLanguages: LearnLanguageType;
 }
 
-//load Storage
-const themeStorage = (): ThemeType => {
-  try {
-    const serializedState = localStorage.getItem('theme');
-    if (serializedState === null) {
-      return 'light';
-    }
-    return JSON.parse(serializedState);
-  } catch (err) {
-    return 'light';
-  }
-};
-
-const userStorage = (): UserLanguageType => {
-  const initState = {
-    short: 'eng',
-    name: 'English'
-  };
-  try {
-    const serializedState = localStorage.getItem('userLanguage');
-    if (serializedState === null) {
-      return initState;
-    }
-    return JSON.parse(serializedState);
-  } catch (err) {
-    return initState;
-  }
-};
-
-const learnLanguageStorage = () => {
-  const initState = {
-    eng: true,
-    pol: true,
-    ger: true,
-    ned: true,
-    spa: true,
-    fra: true,
-    ita: true
-  };
-  try {
-    const serializedState = localStorage.getItem('learnLanguage');
-    if (serializedState === null) {
-      return initState;
-    }
-    return JSON.parse(serializedState);
-  } catch (err) {
-    return initState;
-  }
-};
-
-const dicoLanguageStorage = () => {
-  const initState = {
-    eng: true,
-    pol: true,
-    ger: true,
-    ned: true,
-    spa: true,
-    fra: true,
-    ita: true
-  };
-  try {
-    const serializedState = localStorage.getItem('dicoLanguage');
-    if (serializedState === null) {
-      return initState;
-    }
-    return JSON.parse(serializedState);
-  } catch (err) {
-    return initState;
-  }
-};
-
 const initialState: SettingsState = {
   theme: themeStorage(),
   userLanguage: userStorage(),
@@ -99,7 +34,6 @@ const initialState: SettingsState = {
 
 export const settingsSlice = createSlice({
   name: 'settings',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     toogleTheme: (state, action: PayloadAction<ThemeType>) => {
