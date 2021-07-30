@@ -32,30 +32,69 @@ const themeStorage = (): ThemeType => {
   }
 };
 
-const initialState: SettingsState = {
-  theme: themeStorage(),
-  userLanguage: {
+const userStorage = (): UserLanguageType => {
+  const initState = {
     short: 'eng',
     name: 'English'
-  },
-  learnLanguages: {
-    eng: true,
-    pol: true,
-    ger: true,
-    ned: false,
-    spa: true,
-    fra: true,
-    ita: true
-  },
-  dicoLanguages: {
-    eng: true,
-    pol: true,
-    ger: true,
-    ned: false,
-    spa: true,
-    fra: true,
-    ita: true
+  };
+  try {
+    const serializedState = localStorage.getItem('userLanguage');
+    if (serializedState === null) {
+      return initState;
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return initState;
   }
+};
+
+const learnLanguageStorage = () => {
+  const initState = {
+    eng: true,
+    pol: true,
+    ger: true,
+    ned: true,
+    spa: true,
+    fra: true,
+    ita: true
+  };
+  try {
+    const serializedState = localStorage.getItem('learnLanguage');
+    if (serializedState === null) {
+      return initState;
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return initState;
+  }
+};
+
+const dicoLanguageStorage = () => {
+  const initState = {
+    eng: true,
+    pol: true,
+    ger: true,
+    ned: true,
+    spa: true,
+    fra: true,
+    ita: true
+  };
+  try {
+    const serializedState = localStorage.getItem('dicoLanguage');
+    if (serializedState === null) {
+      return initState;
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return initState;
+  }
+};
+
+const initialState: SettingsState = {
+  theme: themeStorage(),
+  userLanguage: userStorage(),
+  learnLanguages: learnLanguageStorage(),
+  dicoLanguages: dicoLanguageStorage()
 };
 
 export const settingsSlice = createSlice({
@@ -69,14 +108,17 @@ export const settingsSlice = createSlice({
     },
     changeUserLanguage: (state, action: PayloadAction<UserLanguageType>) => {
       state.userLanguage = action.payload;
+      localStorage.setItem('userLanguage', JSON.stringify(action.payload));
     },
     changeLearningLanguages: (state, action: PayloadAction<keyof LearnLanguageType>) => {
       const lang = action.payload;
       state.learnLanguages[lang] = !state.learnLanguages[lang];
+      localStorage.setItem('learnLanguage', JSON.stringify(state.learnLanguages));
     },
     changeDicoLanguages: (state, action: PayloadAction<keyof LearnLanguageType>) => {
       const lang = action.payload;
       state.dicoLanguages[lang] = !state.dicoLanguages[lang];
+      localStorage.setItem('dicoLanguage', JSON.stringify(state.dicoLanguages));
     }
   }
 });
