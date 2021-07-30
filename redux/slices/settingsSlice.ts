@@ -19,8 +19,21 @@ interface SettingsState {
   dicoLanguages: LearnLanguageType;
 }
 
+//load Storage
+const themeStorage = (): ThemeType => {
+  try {
+    const serializedState = localStorage.getItem('theme');
+    if (serializedState === null) {
+      return 'light';
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return 'light';
+  }
+};
+
 const initialState: SettingsState = {
-  theme: 'light',
+  theme: themeStorage(),
   userLanguage: {
     short: 'eng',
     name: 'English'
