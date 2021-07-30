@@ -39,6 +39,9 @@ module.exports = {
       },
       fontFamily: {
         baloo: ['Baloo 2', 'cursive']
+      },
+      boxShadow: {
+        searchShadow: '0 1px 2px 0 rgba(81, 106, 240, 0.5)'
       }
     }
   },

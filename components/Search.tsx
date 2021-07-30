@@ -84,7 +84,7 @@ const Search = () => {
   return (
     <section className="m-3">
       <header className="flex flex-row w-full h-lg justify-between items-center">
-        <div className="flex flex-row justify-start items-center w-3/4 h-full shadow-sm">
+        <div className="flex flex-row justify-start items-center w-3/4 h-full rounded-sm shadow-searchShadow">
           <SearchIcon className="mx-2 text-secondary" />
           <input
             type="text"
