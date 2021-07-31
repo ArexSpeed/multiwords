@@ -4,6 +4,8 @@ import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
@@ -15,11 +17,32 @@ import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { setCategory, setLevel } from 'redux/slices/learnSlice';
 import { LearningLanguages, changeLearningLanguages } from 'redux/slices/settingsSlice';
 
-const LearnPage = () => {
+const useStyles = makeStyles(() =>
+  createStyles({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  })
+);
+
+const MyWordsPage = () => {
   const dispatch = useAppDispatch();
   const learnLanguages = useAppSelector(LearningLanguages);
   const [settingBox, setSettingBox] = useState(false);
   const [moreBox, setMoreBox] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [newCategory, setNewCategory] = useState('');
+  const classes = useStyles();
+
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
 
   const handleDispatch = (level: number, category: string) => {
     dispatch(setLevel(level));
@@ -66,26 +89,41 @@ const LearnPage = () => {
           )}
         </section>
         <section className="flex flex-col w-full p-3 justify-between items-center pb-24 dark:bg-gray-700">
-          <Link href="/mywords/addcategory" passHref>
-            <button
-              type="submit"
-              className="h-16 my-2 flex flex-row justify-between items-center bg-secondary rounded-md">
-              <div className="px-2 mx-2 w-8 h-8 rounded-full flex justify-center items-center bg-secondaryDark">
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    fillRule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <span className="px-2">Add new category</span>
-            </button>
-          </Link>
+          <button
+            className="h-16 my-2 flex flex-row justify-between items-center bg-secondary rounded-md"
+            onClick={handleOpen}>
+            <div className="px-2 mx-2 w-8 h-8 rounded-full flex justify-center items-center bg-secondaryDark">
+              <svg
+                className="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fillRule="evenodd"
+                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <span className="px-2">Add new category</span>
+          </button>
+          <Modal open={openModal} onClose={handleClose} className={classes.modal}>
+            <div className="flex flex-col justify-around items-center w-[250px] h-[250px] bg-secondaryLight text-black rounded-md">
+              <h2>Category Name</h2>
+              <input
+                type="text"
+                className="p-2"
+                placeholder="Name"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+              />
+              <button
+                className="p-2 items-center bg-secondaryDark text-white outline-none rounded-sm"
+                onClick={handleClose}>
+                ADD
+              </button>
+            </div>
+          </Modal>
           <div className="flex flex-row relative w-full justify-between items-center p-2 border-b-2 border-secondary border-opacity-20">
             <p className="text-lg">Category</p>
             <div className="flex flex-row justify-around items-center">
@@ -137,4 +175,4 @@ const LearnPage = () => {
   );
 };
 
-export default LearnPage;
+export default MyWordsPage;
