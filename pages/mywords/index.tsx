@@ -8,7 +8,12 @@ import Modal from '@material-ui/core/Modal';
 import SettingsIcon from '@material-ui/icons/Settings';
 //import slice
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { setCategory, setLevel } from 'redux/slices/learnSlice';
+import {
+  selectCategories,
+  addCategory,
+  editCategoryControl,
+  deleteCategoryControl
+} from 'redux/slices/mywordsSlice';
 import { LearningLanguages, changeLearningLanguages } from 'redux/slices/settingsSlice';
 import { v4 as uuidv4 } from 'uuid';
 import WordsCategory from 'components/WordsCategory';
@@ -30,6 +35,7 @@ const MyWordsPage = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const categories = useAppSelector(selectCategories);
   const [newCategory, setNewCategory] = useState('');
   const [editCategory, setEditCategory] = useState({
     id: '',
@@ -40,37 +46,31 @@ const MyWordsPage = () => {
     name: ''
   });
   const classes = useStyles();
-  const [categories, setCategories] = useState([
-    {
-      id: 'aabbcc',
-      name: 'Music'
-    },
-    {
-      id: 'xxffdd',
-      name: 'Colors'
-    }
-  ]);
 
   const addNewCategory = () => {
-    setCategories((prev) => [...prev, { id: uuidv4(), name: newCategory }]);
+    dispatch(
+      addCategory({
+        id: uuidv4(),
+        name: newCategory
+      })
+    );
     setNewCategory('');
     handleAddClose();
     console.log(categories, 'categories');
   };
 
   const handleEditCategory = (id: string) => {
-    const editName = categories.filter((category) => category.id !== id);
-    editName.push({
-      id: id,
-      name: editCategory.name
-    });
-    setCategories(editName);
+    dispatch(
+      editCategoryControl({
+        id: id,
+        name: editCategory.name
+      })
+    );
     handleEditClose();
   };
 
   const handleDeleteCategory = (id: string) => {
-    const categoryNew = categories.filter((category) => category.id !== id);
-    setCategories(categoryNew);
+    dispatch(deleteCategoryControl(id));
     handleDeleteClose();
   };
 

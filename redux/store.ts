@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import learnReducer from './slices/learnSlice';
 import settingsReducer from './slices/settingsSlice';
+import mywordsReducer from './slices/mywordsSlice';
 
 export const store = configureStore({
   reducer: {
     learn: learnReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
+    mywords: mywordsReducer
   }
 });
 
