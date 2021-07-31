@@ -8,16 +8,28 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { setCategory, setLevel } from 'redux/slices/learnSlice';
 import { LearningLanguages, changeLearningLanguages } from 'redux/slices/settingsSlice';
+import { SetStateAction } from 'react';
 
 type Category = {
+  id: string;
   name: string;
-}
+};
 
 interface Props {
   category: Category;
+  setOpenEditModal: any;
+  setEditCategory: any;
+  setOpenDeleteModal: any;
+  setDeleteCategory: any;
 }
 
-const WordsCategory: React.FC<Props> = ({ category }) => {
+const WordsCategory: React.FC<Props> = ({
+  category,
+  setOpenEditModal,
+  setEditCategory,
+  setOpenDeleteModal,
+  setDeleteCategory
+}) => {
   const dispatch = useAppDispatch();
   const learnLanguages = useAppSelector(LearningLanguages);
   const [moreBox, setMoreBox] = useState(false);
@@ -26,6 +38,25 @@ const WordsCategory: React.FC<Props> = ({ category }) => {
     dispatch(setLevel(level));
     dispatch(setCategory(category));
   };
+
+  const handleEdit = () => {
+    setOpenEditModal(true);
+    setEditCategory({
+      id: category.id,
+      name: category.name
+    });
+    setMoreBox(false);
+  };
+
+  const handleDelete = () => {
+    setOpenDeleteModal(true);
+    setDeleteCategory({
+      id: category.id,
+      name: category.name
+    });
+    setMoreBox(false);
+  };
+
   return (
     <div className="flex flex-row relative w-full justify-between items-center p-2 border-b-2 border-secondary border-opacity-20">
       <p className="text-lg">{category.name}</p>
@@ -66,8 +97,12 @@ const WordsCategory: React.FC<Props> = ({ category }) => {
       </div>
       {moreBox && (
         <div className="flex flex-col absolute top-14 right-0 z-10 justify-start items-start p-2 bg-primaryLight dark:bg-primaryDark">
-          <button className="outline-none">Edit</button>
-          <button>Delete</button>
+          <button className="outline-none" onClick={handleEdit}>
+            Edit
+          </button>
+          <button className="outline-none" onClick={handleDelete}>
+            Delete
+          </button>
         </div>
       )}
     </div>

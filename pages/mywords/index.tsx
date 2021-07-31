@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import MobileNav from 'components/Nav/MobileNav';
 import Search from 'components/Search';
@@ -11,6 +10,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { setCategory, setLevel } from 'redux/slices/learnSlice';
 import { LearningLanguages, changeLearningLanguages } from 'redux/slices/settingsSlice';
+import { v4 as uuidv4 } from 'uuid';
 import WordsCategory from 'components/WordsCategory';
 
 const useStyles = makeStyles(() =>
@@ -27,31 +27,67 @@ const MyWordsPage = () => {
   const dispatch = useAppDispatch();
   const learnLanguages = useAppSelector(LearningLanguages);
   const [settingBox, setSettingBox] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [newCategory, setNewCategory] = useState('');
+  const [editCategory, setEditCategory] = useState({
+    id: '',
+    name: ''
+  });
+  const [deleteCategory, setDeleteCategory] = useState({
+    id: '',
+    name: ''
+  });
   const classes = useStyles();
   const [categories, setCategories] = useState([
     {
+      id: 'aabbcc',
       name: 'Music'
     },
     {
+      id: 'xxffdd',
       name: 'Colors'
     }
   ]);
 
   const addNewCategory = () => {
-    setCategories((prev) => [...prev, { name: newCategory }]);
+    setCategories((prev) => [...prev, { id: uuidv4(), name: newCategory }]);
     setNewCategory('');
-    handleClose();
+    handleAddClose();
     console.log(categories, 'categories');
   };
 
-  const handleOpen = () => {
-    setOpenModal(true);
+  const handleEditCategory = (id: string) => {
+    const editName = categories.filter((category) => category.id !== id);
+    editName.push({
+      id: id,
+      name: editCategory.name
+    });
+    setCategories(editName);
+    handleEditClose();
   };
 
-  const handleClose = () => {
-    setOpenModal(false);
+  const handleDeleteCategory = (id: string) => {
+    const categoryNew = categories.filter((category) => category.id !== id);
+    setCategories(categoryNew);
+    handleDeleteClose();
+  };
+
+  const handleAddOpen = () => {
+    setOpenAddModal(true);
+  };
+
+  const handleAddClose = () => {
+    setOpenAddModal(false);
+  };
+
+  const handleEditClose = () => {
+    setOpenEditModal(false);
+  };
+
+  const handleDeleteClose = () => {
+    setOpenDeleteModal(false);
   };
 
   const langs = ['eng', 'pol', 'ger', 'ned', 'spa', 'fra', 'ita'];
@@ -96,7 +132,7 @@ const MyWordsPage = () => {
         <section className="flex flex-col w-full p-3 justify-between items-center pb-24 dark:bg-gray-700">
           <button
             className="h-16 my-2 flex flex-row justify-between items-center bg-secondary rounded-md"
-            onClick={handleOpen}>
+            onClick={handleAddOpen}>
             <div className="px-2 mx-2 w-8 h-8 rounded-full flex justify-center items-center bg-secondaryDark">
               <svg
                 className="w-6 h-6"
@@ -112,7 +148,7 @@ const MyWordsPage = () => {
             </div>
             <span className="px-2">Add new category</span>
           </button>
-          <Modal open={openModal} onClose={handleClose} className={classes.modal}>
+          <Modal open={openAddModal} onClose={handleAddClose} className={classes.modal}>
             <div className="flex flex-col justify-around items-center w-[250px] h-[250px] bg-secondaryLight text-black rounded-md">
               <h2>Category Name</h2>
               <input
@@ -129,8 +165,49 @@ const MyWordsPage = () => {
               </button>
             </div>
           </Modal>
+          <Modal open={openEditModal} onClose={handleEditClose} className={classes.modal}>
+            <div className="flex flex-col justify-around items-center w-[250px] h-[250px] bg-secondaryLight text-black rounded-md">
+              <h2>Edit category</h2>
+              <input
+                type="text"
+                className="p-2"
+                placeholder="Edit"
+                value={editCategory.name}
+                onChange={(e) =>
+                  setEditCategory({
+                    id: editCategory.id,
+                    name: e.target.value
+                  })
+                }
+              />
+              <button
+                className="p-2 items-center bg-secondaryDark text-white outline-none rounded-sm"
+                onClick={() => handleEditCategory(editCategory.id)}>
+                EDIT
+              </button>
+            </div>
+          </Modal>
+          <Modal open={openDeleteModal} onClose={handleDeleteClose} className={classes.modal}>
+            <div className="flex flex-col justify-around items-center w-[250px] h-[250px] bg-secondaryLight text-black rounded-md">
+              <h2>
+                Do you want to delete <strong>{deleteCategory.name}</strong> ?
+              </h2>
+              <button
+                className="p-2 items-center bg-red-400 text-white outline-none rounded-sm"
+                onClick={() => handleDeleteCategory(deleteCategory.id)}>
+                DELETE
+              </button>
+            </div>
+          </Modal>
           {categories.map((category, i) => (
-            <WordsCategory key={i} category={category} />
+            <WordsCategory
+              key={i}
+              category={category}
+              setOpenEditModal={setOpenEditModal}
+              setEditCategory={setEditCategory}
+              setOpenDeleteModal={setOpenDeleteModal}
+              setDeleteCategory={setDeleteCategory}
+            />
           ))}
         </section>
         <MobileNav />
