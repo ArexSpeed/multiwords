@@ -6,16 +6,12 @@ import Search from 'components/Search';
 import Flag from 'components/Flag';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
-import EditIcon from '@material-ui/icons/Edit';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 //import slice
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { setCategory, setLevel } from 'redux/slices/learnSlice';
 import { LearningLanguages, changeLearningLanguages } from 'redux/slices/settingsSlice';
+import WordsCategory from 'components/WordsCategory';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -31,10 +27,24 @@ const MyWordsPage = () => {
   const dispatch = useAppDispatch();
   const learnLanguages = useAppSelector(LearningLanguages);
   const [settingBox, setSettingBox] = useState(false);
-  const [moreBox, setMoreBox] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [newCategory, setNewCategory] = useState('');
   const classes = useStyles();
+  const [categories, setCategories] = useState([
+    {
+      name: 'Music'
+    },
+    {
+      name: 'Colors'
+    }
+  ]);
+
+  const addNewCategory = () => {
+    setCategories((prev) => [...prev, { name: newCategory }]);
+    setNewCategory('');
+    handleClose();
+    console.log(categories, 'categories');
+  };
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -42,11 +52,6 @@ const MyWordsPage = () => {
 
   const handleClose = () => {
     setOpenModal(false);
-  };
-
-  const handleDispatch = (level: number, category: string) => {
-    dispatch(setLevel(level));
-    dispatch(setCategory(category));
   };
 
   const langs = ['eng', 'pol', 'ger', 'ned', 'spa', 'fra', 'ita'];
@@ -119,55 +124,14 @@ const MyWordsPage = () => {
               />
               <button
                 className="p-2 items-center bg-secondaryDark text-white outline-none rounded-sm"
-                onClick={handleClose}>
+                onClick={addNewCategory}>
                 ADD
               </button>
             </div>
           </Modal>
-          <div className="flex flex-row relative w-full justify-between items-center p-2 border-b-2 border-secondary border-opacity-20">
-            <p className="text-lg">Category</p>
-            <div className="flex flex-row justify-around items-center">
-              <Link href="/mywords/addwords" passHref>
-                <button
-                  className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-                  onClick={() => handleDispatch(Number(1), 'category')}>
-                  <AddIcon />
-                </button>
-              </Link>
-              <Link href="/mywords/learn" passHref>
-                <button
-                  className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-                  onClick={() => handleDispatch(Number(1), 'category')}>
-                  <ImportContactsIcon />
-                </button>
-              </Link>
-              <Link href="/mywords/write" passHref>
-                <button
-                  className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-                  onClick={() => handleDispatch(Number(1), 'category')}>
-                  <EditIcon />
-                </button>
-              </Link>
-              <Link href="/mywords/show" passHref>
-                <button
-                  className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-                  onClick={() => handleDispatch(Number(1), 'category')}>
-                  <VisibilityOffIcon />
-                </button>
-              </Link>
-              <button
-                className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-                onClick={() => setMoreBox(!moreBox)}>
-                <MoreVertIcon />
-              </button>
-            </div>
-            {moreBox && (
-              <div className="flex flex-col absolute top-14 right-0 justify-start items-start p-2 bg-primaryLight dark:bg-primaryDark">
-                <button className="outline-none">Edit</button>
-                <button>Delete</button>
-              </div>
-            )}
-          </div>
+          {categories.map((category, i) => (
+            <WordsCategory key={i} category={category} />
+          ))}
         </section>
         <MobileNav />
       </main>
