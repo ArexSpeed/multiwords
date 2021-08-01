@@ -7,8 +7,7 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { setCategory, setLevel } from 'redux/slices/learnSlice';
-import { LearningLanguages, changeLearningLanguages } from 'redux/slices/settingsSlice';
-import { SetStateAction } from 'react';
+import { LearningLanguages } from 'redux/slices/settingsSlice';
 
 type Category = {
   id: string;
@@ -68,7 +67,7 @@ const WordsCategory: React.FC<Props> = ({
             <AddIcon />
           </button>
         </Link>
-        <Link href="/mywords/learn" passHref>
+        <Link href="/mywords/words" passHref>
           <button
             className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
             onClick={() => handleDispatch(Number(1), 'category')}>
