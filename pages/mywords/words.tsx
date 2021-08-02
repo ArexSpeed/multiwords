@@ -10,9 +10,10 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SchoolIcon from '@material-ui/icons/School';
 import AddIcon from '@material-ui/icons/Add';
 //import slice
-import { useAppSelector } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectCategoryId, selectWords } from 'redux/slices/mywordsSlice';
 import { LearningLanguages, UserLanguage } from 'redux/slices/settingsSlice';
+import { setCategoryId } from 'redux/slices/mywordsSlice';
 
 // Import Swiper styles
 import 'swiper/swiper.min.css';
@@ -37,12 +38,17 @@ type Word = {
 };
 
 const WordsPage = () => {
+  const dispatch = useAppDispatch();
   const categoryId = useAppSelector(selectCategoryId);
   const words = useAppSelector(selectWords);
   const userLanguage = useAppSelector(UserLanguage);
   const learnLanguages = useAppSelector(LearningLanguages);
 
   const keyMainLang = userLanguage.short as keyof Word;
+
+  const handleDispatch = () => {
+    dispatch(setCategoryId(categoryId));
+  };
 
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
@@ -117,8 +123,8 @@ const WordsPage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/mywords/write" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
-                      onClick={() => console.log('')}>
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
+                      onClick={handleDispatch}>
                       <EditIcon />
                     </button>
                   </Link>
@@ -127,8 +133,8 @@ const WordsPage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/mywords/show" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
-                      onClick={() => console.log('')}>
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
+                      onClick={handleDispatch}>
                       <VisibilityOffIcon />
                     </button>
                   </Link>
@@ -137,8 +143,8 @@ const WordsPage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/mywords" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
-                      onClick={() => console.log('')}>
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
+                      onClick={handleDispatch}>
                       <SchoolIcon />
                     </button>
                   </Link>
@@ -147,8 +153,8 @@ const WordsPage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/mywords/addwords" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
-                      onClick={() => console.log('')}>
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
+                      onClick={handleDispatch}>
                       <AddIcon />
                     </button>
                   </Link>

@@ -8,9 +8,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SchoolIcon from '@material-ui/icons/School';
 import AddIcon from '@material-ui/icons/Add';
 //import slice
-import { useAppSelector } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectCategoryId, selectWords } from 'redux/slices/mywordsSlice';
 import { LearningLanguages, UserLanguage } from 'redux/slices/settingsSlice';
+import { setCategoryId } from 'redux/slices/mywordsSlice';
 
 // Import Swiper styles
 import 'swiper/swiper.min.css';
@@ -53,6 +54,7 @@ interface IShowAnswer {
 }
 
 const WritePage = () => {
+  const dispatch = useAppDispatch();
   const categoryId = useAppSelector(selectCategoryId);
   const words = useAppSelector(selectWords);
   const userLanguage = useAppSelector(UserLanguage);
@@ -120,6 +122,10 @@ const WritePage = () => {
         ])
       );
   }, []);
+
+  const handleDispatch = () => {
+    dispatch(setCategoryId(categoryId));
+  };
 
   const handleAnswer = (e: React.FormEvent, id: number, word: string, lang: string) => {
     e.preventDefault();
@@ -610,8 +616,8 @@ const WritePage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/mywords" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
-                      onClick={() => console.log('')}>
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
+                      onClick={handleDispatch}>
                       <SchoolIcon />
                     </button>
                   </Link>
@@ -620,8 +626,8 @@ const WritePage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/mywords/addwords" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
-                      onClick={() => console.log('')}>
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
+                      onClick={handleDispatch}>
                       <AddIcon />
                     </button>
                   </Link>

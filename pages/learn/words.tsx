@@ -116,7 +116,7 @@ const WordsPage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/learn/write" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
                       onClick={() => console.log('')}>
                       <EditIcon />
                     </button>
@@ -126,7 +126,7 @@ const WordsPage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/learn/show" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
                       onClick={() => console.log('')}>
                       <VisibilityOffIcon />
                     </button>
@@ -136,7 +136,7 @@ const WordsPage = () => {
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/learn" passHref>
                     <button
-                      className="p-2 bg-primary25 rounded-full hover:bg-primary50"
+                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
                       onClick={() => console.log('')}>
                       <SchoolIcon />
                     </button>

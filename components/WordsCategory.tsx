@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import AddIcon from '@material-ui/icons/Add';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { useAppDispatch } from 'redux/hooks';
 import { setCategoryId } from 'redux/slices/mywordsSlice';
-import { LearningLanguages } from 'redux/slices/settingsSlice';
 
 type Category = {
   id: string;
@@ -30,15 +28,9 @@ const WordsCategory: React.FC<Props> = ({
   setDeleteCategory
 }) => {
   const dispatch = useAppDispatch();
-  const learnLanguages = useAppSelector(LearningLanguages);
   const [moreBox, setMoreBox] = useState(false);
 
-  const handleDispatch = (level: number, category: string) => {
-    dispatch(setLevel(level));
-    dispatch(setCategoryId(category));
-  };
-
-  const handleDispatchAddNew = (id: string) => {
+  const handleDispatch = (id: string) => {
     dispatch(setCategoryId(id));
   };
 
@@ -67,21 +59,21 @@ const WordsCategory: React.FC<Props> = ({
         <Link href="/mywords/words" passHref>
           <button
             className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-            onClick={() => handleDispatch(Number(1), 'category')}>
+            onClick={() => handleDispatch(category.id)}>
             <ImportContactsIcon />
           </button>
         </Link>
         <Link href="/mywords/write" passHref>
           <button
             className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-            onClick={() => handleDispatch(Number(1), 'category')}>
+            onClick={() => handleDispatch(category.id)}>
             <EditIcon />
           </button>
         </Link>
         <Link href="/mywords/show" passHref>
           <button
             className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-            onClick={() => handleDispatch(Number(1), 'category')}>
+            onClick={() => handleDispatch(category.id)}>
             <VisibilityOffIcon />
           </button>
         </Link>
@@ -94,12 +86,12 @@ const WordsCategory: React.FC<Props> = ({
       {moreBox && (
         <div className="flex flex-col absolute top-14 right-0 z-10 justify-start items-start p-2 bg-primaryLight dark:bg-primaryDark">
           <Link href="/mywords/addwords" passHref>
-            <button className="outline-none" onClick={() => handleDispatchAddNew(category.id)}>
+            <button className="outline-none" onClick={() => handleDispatch(category.id)}>
               Add new words
             </button>
           </Link>
           <Link href="/mywords/check" passHref>
-            <button className="outline-none" onClick={() => handleDispatchAddNew(category.id)}>
+            <button className="outline-none" onClick={() => handleDispatch(category.id)}>
               Check words
             </button>
           </Link>

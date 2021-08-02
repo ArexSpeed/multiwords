@@ -5,10 +5,11 @@ import Search from 'components/Search';
 import Flag from 'components/Flag';
 import MobileNav from 'components/Nav/MobileNav';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { selectCategoryId, addWords } from 'redux/slices/mywordsSlice';
+import { selectCategoryId, selectCategories, addWords } from 'redux/slices/mywordsSlice';
 
 const AddWordsPage = () => {
-  const category = useAppSelector(selectCategoryId);
+  const categoryId = useAppSelector(selectCategoryId);
+  const categories = useAppSelector(selectCategories);
   const dispatch = useAppDispatch();
   const [isAdd, setIsAdd] = useState(false);
   const [newWord, setNewWord] = useState({
@@ -24,7 +25,7 @@ const AddWordsPage = () => {
   const addNewWords = () => {
     dispatch(
       addWords({
-        categoryId: category,
+        categoryId: categoryId,
         eng: newWord.eng,
         pol: newWord.pol,
         ger: newWord.ger,
