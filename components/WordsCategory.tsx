@@ -6,7 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { setCategory, setLevel } from 'redux/slices/learnSlice';
+import { setCategoryId } from 'redux/slices/mywordsSlice';
 import { LearningLanguages } from 'redux/slices/settingsSlice';
 
 type Category = {
@@ -35,7 +35,11 @@ const WordsCategory: React.FC<Props> = ({
 
   const handleDispatch = (level: number, category: string) => {
     dispatch(setLevel(level));
-    dispatch(setCategory(category));
+    dispatch(setCategoryId(category));
+  };
+
+  const handleDispatchAddNew = (id: string) => {
+    dispatch(setCategoryId(id));
   };
 
   const handleEdit = () => {
@@ -60,13 +64,6 @@ const WordsCategory: React.FC<Props> = ({
     <div className="flex flex-row relative w-full justify-between items-center p-2 border-b-2 border-secondary border-opacity-20">
       <p className="text-lg">{category.name}</p>
       <div className="flex flex-row justify-around items-center">
-        <Link href="/mywords/addwords" passHref>
-          <button
-            className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
-            onClick={() => handleDispatch(Number(1), 'category')}>
-            <AddIcon />
-          </button>
-        </Link>
         <Link href="/mywords/words" passHref>
           <button
             className="p-2 hover:bg-primaryLight rounded-full dark:hover:bg-primaryDark"
@@ -96,6 +93,16 @@ const WordsCategory: React.FC<Props> = ({
       </div>
       {moreBox && (
         <div className="flex flex-col absolute top-14 right-0 z-10 justify-start items-start p-2 bg-primaryLight dark:bg-primaryDark">
+          <Link href="/mywords/addwords" passHref>
+            <button className="outline-none" onClick={() => handleDispatchAddNew(category.id)}>
+              Add new words
+            </button>
+          </Link>
+          <Link href="/mywords/check" passHref>
+            <button className="outline-none" onClick={() => handleDispatchAddNew(category.id)}>
+              Check words
+            </button>
+          </Link>
           <button className="outline-none" onClick={handleEdit}>
             Edit
           </button>

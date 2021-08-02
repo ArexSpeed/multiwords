@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
 import MobileNav from 'components/Nav/MobileNav';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { selectCategoryId, addWords } from 'redux/slices/mywordsSlice';
 
 const AddWordsPage = () => {
+  const category = useAppSelector(selectCategoryId);
+  const dispatch = useAppDispatch();
+  const [isAdd, setIsAdd] = useState(false);
   const [newWord, setNewWord] = useState({
     eng: '',
     pol: '',
@@ -16,7 +22,32 @@ const AddWordsPage = () => {
   });
 
   const addNewWords = () => {
-    console.log(newWord);
+    dispatch(
+      addWords({
+        categoryId: category,
+        eng: newWord.eng,
+        pol: newWord.pol,
+        ger: newWord.ger,
+        ned: newWord.ned,
+        spa: newWord.spa,
+        fra: newWord.fra,
+        ita: newWord.ita
+      })
+    );
+    setIsAdd(true);
+  };
+
+  const addNextWords = () => {
+    setIsAdd(false);
+    setNewWord({
+      eng: '',
+      pol: '',
+      ger: '',
+      ned: '',
+      spa: '',
+      fra: '',
+      ita: ''
+    });
   };
 
   return (
@@ -104,12 +135,25 @@ const AddWordsPage = () => {
                 />
               </div>
               <div className="flex flex-row justify-center items-center">
-                <button
-                  className="bg-secondary p-2 m-3 rounded-sm outline-none"
-                  onClick={addNewWords}>
-                  Add
-                </button>
-                <button className="bg-secondary p-2 m-3 rounded-sm outline-none">Add more</button>
+                {!isAdd ? (
+                  <button
+                    className="bg-secondary p-2 m-3 rounded-sm outline-none"
+                    onClick={addNewWords}>
+                    Add
+                  </button>
+                ) : (
+                  <>
+                    <div className="bg-green-400 p-2 m-3 rounded-sm">You added new words!</div>
+                    <button
+                      className="bg-secondary p-2 m-3 rounded-sm outline-none"
+                      onClick={addNextWords}>
+                      Next
+                    </button>
+                    <Link href="/mywords" passHref>
+                      <button className="bg-primary p-2 m-3 rounded-sm outline-none">Back</button>
+                    </Link>
+                  </>
+                )}
               </div>
             </article>
           </div>
