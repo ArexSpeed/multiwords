@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
+import { categoriesStorage } from '../storage/mywordsStorage';
 
 type Categories = {
   id: string;
@@ -21,12 +22,7 @@ interface MyWordsState {
 // Define the initial state using that type
 const initialState: MyWordsState = {
   categoryId: 'asdasd',
-  categories: [
-    {
-      id: 'asdasd',
-      name: 'Music'
-    }
-  ],
+  categories: categoriesStorage(),
   words: [
     {
       id: '1',
@@ -104,14 +100,17 @@ export const mywordsSlice = createSlice({
     addCategory: (state, action: PayloadAction<Categories>) => {
       state.categories = [...state.categories, action.payload];
       console.log(action.payload, 'payload');
+      localStorage.setItem('mywordsCategories', JSON.stringify(state.categories));
     },
     editCategoryControl: (state, action: PayloadAction<Categories>) => {
       const categoryEdit = state.categories.filter((category) => category.id !== action.payload.id);
       categoryEdit.push(action.payload);
       state.categories = categoryEdit;
+      localStorage.setItem('mywordsCategories', JSON.stringify(state.categories));
     },
     deleteCategoryControl: (state, action: PayloadAction<string>) => {
       state.categories = state.categories.filter((category) => category.id !== action.payload);
+      localStorage.setItem('mywordsCategories', JSON.stringify(state.categories));
     }
   }
 });
