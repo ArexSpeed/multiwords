@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 const AddWordsPage = () => {
   const categoryId = useAppSelector(selectCategoryId);
   const categories = useAppSelector(selectCategories);
+  const [categoryName, setCategoryName] = useState('');
   const dispatch = useAppDispatch();
   const [isAdd, setIsAdd] = useState(false);
   const [newWord, setNewWord] = useState({
@@ -22,6 +23,13 @@ const AddWordsPage = () => {
     fra: '',
     ita: ''
   });
+
+  useEffect(() => {
+    const category = categories.find((category) => category.id === categoryId);
+    if (category) {
+      setCategoryName(category.name);
+    }
+  }, [categoryId]);
 
   const addNewWords = () => {
     dispatch(
@@ -60,7 +68,7 @@ const AddWordsPage = () => {
         <Search />
         <section className="flex flex-col w-full p-3">
           <div className="flex flex-row justify-between items-center">
-            <h4 className="text-md">Add new words to category</h4>
+            <h4 className="text-md">Add new words to {categoryName}</h4>
           </div>
         </section>
         <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24">
@@ -145,17 +153,24 @@ const AddWordsPage = () => {
                     Add
                   </button>
                 ) : (
-                  <>
+                  <div className="flex flex-col justify-center items-center">
                     <div className="bg-green-400 p-2 m-3 rounded-sm">You added new words!</div>
-                    <button
-                      className="bg-secondary p-2 m-3 rounded-sm outline-none"
-                      onClick={addNextWords}>
-                      Next
-                    </button>
-                    <Link href="/mywords" passHref>
-                      <button className="bg-primary p-2 m-3 rounded-sm outline-none">Back</button>
-                    </Link>
-                  </>
+                    <div className="flex flex-row">
+                      <button
+                        className="bg-secondary p-2 m-3 rounded-sm outline-none"
+                        onClick={addNextWords}>
+                        Next
+                      </button>
+                      <Link href="/mywords" passHref>
+                        <button className="bg-primary p-2 m-3 rounded-sm outline-none">Back</button>
+                      </Link>
+                      <Link href="/mywords/check" passHref>
+                        <button className="bg-secondary p-2 m-3 rounded-sm outline-none">
+                          Check
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
                 )}
               </div>
             </article>
