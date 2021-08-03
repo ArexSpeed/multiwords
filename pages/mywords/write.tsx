@@ -211,7 +211,7 @@ const WritePage = () => {
         <Search />
         <section className="flex flex-row w-full p-3 justify-between items-center">
           <div>
-            <CategorySwitch />
+            <CategorySwitch type="mywords" />
           </div>
         </section>
         <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24">
