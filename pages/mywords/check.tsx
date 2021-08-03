@@ -1,24 +1,50 @@
 /* eslint-disable jsx-a11y/no-onchange */
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
 import MobileNav from 'components/Nav/MobileNav';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 import {
   selectCategoryId,
   selectCategories,
   setCategoryId,
   setWordId,
-  selectWords
+  selectWords,
+  deleteWordControl
 } from 'redux/slices/mywordsSlice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  })
+);
 
 const Checkwords = () => {
   const categoryId = useAppSelector(selectCategoryId);
   const mwCategories = useAppSelector(selectCategories);
   const mwWords = useAppSelector(selectWords);
   const dispatch = useAppDispatch();
+  const [deleteWordId, setDeleteWordId] = useState('');
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const classes = useStyles();
+
+  const handleDeleteClose = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const handleDeleteWord = (id: string) => {
+    dispatch(deleteWordControl(id));
+    setOpenDeleteModal(false);
+  };
+
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
@@ -38,8 +64,28 @@ const Checkwords = () => {
           </div>
         </section>
         <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24 overflow-hidden">
+          {/* Modal for delete words */}
+          <Modal open={openDeleteModal} onClose={handleDeleteClose} className={classes.modal}>
+            <div className="flex flex-col justify-around items-center w-[250px] h-[250px] bg-secondaryLight text-black rounded-md">
+              <h2>Do you want to delete these words ?</h2>
+              <div className="flex flex-row">
+                <button
+                  className="p-2 items-center mx-1 w-10 bg-red-400 text-white outline-none rounded-sm"
+                  onClick={() => handleDeleteWord(deleteWordId)}>
+                  YES
+                </button>
+                <button
+                  className="p-2 items-center mx-1 w-10 bg-blue-400 text-white outline-none rounded-sm"
+                  onClick={() => setOpenDeleteModal(false)}>
+                  NO
+                </button>
+              </div>
+            </div>
+          </Modal>
           <div className="flex flex-col w-full h-full justify-start items-start py-2 px-2 border-[1px] border-primary25 rounded-lg overflow-auto">
-            <button className="bg-secondary p-2 rounded-md">Add words to category</button>
+            <Link href="/mywords/addwords" passHref>
+              <button className="bg-secondary p-2 rounded-md">Add words to category</button>
+            </Link>
             <table className="border-separate">
               <thead>
                 <tr>
@@ -89,7 +135,14 @@ const Checkwords = () => {
                             Edit
                           </button>
                         </Link>
-                        <button className="bg-red-500 p-2 m-1 rounded-sm">Delete</button>
+                        <button
+                          className="bg-red-500 p-2 m-1 rounded-sm"
+                          onClick={() => {
+                            setDeleteWordId(item.id);
+                            setOpenDeleteModal(true);
+                          }}>
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}

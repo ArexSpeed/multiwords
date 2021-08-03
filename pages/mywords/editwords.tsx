@@ -4,14 +4,7 @@ import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
 import MobileNav from 'components/Nav/MobileNav';
-import {
-  selectCategoryId,
-  selectCategories,
-  setCategoryId,
-  setWordId,
-  selectWordId,
-  selectWords
-} from 'redux/slices/mywordsSlice';
+import { selectWordId, selectWords, editWordControl } from 'redux/slices/mywordsSlice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 
 type Words = {
@@ -40,12 +33,15 @@ const EditWordsPage = () => {
   useEffect(() => {
     const word = words.find((word) => word.id === wordId);
     console.log(word, 'find word');
-    setEditWord(word);
+    if (word) {
+      setEditWord(word);
+    }
     console.log(editWord, 'edited words');
   }, [wordId]);
 
   const confirmEdit = () => {
     console.log(editWord, 'confirm');
+    dispatch(editWordControl(editWord));
     setIsConfirm(true);
   };
 

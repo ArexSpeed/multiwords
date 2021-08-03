@@ -52,8 +52,18 @@ export const mywordsSlice = createSlice({
     setWordId: (state, action: PayloadAction<string>) => {
       state.wordId = action.payload;
     },
-    addWords: (state, action) => {
+    addWords: (state, action: PayloadAction<Words>) => {
       state.words = [...state.words, action.payload];
+      localStorage.setItem('mywordsWords', JSON.stringify(state.words));
+    },
+    editWordControl: (state, action: PayloadAction<Words>) => {
+      const wordEdit = state.words.filter((word) => word.id !== action.payload.id);
+      wordEdit.push(action.payload);
+      state.words = wordEdit;
+      localStorage.setItem('mywordsWords', JSON.stringify(state.words));
+    },
+    deleteWordControl: (state, action: PayloadAction<string>) => {
+      state.words = state.words.filter((word) => word.id !== action.payload);
       localStorage.setItem('mywordsWords', JSON.stringify(state.words));
     }
   }
@@ -65,7 +75,9 @@ export const {
   editCategoryControl,
   deleteCategoryControl,
   setWordId,
-  addWords
+  addWords,
+  editWordControl,
+  deleteWordControl
 } = mywordsSlice.actions;
 
 export const selectCategoryId = (state: RootState) => state.mywords.categoryId;
