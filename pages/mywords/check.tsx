@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react';
+import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
@@ -8,6 +9,7 @@ import {
   selectCategoryId,
   selectCategories,
   setCategoryId,
+  setWordId,
   selectWords
 } from 'redux/slices/mywordsSlice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -80,9 +82,13 @@ const Checkwords = () => {
                       <td className="border-l border-fra">{item.fra}</td>
                       <td className="border-l border-ita">{item.ita}</td>
                       <td className="flex flex-row">
-                        <button className="bg-primaryLight p-2 m-1 rounded-sm dark:bg-primaryDark">
-                          Edit
-                        </button>
+                        <Link href="/mywords/editwords" passHref>
+                          <button
+                            className="bg-primaryLight p-2 m-1 rounded-sm dark:bg-primaryDark"
+                            onClick={() => dispatch(setWordId(item.id))}>
+                            Edit
+                          </button>
+                        </Link>
                         <button className="bg-red-500 p-2 m-1 rounded-sm">Delete</button>
                       </td>
                     </tr>

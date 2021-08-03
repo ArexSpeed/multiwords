@@ -102,7 +102,7 @@ const MyWordsPage = () => {
         <Search />
         <section className="flex flex-col w-full p-3">
           <div className="flex flex-row justify-between items-center">
-            <h4 className="text-md">My words cateogries:</h4>
+            <h4 className="text-md">My words categories:</h4>
             <button className="outline-none" onClick={() => setSettingBox(!settingBox)}>
               <SettingsIcon style={{ fontSize: '20px' }} />
             </button>

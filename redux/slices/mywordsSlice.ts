@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import { categoriesStorage } from '../storage/mywordsStorage';
+import { categoriesStorage, wordsStorage } from '../storage/mywordsStorage';
 
 type Categories = {
   id: string;
@@ -16,6 +16,7 @@ type Words = {
 interface MyWordsState {
   categoryId: string;
   categories: Categories[];
+  wordId: string;
   words: Words[];
 }
 
@@ -23,7 +24,8 @@ interface MyWordsState {
 const initialState: MyWordsState = {
   categoryId: '',
   categories: categoriesStorage(),
-  words: []
+  wordId: '',
+  words: wordsStorage()
 };
 
 export const mywordsSlice = createSlice({
@@ -35,7 +37,6 @@ export const mywordsSlice = createSlice({
     },
     addCategory: (state, action: PayloadAction<Categories>) => {
       state.categories = [...state.categories, action.payload];
-      console.log(action.payload, 'payload');
       localStorage.setItem('mywordsCategories', JSON.stringify(state.categories));
     },
     editCategoryControl: (state, action: PayloadAction<Categories>) => {
@@ -48,17 +49,28 @@ export const mywordsSlice = createSlice({
       state.categories = state.categories.filter((category) => category.id !== action.payload);
       localStorage.setItem('mywordsCategories', JSON.stringify(state.categories));
     },
+    setWordId: (state, action: PayloadAction<string>) => {
+      state.wordId = action.payload;
+    },
     addWords: (state, action) => {
       state.words = [...state.words, action.payload];
+      localStorage.setItem('mywordsWords', JSON.stringify(state.words));
     }
   }
 });
 
-export const { setCategoryId, addCategory, editCategoryControl, deleteCategoryControl, addWords } =
-  mywordsSlice.actions;
+export const {
+  setCategoryId,
+  addCategory,
+  editCategoryControl,
+  deleteCategoryControl,
+  setWordId,
+  addWords
+} = mywordsSlice.actions;
 
 export const selectCategoryId = (state: RootState) => state.mywords.categoryId;
 export const selectCategories = (state: RootState) => state.mywords.categories;
+export const selectWordId = (state: RootState) => state.mywords.wordId;
 export const selectWords = (state: RootState) => state.mywords.words;
 
 export default mywordsSlice.reducer;
