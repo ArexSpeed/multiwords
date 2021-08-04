@@ -6,14 +6,19 @@ import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
 import { levels, categories } from 'data';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { selectCategories } from 'redux/slices/mywordsSlice';
 
 const MemoPage = () => {
   const [firstLangBox, setFirstLangBox] = useState(false);
   const [secondLangBox, setSecondLangBox] = useState(false);
   const [firstLangGame, setFirstLangGame] = useState('eng');
   const [secondLangGame, setSecondLangGame] = useState('eng');
+  const [wordsQty, setWordsQty] = useState(10);
   const [level, setLevel] = useState('1');
-  const [category, setCategory] = useState('');
+  const [categoryGame, setCategoryGame] = useState('');
+  const mwCategories = useAppSelector(selectCategories);
+  const dispatch = useAppDispatch();
 
   const langs = [
     {
@@ -46,6 +51,10 @@ const MemoPage = () => {
     }
   ];
 
+  const handlePlay = () => {
+    console.log('play');
+  };
+
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
@@ -61,7 +70,7 @@ const MemoPage = () => {
               <button
                 className="flex flex-row justify-center items-center"
                 onClick={() => setFirstLangBox(!firstLangBox)}>
-                1: <Flag flag="eng" />
+                1: <Flag flag={firstLangGame} />
                 <svg
                   className="w-6 h-6"
                   fill="currentColor"
@@ -80,7 +89,10 @@ const MemoPage = () => {
                     <button
                       key={i}
                       className="flex flex-row justify-start items-center rounded-sm hover:bg-secondary dark:hover:bg-secondaryDark"
-                      onClick={() => setFirstLangGame(lang.short)}>
+                      onClick={() => {
+                        setFirstLangGame(lang.short);
+                        setFirstLangBox(false);
+                      }}>
                       <Flag flag={lang.short} />
                       <span>{lang.name}</span>
                     </button>
@@ -93,7 +105,7 @@ const MemoPage = () => {
               <button
                 className="flex flex-row justify-center items-center"
                 onClick={() => setSecondLangBox(!secondLangBox)}>
-                2: <Flag flag="eng" />
+                2: <Flag flag={secondLangGame} />
                 <svg
                   className="w-6 h-6"
                   fill="currentColor"
@@ -112,7 +124,10 @@ const MemoPage = () => {
                     <button
                       key={i}
                       className="flex flex-row justify-start items-center rounded-sm hover:bg-secondary dark:hover:bg-secondaryDark"
-                      onClick={() => setSecondLangGame(lang.short)}>
+                      onClick={() => {
+                        setSecondLangGame(lang.short);
+                        setSecondLangBox(false);
+                      }}>
                       <Flag flag={lang.short} />
                       <span>{lang.name}</span>
                     </button>
@@ -143,30 +158,55 @@ const MemoPage = () => {
             </div>
             <div className="flex flex-col mx-2">
               Category:
-              <select
-                className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
-                onChange={(e) => setLevel(e.target.value)}>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-                <option value="999">My Words</option>
-              </select>
+              {level !== '999' ? (
+                <select
+                  className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
+                  onChange={(e) => setCategoryGame(e.target.value)}>
+                  {categories
+                    .filter((category) => category.lvl === level)
+                    .map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                </select>
+              ) : (
+                <select
+                  className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
+                  onChange={(e) => setCategoryGame(e.target.value)}>
+                  {mwCategories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
           </article>
         </section>
         <section className="flex flex-row justify-center items-center w-full p-3">
           <span className="text-lg mx-2">Words:</span>
-          <div className="text-lg mx-2">
-            <button>-</button>
-            <span>10</span>
-            <button>+</button>
+          <div className="flex flex-row justify-center items-center text-lg mx-2">
+            <button
+              className="w-6 h-6 p-2 mx-2 flex justify-center items-center bg-primaryLight rounded-full dark:bg-primaryDark"
+              disabled={wordsQty === 0}
+              onClick={() => setWordsQty(wordsQty - 2)}>
+              -
+            </button>
+            <span className="text-[30px]">{wordsQty}</span>
+            <button
+              className="w-6 h-6 p-2 mx-2 flex justify-center items-center bg-secondaryLight rounded-full dark:bg-secondaryDark"
+              disabled={wordsQty >= 20}
+              onClick={() => setWordsQty(wordsQty + 2)}>
+              +
+            </button>
           </div>
         </section>
         <section className="flex flex-row justify-center items-center w-full p-3">
           <Link href="/games/memo/play" passHref>
-            <button className="bg-secondary p-2 m-2 w-40 text-lg rounded-md">Play</button>
+            <button className="bg-secondary p-2 m-2 w-40 text-lg rounded-md" onClick={handlePlay}>
+              Play
+            </button>
           </Link>
         </section>
         <MobileNav />
