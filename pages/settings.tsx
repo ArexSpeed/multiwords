@@ -15,8 +15,7 @@ import {
   changeDicoLanguages
 } from 'redux/slices/settingsSlice';
 //icon
-import SchoolIcon from '@material-ui/icons/School';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import { SchoolIcon, ImportContactsIcon, ChevronDown } from 'components/Icons';
 
 const SettingsPage = () => {
   const userLanguage = useAppSelector(UserLanguage);
@@ -88,17 +87,7 @@ const SettingsPage = () => {
                   className="flex flex-row justify-center items-center"
                   onClick={() => setOpenBox(!openBox)}>
                   <Flag flag={userLanguage.short} />
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <ChevronDown />
                 </button>
                 {openBox && (
                   <div className="absolute z-10 flex flex-col max-h-60 bg-secondaryLight rounded-sm p-2 overflow-y-auto dark:bg-secondary">
