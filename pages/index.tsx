@@ -87,7 +87,7 @@ export default function Home() {
             <Link href="/game" passHref>
               <div className="w-[100px] h-[100px] m-4 bg-gray-100 dark:bg-gray-800 flex flex-col justify-between items-center rounded-sm shadow-sm">
                 <BorderAllIcon style={{ fontSize: '60px' }} />
-                <h5>Find word</h5>
+                <h5>Word Puzzle</h5>
               </div>
             </Link>
           </article>
