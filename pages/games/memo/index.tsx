@@ -8,6 +8,7 @@ import Flag from 'components/Flag';
 import { levels, categories } from 'data';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectCategories } from 'redux/slices/mywordsSlice';
+import { setMemoState } from 'redux/slices/gamesSlice';
 
 const MemoPage = () => {
   const [firstLangBox, setFirstLangBox] = useState(false);
@@ -52,7 +53,14 @@ const MemoPage = () => {
   ];
 
   const handlePlay = () => {
-    console.log('play');
+    const memoSettings = {
+      level,
+      category: categoryGame,
+      wordsQty,
+      firstLang: firstLangGame,
+      secondLang: secondLangGame
+    };
+    dispatch(setMemoState(memoSettings));
   };
 
   return (
@@ -165,7 +173,7 @@ const MemoPage = () => {
                   {categories
                     .filter((category) => category.lvl === level)
                     .map((category) => (
-                      <option key={category.id} value={category.id}>
+                      <option key={category.id} value={category.name}>
                         {category.name}
                       </option>
                     ))}
@@ -175,7 +183,7 @@ const MemoPage = () => {
                   className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
                   onChange={(e) => setCategoryGame(e.target.value)}>
                   {mwCategories.map((category) => (
-                    <option key={category.id} value={category.id}>
+                    <option key={category.id} value={category.name}>
                       {category.name}
                     </option>
                   ))}
