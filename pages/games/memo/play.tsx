@@ -30,8 +30,10 @@ const shuffleCards = (array: Words[]) => {
 
 const MemoPlay = () => {
   const memoState = useAppSelector(selectMemoState);
-  const [cardsOne, setCardsOne] = useState<Words[]>([]);
-  const [cardsTwo, setCardsTwo] = useState<Words[]>([]);
+  const [cardsInit, setCardsInit] = useState([]);
+  const [cardsShuffle, setCardsShuffle] = useState([]);
+  const [cardsOne, setCardsOne] = useState([]);
+  const [cardsTwo, setCardsTwo] = useState([]);
   const [cards, setCards] = useState(() => shuffleCards(cardsOne.concat(cardsTwo)));
   const [openCards, setOpenCards] = useState<OpenCards[]>([]);
   const [clearedCards, setClearedCards] = useState({});
@@ -39,18 +41,34 @@ const MemoPlay = () => {
   const timeout = null;
   const [points, setPoints] = useState(0);
 
+  // Step 1. get selected words (in 2 langs) from data words
   useEffect(() => {
+    const langFirst = memoState.firstLang;
+    const langSecond = memoState.secondLang;
     words
-      .filter((word) => word.cat === 'Numbers')
+      .filter((word) => word.cat === memoState.category)
       .map((word) => {
-        setCardsOne((prev) => [...prev, { id: word.id, lang: word.pol, correct: false }]);
-        setCardsTwo((prev) => [...prev, { id: word.id, lang: word.eng, correct: false }]);
+        setCardsInit((prev) => [...prev, { id: word.id, lang1: word[langFirst], lang2: word[langSecond] }])
       });
   }, []);
 
+  //Step 2. shuffle all selected words
+  useEffect(() => {
+    setCardsShuffle(() => shuffleCards(cardsInit));
+  }, [cardsInit]);
+
+  //Step 3. Slice shuffled words to quantity of selected by user and map these for 2 array of cards for every language
+  useEffect(() => {
+    const cardsSlice = cardsShuffle.slice(0, memoState.wordsQty);
+    cardsSlice.map((word) => {
+      setCardsOne((prev) => [...prev, { id: word.id, lang: word.lang1, correct: false }]);
+      setCardsTwo((prev) => [...prev, { id: word.id, lang: word.lang2, correct: false }]);
+    });
+  }, [cardsShuffle])
+
+  // Step 4. shuffle and concat words from both language
   useEffect(() => {
     setCards(() => shuffleCards(cardsOne.concat(cardsTwo)));
-    console.log('pick');
   }, [cardsOne, cardsTwo]);
 
   const disable = () => {
@@ -130,6 +148,8 @@ const MemoPlay = () => {
           </button>
         </Link>
         <section className="flex flex-wrap justify-center items-center w-full">
+          {console.log(cardsShuffle, 'shuffle Cards')}
+          {console.log(cards, 'final cards')}
           {cards.map((card, index) => (
             <FlipCard
               key={index}
