@@ -1,4 +1,6 @@
 import React from 'react';
+import Image from 'next/image';
+import logo from 'assets/mwl.png';
 
 type Cards = {
   id: string;
@@ -29,13 +31,15 @@ const FlipCard: React.FC<Props> = ({
 
   return (
     <button
-      className={`card w-16 h-10 bg-secondary ${isFlipped && 'is-flipped'} ${
-        isInactive && 'is-inactive'
-      }`}
+      className={`card ${isInactive && 'is-inactive'} ${isFlipped && 'is-flipped'}`}
       disabled={isDisabled}
       onClick={handleClick}>
-      <div className="card-face">Front</div>
-      <div className="card-back-face">{card.lang}</div>
+      <div className="card-front bg-secondary flex flex-row justify-center items-center">
+        <div className="max-w-[50px] md:max-w-[80px]">
+          <Image src={logo} alt="Multiwords" />
+        </div>
+      </div>
+      <div className="card-back bg-primary">{card.lang}</div>
     </button>
   );
 };
