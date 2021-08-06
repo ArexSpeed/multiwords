@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import { useAppSelector } from 'redux/hooks';
@@ -40,6 +40,7 @@ const MemoPlay = () => {
   const [clearedCards, setClearedCards] = useState({});
   const [shouldDisableAllCards, setShouldDisableAllCards] = useState(false);
   const [points, setPoints] = useState(0);
+  const [isFinish, setIsFinish] = useState(false);
 
   // Step 1. get selected words (in 2 langs) from data words
   useEffect(() => {
@@ -115,11 +116,20 @@ const MemoPlay = () => {
     };
   }, [openCards]);
 
+  //Step 6. finisg game when board is empty (cardsOne half of all cards on board == founded cards)
+  useEffect(() => {
+    if (cardsOne.length > 1 && Object.keys(clearedCards).length === cardsOne.length) {
+      setIsFinish(true);
+    }
+    console.log(clearedCards, 'cleared');
+    console.log(cardsOne.length, Object.keys(clearedCards).length, 'length');
+  }, [clearedCards, cardsOne]);
+
   const checkIsFlipped = (index: number) => {
     return openCards.includes(index);
   };
 
-  const checkIsInactive = (card) => {
+  const checkIsInactive = (card: Cards) => {
     return Boolean(clearedCards[card.id]);
   };
 
@@ -143,20 +153,45 @@ const MemoPlay = () => {
             <span>Back</span>
           </button>
         </Link>
-        <section className="flex flex-wrap justify-center items-center w-full">
-          {cards.map((card, index) => (
-            <FlipCard
-              key={index}
-              card={card}
-              index={index}
-              isInactive={checkIsInactive(card)}
-              isFlipped={checkIsFlipped(index)}
-              isDisabled={shouldDisableAllCards}
-              handleCardClick={handleCardClick}
-            />
-          ))}
-        </section>
-        Points: {points}
+        {!isFinish ? (
+          <>
+            <section className="flex flex-wrap justify-center items-center w-full">
+              {cards.map((card, index) => (
+                <FlipCard
+                  key={index}
+                  card={card}
+                  index={index}
+                  isInactive={checkIsInactive(card)}
+                  isFlipped={checkIsFlipped(index)}
+                  isDisabled={shouldDisableAllCards}
+                  handleCardClick={handleCardClick}
+                />
+              ))}
+            </section>
+            Points: {points}
+          </>
+        ) : (
+          <section className="flex flex-col justify-center items-center w-full">
+            <p>Amazing you found all words!!</p>
+            <p>Now you can back to memo with other words</p>
+            <Link href="/games/memo" passHref>
+              <button className="flex flex-row p-2 m-2 bg-primaryLight rounded-md dark:bg-primaryDark">
+                <svg
+                  className="w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fillRule="evenodd"
+                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>Back</span>
+              </button>
+            </Link>
+          </section>
+        )}
       </main>
     </div>
   );

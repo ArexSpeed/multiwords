@@ -17,7 +17,7 @@ const MemoPage = () => {
   const [secondLangGame, setSecondLangGame] = useState('eng');
   const [wordsQty, setWordsQty] = useState(10);
   const [level, setLevel] = useState('1');
-  const [categoryGame, setCategoryGame] = useState('');
+  const [categoryGame, setCategoryGame] = useState('Numbers');
   const mwCategories = useAppSelector(selectCategories);
   const dispatch = useAppDispatch();
 
@@ -197,7 +197,7 @@ const MemoPage = () => {
           <div className="flex flex-row justify-center items-center text-lg mx-2">
             <button
               className="w-6 h-6 p-2 mx-2 flex justify-center items-center bg-primaryLight rounded-full dark:bg-primaryDark"
-              disabled={wordsQty === 0}
+              disabled={wordsQty <= 2}
               onClick={() => setWordsQty(wordsQty - 2)}>
               -
             </button>

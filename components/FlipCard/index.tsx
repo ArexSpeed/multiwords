@@ -24,10 +24,9 @@ const FlipCard: React.FC<Props> = ({
   isDisabled
 }) => {
   const handleClick = () => {
-    console.log(index, 'handleClick');
     !isFlipped && handleCardClick(index);
   };
-  console.log(isFlipped, 'isFlip');
+
   return (
     <button
       className={`card w-16 h-10 bg-secondary ${isFlipped && 'is-flipped'} ${
