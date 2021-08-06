@@ -6,17 +6,18 @@ import { selectMemoState } from 'redux/slices/gamesSlice';
 import FlipCard from 'components/FlipCard';
 import { words } from 'data';
 
-interface Words {
+type CardInit = {
+  id: string;
+  lang1: string;
+  lang2: string;
+};
+type Cards = {
+  id: string;
+  lang: string;
   correct: boolean;
-  [key: string]: string;
-}
-
-type OpenCards = {
-  index: number;
 };
 
-const shuffleCards = (array: Words[]) => {
-  console.log(array, 'array shuffle')
+const shuffleCards = (array: Array<any>) => {
   const length = array.length;
   for (let i = length; i > 0; i--) {
     const randomIndex = Math.floor(Math.random() * i);
@@ -30,15 +31,14 @@ const shuffleCards = (array: Words[]) => {
 
 const MemoPlay = () => {
   const memoState = useAppSelector(selectMemoState);
-  const [cardsInit, setCardsInit] = useState([]);
-  const [cardsShuffle, setCardsShuffle] = useState([]);
-  const [cardsOne, setCardsOne] = useState([]);
-  const [cardsTwo, setCardsTwo] = useState([]);
-  const [cards, setCards] = useState(() => shuffleCards(cardsOne.concat(cardsTwo)));
-  const [openCards, setOpenCards] = useState<OpenCards[]>([]);
+  const [cardsInit, setCardsInit] = useState<CardInit[]>([]);
+  const [cardsShuffle, setCardsShuffle] = useState<CardInit[]>([]);
+  const [cardsOne, setCardsOne] = useState<Cards[]>([]);
+  const [cardsTwo, setCardsTwo] = useState<Cards[]>([]);
+  const [cards, setCards] = useState<Cards[]>([]);
+  const [openCards, setOpenCards] = useState<number[]>([]);
   const [clearedCards, setClearedCards] = useState({});
   const [shouldDisableAllCards, setShouldDisableAllCards] = useState(false);
-  const timeout = null;
   const [points, setPoints] = useState(0);
 
   // Step 1. get selected words (in 2 langs) from data words
@@ -48,7 +48,10 @@ const MemoPlay = () => {
     words
       .filter((word) => word.cat === memoState.category)
       .map((word) => {
-        setCardsInit((prev) => [...prev, { id: word.id, lang1: word[langFirst], lang2: word[langSecond] }])
+        setCardsInit((prev) => [
+          ...prev,
+          { id: word.id, lang1: word[langFirst], lang2: word[langSecond] }
+        ]);
       });
   }, []);
 
@@ -64,7 +67,7 @@ const MemoPlay = () => {
       setCardsOne((prev) => [...prev, { id: word.id, lang: word.lang1, correct: false }]);
       setCardsTwo((prev) => [...prev, { id: word.id, lang: word.lang2, correct: false }]);
     });
-  }, [cardsShuffle])
+  }, [cardsShuffle]);
 
   // Step 4. shuffle and concat words from both language
   useEffect(() => {
@@ -81,12 +84,7 @@ const MemoPlay = () => {
   const evaluate = () => {
     const [first, second] = openCards;
     enable();
-    console.log('evaluate', openCards);
-    console.log(cards[first], 'card first');
-    console.log(cards[second], 'card second');
     if (cards[first].id === cards[second].id) {
-      console.log(cards[first], 'card first');
-      console.log(cards[second], 'card second');
       setClearedCards((prev) => ({ ...prev, [cards[first].id]: true }));
       setOpenCards([]);
       setPoints((prev) => prev + 1);
@@ -98,10 +96,8 @@ const MemoPlay = () => {
     }, 500);
   };
   const handleCardClick = (index: number) => {
-
     if (openCards.length === 1) {
       setOpenCards((prev) => [...prev, index]);
-      console.log(openCards, 'open Cards');
       disable();
     } else {
       //clearTimeout(timeout.current);
@@ -110,9 +106,9 @@ const MemoPlay = () => {
   };
 
   useEffect(() => {
-    let timeout = null;
+    let timeout: ReturnType<typeof setTimeout>;
     if (openCards.length === 2) {
-      timeout = setTimeout(evaluate, 300);
+      timeout = setTimeout(evaluate, 500);
     }
     return () => {
       clearTimeout(timeout);
@@ -148,17 +144,15 @@ const MemoPlay = () => {
           </button>
         </Link>
         <section className="flex flex-wrap justify-center items-center w-full">
-          {console.log(cardsShuffle, 'shuffle Cards')}
-          {console.log(cards, 'final cards')}
           {cards.map((card, index) => (
             <FlipCard
               key={index}
-              word={card}
+              card={card}
               index={index}
-              correct={card.correct}
               isInactive={checkIsInactive(card)}
               isFlipped={checkIsFlipped(index)}
-              onClick={handleCardClick}
+              isDisabled={shouldDisableAllCards}
+              handleCardClick={handleCardClick}
             />
           ))}
         </section>
