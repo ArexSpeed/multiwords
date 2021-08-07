@@ -8,8 +8,14 @@ import Flag from 'components/Flag';
 import { levels, categories } from 'data';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectCategories } from 'redux/slices/mywordsSlice';
+import {
+  setConnectState,
+  setConnectLanguages,
+  selectConnectLanguages
+} from 'redux/slices/gamesSlice';
 
 const ConnectPage = () => {
+  const connectLanguagues = useAppSelector(selectConnectLanguages);
   const [wordsQty, setWordsQty] = useState(10);
   const [level, setLevel] = useState('1');
   const [categoryGame, setCategoryGame] = useState('Numbers');
@@ -17,7 +23,16 @@ const ConnectPage = () => {
   const dispatch = useAppDispatch();
 
   const handlePlay = () => {
-    console.log('play');
+    const connectSettings = {
+      level,
+      category: categoryGame,
+      wordsQty
+    };
+    dispatch(setConnectState(connectSettings));
+  };
+
+  const checkLanguage = (lang: string) => {
+    dispatch(setConnectLanguages(lang));
   };
 
   const langs = [
@@ -64,7 +79,11 @@ const ConnectPage = () => {
             {langs.map((lang, i) => (
               <label key={i} className="flex flex-col justify-center items-center cursor-pointer">
                 <Flag flag={lang.short} />
-                <input type="checkbox" onChange={() => console.log('check lang')} />
+                <input
+                  type="checkbox"
+                  defaultChecked={connectLanguagues[lang.short]}
+                  onChange={() => checkLanguage(lang.short)}
+                />
               </label>
             ))}
           </div>
@@ -135,7 +154,7 @@ const ConnectPage = () => {
           </div>
         </section>
         <section className="flex flex-row justify-center items-center w-full p-3">
-          <Link href="/games/memo/play" passHref>
+          <Link href="/games/connect/play" passHref>
             <button className="bg-secondary p-2 m-2 w-40 text-lg rounded-md" onClick={handlePlay}>
               Play
             </button>
