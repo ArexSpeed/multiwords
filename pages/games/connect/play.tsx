@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import { useAppSelector } from 'redux/hooks';
-import { selectMemoState } from 'redux/slices/gamesSlice';
+import { selectConnectState, selectConnectLanguages } from 'redux/slices/gamesSlice';
 import FlipCard from 'components/FlipCard';
 import { words } from 'data';
 
@@ -30,13 +30,64 @@ const shuffleCards = (array: Array<any>) => {
 };
 
 const ConnectPlay = () => {
+  const connectLanguages = useAppSelector(selectConnectLanguages);
+  const connectState = useAppSelector(selectConnectState);
   const [isFinish, setIsFinish] = useState(false);
+  const [cardsInit, setCardsInit] = useState([]);
+  const [cardsShuffle, setCardsShuffle] = useState([]);
+  const [cardsSlice, setCardsSlice] = useState([]);
+  const [cardsEng, setCardsEng] = useState([]);
+  const [cardsPol, setCardsPol] = useState([]);
+  const [cardsGer, setCardsGer] = useState([]);
+  const [cardsNed, setCardsNed] = useState([]);
+  const [cardsSpa, setCardsSpa] = useState([]);
+  const [cardsFra, setCardsFra] = useState([]);
+  const [cardsIta, setCardsIta] = useState([]);
+  // Step 1. get selected words category
+  useEffect(() => {
+    words
+      .filter((word) => word.cat === connectState.category)
+      .map((word) => {
+        setCardsInit((prev) => [
+          ...prev,
+          {
+            id: word.id,
+            eng: word.eng,
+            pol: word.pol,
+            ger: word.ger,
+            ned: word.ned,
+            spa: word.spa,
+            fra: word.fra,
+            ita: word.ita
+          }
+        ]);
+      });
+  }, []);
+
+  //Step 2. shuffle all selected words
+  useEffect(() => {
+    setCardsShuffle(() => shuffleCards(cardsInit));
+  }, [cardsInit]);
+
+  //Step 3. Slice shuffled words to quantity of selected by user and map to all language
+  useEffect(() => {
+    const cardsSlice = cardsShuffle.slice(0, connectState.wordsQty);
+    cardsSlice.map((word) => {
+      setCardsEng((prev) => [...prev, { id: word.id, word: word.eng, correct: false }]);
+      setCardsPol((prev) => [...prev, { id: word.id, word: word.pol, correct: false }]);
+      setCardsGer((prev) => [...prev, { id: word.id, word: word.ger, correct: false }]);
+      setCardsNed((prev) => [...prev, { id: word.id, word: word.ned, correct: false }]);
+      setCardsSpa((prev) => [...prev, { id: word.id, word: word.spa, correct: false }]);
+      setCardsFra((prev) => [...prev, { id: word.id, word: word.fra, correct: false }]);
+      setCardsIta((prev) => [...prev, { id: word.id, word: word.ita, correct: false }]);
+    });
+  }, [cardsShuffle, connectState.wordsQty]);
 
   return (
     <div className="w-screen min-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
       <main className="w-full min-h-screen">
-        <Link href="/games/memo" passHref>
+        <Link href="/games/connect" passHref>
           <button className="flex flex-row p-2 m-2 bg-primaryLight rounded-md dark:bg-primaryDark">
             <svg
               className="w-6 h-6"
@@ -56,123 +107,74 @@ const ConnectPlay = () => {
           <>
             <section className="flex flex-row justify-start items-center w-full overflow-x-auto">
               <div className="flex flex-col justify-center items-center">
-                <button className="bg-eng flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word
-                </button>
+                {connectLanguages.eng &&
+                  shuffleCards(cardsEng).map((word) => (
+                    <button
+                      key={word.id}
+                      className="bg-eng flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
+                      {word.word}
+                    </button>
+                  ))}
               </div>
               <div className="flex flex-col justify-center items-center">
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
+                {connectLanguages.pol &&
+                  shuffleCards(cardsPol).map((word) => (
+                    <button
+                      key={word.id}
+                      className="bg-pol flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
+                      {word.word}
+                    </button>
+                  ))}
               </div>
               <div className="flex flex-col justify-center items-center">
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word3
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word3
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word3
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word3
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word3
-                </button>
+                {connectLanguages.ger &&
+                  shuffleCards(cardsGer).map((word) => (
+                    <button
+                      key={word.id}
+                      className="bg-ger flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
+                      {word.word}
+                    </button>
+                  ))}
               </div>
               <div className="flex flex-col justify-center items-center">
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
+                {connectLanguages.ned &&
+                  shuffleCards(cardsNed).map((word) => (
+                    <button
+                      key={word.id}
+                      className="bg-ned flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
+                      {word.word}
+                    </button>
+                  ))}
               </div>
               <div className="flex flex-col justify-center items-center">
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
+                {connectLanguages.spa &&
+                  shuffleCards(cardsSpa).map((word) => (
+                    <button
+                      key={word.id}
+                      className="bg-spa text-black flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
+                      {word.word}
+                    </button>
+                  ))}
               </div>
               <div className="flex flex-col justify-center items-center">
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
+                {connectLanguages.fra &&
+                  shuffleCards(cardsFra).map((word) => (
+                    <button
+                      key={word.id}
+                      className="bg-fra text-black flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
+                      {word.word}
+                    </button>
+                  ))}
               </div>
               <div className="flex flex-col justify-center items-center">
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
-                <button className="bg-secondary flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                  Word2
-                </button>
+                {connectLanguages.ita &&
+                  shuffleCards(cardsIta).map((word) => (
+                    <button
+                      key={word.id}
+                      className="bg-ita flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
+                      {word.word}
+                    </button>
+                  ))}
               </div>
             </section>
           </>
@@ -180,7 +182,7 @@ const ConnectPlay = () => {
           <section className="flex flex-col justify-center items-center w-full">
             <p>Amazing you found all words!!</p>
             <p>Now you can back to memo with other words</p>
-            <Link href="/games/memo" passHref>
+            <Link href="/games/connect" passHref>
               <button className="flex flex-row p-2 m-2 bg-primaryLight rounded-md dark:bg-primaryDark">
                 <svg
                   className="w-6 h-6"
