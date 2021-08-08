@@ -54,7 +54,7 @@ const MemoPlay = () => {
           { id: word.id, lang1: word[langFirst], lang2: word[langSecond] }
         ]);
       });
-  }, []);
+  }, [memoState.firstLang, memoState.secondLang, memoState.category]);
 
   //Step 2. shuffle all selected words
   useEffect(() => {
@@ -68,7 +68,7 @@ const MemoPlay = () => {
       setCardsOne((prev) => [...prev, { id: word.id, lang: word.lang1, correct: false }]);
       setCardsTwo((prev) => [...prev, { id: word.id, lang: word.lang2, correct: false }]);
     });
-  }, [cardsShuffle]);
+  }, [cardsShuffle, memoState.wordsQty]);
 
   // Step 4. shuffle and concat words from both language
   useEffect(() => {
@@ -121,8 +121,6 @@ const MemoPlay = () => {
     if (cardsOne.length > 1 && Object.keys(clearedCards).length === cardsOne.length) {
       setIsFinish(true);
     }
-    console.log(clearedCards, 'cleared');
-    console.log(cardsOne.length, Object.keys(clearedCards).length, 'length');
   }, [clearedCards, cardsOne]);
 
   const checkIsFlipped = (index: number) => {

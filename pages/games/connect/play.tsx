@@ -3,17 +3,15 @@ import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import { useAppSelector } from 'redux/hooks';
 import { selectConnectState, selectConnectLanguages } from 'redux/slices/gamesSlice';
-import FlipCard from 'components/FlipCard';
 import { words } from 'data';
 
-type CardInit = {
+type Word = {
   id: string;
-  lang1: string;
-  lang2: string;
+  [key: string]: string;
 };
-type Cards = {
+type WordCards = {
   id: string;
-  lang: string;
+  word: string;
   correct: boolean;
 };
 
@@ -33,16 +31,15 @@ const ConnectPlay = () => {
   const connectLanguages = useAppSelector(selectConnectLanguages);
   const connectState = useAppSelector(selectConnectState);
   const [isFinish, setIsFinish] = useState(false);
-  const [cardsInit, setCardsInit] = useState([]);
-  const [cardsShuffle, setCardsShuffle] = useState([]);
-  const [cardsSlice, setCardsSlice] = useState([]);
-  const [cardsEng, setCardsEng] = useState([]);
-  const [cardsPol, setCardsPol] = useState([]);
-  const [cardsGer, setCardsGer] = useState([]);
-  const [cardsNed, setCardsNed] = useState([]);
-  const [cardsSpa, setCardsSpa] = useState([]);
-  const [cardsFra, setCardsFra] = useState([]);
-  const [cardsIta, setCardsIta] = useState([]);
+  const [cardsInit, setCardsInit] = useState<Word[]>([]);
+  const [cardsShuffle, setCardsShuffle] = useState<Word[]>([]);
+  const [cardsEng, setCardsEng] = useState<WordCards[]>([]);
+  const [cardsPol, setCardsPol] = useState<WordCards[]>([]);
+  const [cardsGer, setCardsGer] = useState<WordCards[]>([]);
+  const [cardsNed, setCardsNed] = useState<WordCards[]>([]);
+  const [cardsSpa, setCardsSpa] = useState<WordCards[]>([]);
+  const [cardsFra, setCardsFra] = useState<WordCards[]>([]);
+  const [cardsIta, setCardsIta] = useState<WordCards[]>([]);
   // Step 1. get selected words category
   useEffect(() => {
     words
@@ -62,7 +59,7 @@ const ConnectPlay = () => {
           }
         ]);
       });
-  }, []);
+  }, [connectState.category]);
 
   //Step 2. shuffle all selected words
   useEffect(() => {
