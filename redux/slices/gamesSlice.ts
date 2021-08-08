@@ -18,7 +18,13 @@ type ConnectState = {
   wordsQty: number;
 };
 
-const initialState = {
+interface GamesState {
+  memoState: MemoState;
+  connectState: ConnectState;
+  connectLanguages: ConnectLanguageType;
+}
+
+const initialState: GamesState = {
   memoState: {
     level: '1',
     category: 'Numbers',
@@ -63,7 +69,7 @@ export const { setMemoState, setConnectState, setConnectLanguages } = gamesSlice
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectMemoState = (state: RootState) => state.games.memoState;
-export const selectConnectState = (state: RootState) => state.games.memoState;
-export const selectConnectLanguages = (state: RootState) => state.games.memoState;
+export const selectConnectState = (state: RootState) => state.games.connectState;
+export const selectConnectLanguages = (state: RootState) => state.games.connectLanguages;
 
 export default gamesSlice.reducer;
