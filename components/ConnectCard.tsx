@@ -5,16 +5,18 @@ interface Props {
   word: string;
   lang: string;
   color: string;
+  checkIndex: string;
+  // eslint-disable-next-line no-unused-vars
+  setCheck: (index: string) => void;
 }
 
-const ConnectCard: React.FC<Props> = ({ index, word, lang, color }) => {
-  const [isCheck, setIsCheck] = useState(false);
+const ConnectCard: React.FC<Props> = ({ index, word, lang, color, checkIndex, setCheck }) => {
   return (
     <button
       className={`bg-${lang} text-${color} flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm ${
-        isCheck && 'border-2 border-green-400'
+        checkIndex === index && 'border-2 border-green-400'
       }`}
-      onClick={() => setIsCheck(!isCheck)}>
+      onClick={() => setCheck(index)}>
       {word}
     </button>
   );

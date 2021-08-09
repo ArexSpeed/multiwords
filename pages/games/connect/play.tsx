@@ -15,6 +15,9 @@ type WordCards = {
   word: string;
   correct: boolean;
 };
+type Check = {
+  [key: string]: string;
+};
 
 const shuffleCards = (array: Array<any>) => {
   const length = array.length;
@@ -34,6 +37,13 @@ const ConnectPlay = () => {
   const [isFinish, setIsFinish] = useState(false);
   const [cardsInit, setCardsInit] = useState<Word[]>([]);
   const [cardsShuffle, setCardsShuffle] = useState<Word[]>([]);
+  const [cardsShuffleEng, setCardsShuffleEng] = useState<WordCards[]>([]);
+  const [cardsShufflePol, setCardsShufflePol] = useState<WordCards[]>([]);
+  const [cardsShuffleGer, setCardsShuffleGer] = useState<WordCards[]>([]);
+  const [cardsShuffleNed, setCardsShuffleNed] = useState<WordCards[]>([]);
+  const [cardsShuffleSpa, setCardsShuffleSpa] = useState<WordCards[]>([]);
+  const [cardsShuffleFra, setCardsShuffleFra] = useState<WordCards[]>([]);
+  const [cardsShuffleIta, setCardsShuffleIta] = useState<WordCards[]>([]);
   const [cardsEng, setCardsEng] = useState<WordCards[]>([]);
   const [cardsPol, setCardsPol] = useState<WordCards[]>([]);
   const [cardsGer, setCardsGer] = useState<WordCards[]>([]);
@@ -41,7 +51,13 @@ const ConnectPlay = () => {
   const [cardsSpa, setCardsSpa] = useState<WordCards[]>([]);
   const [cardsFra, setCardsFra] = useState<WordCards[]>([]);
   const [cardsIta, setCardsIta] = useState<WordCards[]>([]);
-  const [currentCheck, setCurrentCheck] = useState('');
+  const [currentCheckEng, setCurrentCheckEng] = useState('');
+  const [currentCheckPol, setCurrentCheckPol] = useState('');
+  const [currentCheckGer, setCurrentCheckGer] = useState('');
+  const [currentCheckNed, setCurrentCheckNed] = useState('');
+  const [currentCheckSpa, setCurrentCheckSpa] = useState('');
+  const [currentCheckFra, setCurrentCheckFra] = useState('');
+  const [currentCheckIta, setCurrentCheckIta] = useState('');
   // Step 1. get selected words category
   useEffect(() => {
     words
@@ -68,19 +84,31 @@ const ConnectPlay = () => {
     setCardsShuffle(() => shuffleCards(cardsInit));
   }, [cardsInit]);
 
-  //Step 3. Slice shuffled words to quantity of selected by user and map to all language
+  //Step 3. Slice shuffled words to quantity of selected by user and map to all language (first shuffle for all words)
   useEffect(() => {
     const cardsSlice = cardsShuffle.slice(0, connectState.wordsQty);
     cardsSlice.map((word) => {
-      setCardsEng((prev) => [...prev, { id: word.id, word: word.eng, correct: false }]);
-      setCardsPol((prev) => [...prev, { id: word.id, word: word.pol, correct: false }]);
-      setCardsGer((prev) => [...prev, { id: word.id, word: word.ger, correct: false }]);
-      setCardsNed((prev) => [...prev, { id: word.id, word: word.ned, correct: false }]);
-      setCardsSpa((prev) => [...prev, { id: word.id, word: word.spa, correct: false }]);
-      setCardsFra((prev) => [...prev, { id: word.id, word: word.fra, correct: false }]);
-      setCardsIta((prev) => [...prev, { id: word.id, word: word.ita, correct: false }]);
+      setCardsShuffleEng((prev) => [...prev, { id: word.id, word: word.eng, correct: false }]);
+      setCardsShufflePol((prev) => [...prev, { id: word.id, word: word.pol, correct: false }]);
+      setCardsShuffleGer((prev) => [...prev, { id: word.id, word: word.ger, correct: false }]);
+      setCardsShuffleNed((prev) => [...prev, { id: word.id, word: word.ned, correct: false }]);
+      setCardsShuffleSpa((prev) => [...prev, { id: word.id, word: word.spa, correct: false }]);
+      setCardsShuffleFra((prev) => [...prev, { id: word.id, word: word.fra, correct: false }]);
+      setCardsShuffleIta((prev) => [...prev, { id: word.id, word: word.ita, correct: false }]);
     });
   }, [cardsShuffle, connectState.wordsQty]);
+
+  //Step 4. Second shuffle for all words in one column to every language have a diffrent shuffle and user see it on first look
+  useEffect(() => {
+    setCardsEng(shuffleCards(cardsShuffleEng));
+    setCardsPol(shuffleCards(cardsShufflePol));
+    setCardsGer(shuffleCards(cardsShuffleGer));
+    setCardsNed(shuffleCards(cardsShuffleNed));
+    setCardsSpa(shuffleCards(cardsShuffleSpa));
+    setCardsFra(shuffleCards(cardsShuffleFra));
+    setCardsIta(shuffleCards(cardsShuffleIta));
+    // eslint-disable-next-line prettier/prettier
+  }, [cardsShuffleEng, cardsShufflePol, cardsShuffleGer, cardsShuffleNed, cardsShuffleSpa, cardsShuffleFra, cardsShuffleIta]);
 
   return (
     <div className="w-screen min-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
@@ -107,85 +135,99 @@ const ConnectPlay = () => {
             <section className="flex flex-row justify-start items-center w-full overflow-x-auto">
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.eng &&
-                  shuffleCards(cardsEng).map((word) => (
+                  cardsEng.map((word) => (
                     <ConnectCard
                       key={word.id}
                       index={word.id}
                       word={word.word}
                       lang="eng"
                       color="white"
+                      checkIndex={currentCheckEng}
+                      setCheck={setCurrentCheckEng}
                     />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.pol &&
-                  shuffleCards(cardsPol).map((word) => (
+                  cardsPol.map((word) => (
                     <ConnectCard
                       key={word.id}
                       index={word.id}
                       word={word.word}
                       lang="pol"
                       color="white"
+                      checkIndex={currentCheckPol}
+                      setCheck={setCurrentCheckPol}
                     />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.ger &&
-                  shuffleCards(cardsGer).map((word) => (
+                  cardsGer.map((word) => (
                     <ConnectCard
                       key={word.id}
                       index={word.id}
                       word={word.word}
                       lang="ger"
                       color="white"
+                      checkIndex={currentCheckGer}
+                      setCheck={setCurrentCheckGer}
                     />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.ned &&
-                  shuffleCards(cardsNed).map((word) => (
+                  cardsNed.map((word) => (
                     <ConnectCard
                       key={word.id}
                       index={word.id}
                       word={word.word}
                       lang="ned"
                       color="white"
+                      checkIndex={currentCheckNed}
+                      setCheck={setCurrentCheckNed}
                     />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.spa &&
-                  shuffleCards(cardsSpa).map((word) => (
+                  cardsSpa.map((word) => (
                     <ConnectCard
                       key={word.id}
                       index={word.id}
                       word={word.word}
                       lang="spa"
                       color="black"
+                      checkIndex={currentCheckSpa}
+                      setCheck={setCurrentCheckSpa}
                     />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.fra &&
-                  shuffleCards(cardsFra).map((word) => (
+                  cardsFra.map((word) => (
                     <ConnectCard
                       key={word.id}
                       index={word.id}
                       word={word.word}
                       lang="fra"
                       color="black"
+                      checkIndex={currentCheckFra}
+                      setCheck={setCurrentCheckFra}
                     />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.ita &&
-                  shuffleCards(cardsIta).map((word) => (
+                  cardsIta.map((word) => (
                     <ConnectCard
                       key={word.id}
                       index={word.id}
                       word={word.word}
                       lang="ita"
                       color="black"
+                      checkIndex={currentCheckIta}
+                      setCheck={setCurrentCheckIta}
                     />
                   ))}
               </div>
