@@ -4,6 +4,7 @@ import MetaHead from 'components/MetaHead';
 import { useAppSelector } from 'redux/hooks';
 import { selectConnectState, selectConnectLanguages } from 'redux/slices/gamesSlice';
 import { words } from 'data';
+import ConnectCard from 'components/ConnectCard';
 
 type Word = {
   id: string;
@@ -40,6 +41,7 @@ const ConnectPlay = () => {
   const [cardsSpa, setCardsSpa] = useState<WordCards[]>([]);
   const [cardsFra, setCardsFra] = useState<WordCards[]>([]);
   const [cardsIta, setCardsIta] = useState<WordCards[]>([]);
+  const [currentCheck, setCurrentCheck] = useState('');
   // Step 1. get selected words category
   useEffect(() => {
     words
@@ -106,71 +108,85 @@ const ConnectPlay = () => {
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.eng &&
                   shuffleCards(cardsEng).map((word) => (
-                    <button
+                    <ConnectCard
                       key={word.id}
-                      className="bg-eng flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                      {word.word}
-                    </button>
+                      index={word.id}
+                      word={word.word}
+                      lang="eng"
+                      color="white"
+                    />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.pol &&
                   shuffleCards(cardsPol).map((word) => (
-                    <button
+                    <ConnectCard
                       key={word.id}
-                      className="bg-pol flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                      {word.word}
-                    </button>
+                      index={word.id}
+                      word={word.word}
+                      lang="pol"
+                      color="white"
+                    />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.ger &&
                   shuffleCards(cardsGer).map((word) => (
-                    <button
+                    <ConnectCard
                       key={word.id}
-                      className="bg-ger flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                      {word.word}
-                    </button>
+                      index={word.id}
+                      word={word.word}
+                      lang="ger"
+                      color="white"
+                    />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.ned &&
                   shuffleCards(cardsNed).map((word) => (
-                    <button
+                    <ConnectCard
                       key={word.id}
-                      className="bg-ned flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                      {word.word}
-                    </button>
+                      index={word.id}
+                      word={word.word}
+                      lang="ned"
+                      color="white"
+                    />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.spa &&
                   shuffleCards(cardsSpa).map((word) => (
-                    <button
+                    <ConnectCard
                       key={word.id}
-                      className="bg-spa text-black flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                      {word.word}
-                    </button>
+                      index={word.id}
+                      word={word.word}
+                      lang="spa"
+                      color="black"
+                    />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.fra &&
                   shuffleCards(cardsFra).map((word) => (
-                    <button
+                    <ConnectCard
                       key={word.id}
-                      className="bg-fra text-black flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                      {word.word}
-                    </button>
+                      index={word.id}
+                      word={word.word}
+                      lang="fra"
+                      color="black"
+                    />
                   ))}
               </div>
               <div className="flex flex-col justify-center items-center">
                 {connectLanguages.ita &&
                   shuffleCards(cardsIta).map((word) => (
-                    <button
+                    <ConnectCard
                       key={word.id}
-                      className="bg-ita flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm">
-                      {word.word}
-                    </button>
+                      index={word.id}
+                      word={word.word}
+                      lang="ita"
+                      color="black"
+                    />
                   ))}
               </div>
             </section>
