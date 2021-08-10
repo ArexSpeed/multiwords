@@ -34,6 +34,7 @@ const shuffleCards = (array: Array<any>) => {
 const ConnectPlay = () => {
   const connectLanguages = useAppSelector(selectConnectLanguages);
   const connectState = useAppSelector(selectConnectState);
+  const [langQty, setLangQty] = useState(0);
   const [isFinish, setIsFinish] = useState(false);
   const [cardsInit, setCardsInit] = useState<Word[]>([]);
   const [cardsShuffle, setCardsShuffle] = useState<Word[]>([]);
@@ -58,6 +59,15 @@ const ConnectPlay = () => {
   const [currentCheckSpa, setCurrentCheckSpa] = useState('');
   const [currentCheckFra, setCurrentCheckFra] = useState('');
   const [currentCheckIta, setCurrentCheckIta] = useState('');
+  const [checkCorrect, setCheckCorrect] = useState('');
+  const [openCards, setOpenCards] = useState<string[]>([]);
+  useEffect(() => {
+    Object.keys(connectLanguages).forEach((lang) => {
+      if (connectLanguages[lang]) {
+        setLangQty((prev) => prev + 1);
+      }
+    });
+  }, [connectLanguages]);
   // Step 1. get selected words category
   useEffect(() => {
     words
@@ -110,6 +120,40 @@ const ConnectPlay = () => {
     // eslint-disable-next-line prettier/prettier
   }, [cardsShuffleEng, cardsShufflePol, cardsShuffleGer, cardsShuffleNed, cardsShuffleSpa, cardsShuffleFra, cardsShuffleIta]);
 
+  const handleOpenCard = (index: string) => {
+    if (openCards.length <= langQty - 1) {
+      setOpenCards((prev) => [...prev, index]);
+    }
+  };
+
+  useEffect(() => {
+    if (openCards.length === langQty) {
+      const checkOpenIds = openCards.every((val, i, arr) => val === arr[0]);
+      console.log(checkOpenIds, 'check open');
+      if (checkOpenIds) {
+        setCheckCorrect('correct');
+        clearChecked();
+      } else {
+        setCheckCorrect('wrong');
+        clearChecked();
+      }
+    }
+  }, [openCards]);
+
+  const clearChecked = () => {
+    setOpenCards([]);
+    setTimeout(() => {
+      setCurrentCheckEng('');
+      setCurrentCheckPol('');
+      setCurrentCheckGer('');
+      setCurrentCheckNed('');
+      setCurrentCheckSpa('');
+      setCurrentCheckFra('');
+      setCurrentCheckIta('');
+      setCheckCorrect('');
+    }, 500);
+  };
+
   return (
     <div className="w-screen min-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
@@ -144,6 +188,8 @@ const ConnectPlay = () => {
                       color="white"
                       checkIndex={currentCheckEng}
                       setCheck={setCurrentCheckEng}
+                      openCard={handleOpenCard}
+                      checkCorrect={checkCorrect}
                     />
                   ))}
               </div>
@@ -158,6 +204,8 @@ const ConnectPlay = () => {
                       color="white"
                       checkIndex={currentCheckPol}
                       setCheck={setCurrentCheckPol}
+                      openCard={handleOpenCard}
+                      checkCorrect={checkCorrect}
                     />
                   ))}
               </div>
@@ -172,6 +220,8 @@ const ConnectPlay = () => {
                       color="white"
                       checkIndex={currentCheckGer}
                       setCheck={setCurrentCheckGer}
+                      openCard={handleOpenCard}
+                      checkCorrect={checkCorrect}
                     />
                   ))}
               </div>
@@ -186,6 +236,8 @@ const ConnectPlay = () => {
                       color="white"
                       checkIndex={currentCheckNed}
                       setCheck={setCurrentCheckNed}
+                      openCard={handleOpenCard}
+                      checkCorrect={checkCorrect}
                     />
                   ))}
               </div>
@@ -200,6 +252,8 @@ const ConnectPlay = () => {
                       color="black"
                       checkIndex={currentCheckSpa}
                       setCheck={setCurrentCheckSpa}
+                      openCard={handleOpenCard}
+                      checkCorrect={checkCorrect}
                     />
                   ))}
               </div>
@@ -214,6 +268,8 @@ const ConnectPlay = () => {
                       color="black"
                       checkIndex={currentCheckFra}
                       setCheck={setCurrentCheckFra}
+                      openCard={handleOpenCard}
+                      checkCorrect={checkCorrect}
                     />
                   ))}
               </div>
@@ -228,6 +284,8 @@ const ConnectPlay = () => {
                       color="black"
                       checkIndex={currentCheckIta}
                       setCheck={setCurrentCheckIta}
+                      openCard={handleOpenCard}
+                      checkCorrect={checkCorrect}
                     />
                   ))}
               </div>
