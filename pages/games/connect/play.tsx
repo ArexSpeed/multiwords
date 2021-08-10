@@ -15,9 +15,6 @@ type WordCards = {
   word: string;
   correct: boolean;
 };
-type Check = {
-  [key: string]: string;
-};
 
 const shuffleCards = (array: Array<any>) => {
   const length = array.length;
@@ -61,6 +58,7 @@ const ConnectPlay = () => {
   const [currentCheckIta, setCurrentCheckIta] = useState('');
   const [checkCorrect, setCheckCorrect] = useState('');
   const [openCards, setOpenCards] = useState<string[]>([]);
+  const [clearedCards, setClearedCards] = useState<string[]>([]);
   useEffect(() => {
     Object.keys(connectLanguages).forEach((lang) => {
       if (connectLanguages[lang]) {
@@ -126,12 +124,15 @@ const ConnectPlay = () => {
     }
   };
 
+  //Step 5. Check correct in openCards
   useEffect(() => {
     if (openCards.length === langQty) {
       const checkOpenIds = openCards.every((val, i, arr) => val === arr[0]);
       console.log(checkOpenIds, 'check open');
       if (checkOpenIds) {
         setCheckCorrect('correct');
+        const Id = openCards[0];
+        setClearedCards((prev) => [...prev, Id]);
         clearChecked();
       } else {
         setCheckCorrect('wrong');
@@ -153,6 +154,22 @@ const ConnectPlay = () => {
       setCheckCorrect('');
     }, 500);
   };
+
+  const checkIsInactive = (id: string) => {
+    const findCard = clearedCards.find((card) => card === id);
+    if (findCard) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  //Step 6. finisg game when board is empty (cardsOne half of all cards on board == founded cards)
+  useEffect(() => {
+    if (clearedCards.length === connectState.wordsQty + 1) {
+      setIsFinish(true);
+    }
+  }, [clearedCards, connectState.wordsQty]);
 
   return (
     <div className="w-screen min-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
@@ -190,6 +207,7 @@ const ConnectPlay = () => {
                       setCheck={setCurrentCheckEng}
                       openCard={handleOpenCard}
                       checkCorrect={checkCorrect}
+                      isInactive={checkIsInactive(word.id)}
                     />
                   ))}
               </div>
@@ -206,6 +224,7 @@ const ConnectPlay = () => {
                       setCheck={setCurrentCheckPol}
                       openCard={handleOpenCard}
                       checkCorrect={checkCorrect}
+                      isInactive={checkIsInactive(word.id)}
                     />
                   ))}
               </div>
@@ -222,6 +241,7 @@ const ConnectPlay = () => {
                       setCheck={setCurrentCheckGer}
                       openCard={handleOpenCard}
                       checkCorrect={checkCorrect}
+                      isInactive={checkIsInactive(word.id)}
                     />
                   ))}
               </div>
@@ -238,6 +258,7 @@ const ConnectPlay = () => {
                       setCheck={setCurrentCheckNed}
                       openCard={handleOpenCard}
                       checkCorrect={checkCorrect}
+                      isInactive={checkIsInactive(word.id)}
                     />
                   ))}
               </div>
@@ -254,6 +275,7 @@ const ConnectPlay = () => {
                       setCheck={setCurrentCheckSpa}
                       openCard={handleOpenCard}
                       checkCorrect={checkCorrect}
+                      isInactive={checkIsInactive(word.id)}
                     />
                   ))}
               </div>
@@ -270,6 +292,7 @@ const ConnectPlay = () => {
                       setCheck={setCurrentCheckFra}
                       openCard={handleOpenCard}
                       checkCorrect={checkCorrect}
+                      isInactive={checkIsInactive(word.id)}
                     />
                   ))}
               </div>
@@ -286,6 +309,7 @@ const ConnectPlay = () => {
                       setCheck={setCurrentCheckIta}
                       openCard={handleOpenCard}
                       checkCorrect={checkCorrect}
+                      isInactive={checkIsInactive(word.id)}
                     />
                   ))}
               </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface Props {
   index: string;
@@ -8,8 +8,10 @@ interface Props {
   checkIndex: string;
   // eslint-disable-next-line no-unused-vars
   setCheck: (index: string) => void;
+  // eslint-disable-next-line no-unused-vars
   openCard: (index: string) => void;
   checkCorrect: string;
+  isInactive: boolean;
 }
 
 const ConnectCard: React.FC<Props> = ({
@@ -20,7 +22,8 @@ const ConnectCard: React.FC<Props> = ({
   checkIndex,
   setCheck,
   openCard,
-  checkCorrect
+  checkCorrect,
+  isInactive
 }) => {
   const handleClick = () => {
     setCheck(index);
@@ -38,7 +41,8 @@ const ConnectCard: React.FC<Props> = ({
     <button
       className={`bg-${lang} text-${color} flex flex-row justify-center items-center w-[150px] h-[70px] m-2 rounded-sm ${
         checkIndex === index && 'border-2 border-green-400'
-      } ${checkStyle}`}
+      } ${checkStyle} ${isInactive && 'bg-green-200 bg-opacity-20'}`}
+      disabled={isInactive}
       onClick={handleClick}>
       {word}
     </button>
