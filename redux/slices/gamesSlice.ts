@@ -18,10 +18,16 @@ type ConnectState = {
   wordsQty: number;
 };
 
+type PuzzleState = {
+  language: string;
+  lettersQty: number;
+};
+
 interface GamesState {
   memoState: MemoState;
   connectState: ConnectState;
   connectLanguages: ConnectLanguageType;
+  puzzleState: PuzzleState;
 }
 
 const initialState: GamesState = {
@@ -45,6 +51,10 @@ const initialState: GamesState = {
     spa: false,
     fra: false,
     ita: false
+  },
+  puzzleState: {
+    language: 'eng',
+    lettersQty: 4
   }
 };
 
@@ -61,15 +71,20 @@ export const gamesSlice = createSlice({
     setConnectLanguages: (state, action: PayloadAction<keyof ConnectLanguageType>) => {
       const lang = action.payload;
       state.connectLanguages[lang] = !state.connectLanguages[lang];
+    },
+    setPuzzleState: (state, action: PayloadAction<PuzzleState>) => {
+      state.puzzleState = action.payload;
     }
   }
 });
 
-export const { setMemoState, setConnectState, setConnectLanguages } = gamesSlice.actions;
+export const { setMemoState, setConnectState, setConnectLanguages, setPuzzleState } =
+  gamesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectMemoState = (state: RootState) => state.games.memoState;
 export const selectConnectState = (state: RootState) => state.games.connectState;
 export const selectConnectLanguages = (state: RootState) => state.games.connectLanguages;
+export const selectPuzzleState = (state: RootState) => state.games.puzzleState;
 
 export default gamesSlice.reducer;
