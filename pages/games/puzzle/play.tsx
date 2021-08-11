@@ -12,7 +12,6 @@ type CardInit = {
   lang1: string;
   lang2: string;
 };
-
 const shuffleCards = (array: Array<any>) => {
   const length = array.length;
   for (let i = length; i > 0; i--) {
@@ -32,10 +31,13 @@ const PuzzlePlay = () => {
   const [cardsShuffle, setCardsShuffle] = useState<CardInit[]>([]);
   const [word, setWord] = useState<CardInit>();
   const [wordArray, setWordArray] = useState<string[]>([]);
+  const [wordCorrect, setWordCorrect] = useState<string[]>([]);
   const [wordShuffle, setWordShuffle] = useState<string[]>([]);
   const [openHintWord, setOpenHintWord] = useState(false);
   const [openHintAnswer, setOpenHintAnswer] = useState(false);
   const [answer, setAnswer] = useState<string[]>([]);
+  const [checkCorrect, setCheckCorrect] = useState(false);
+  const [correct, setCorrect] = useState(false);
 
   useEffect(() => {
     const lang = puzzleState.language;
@@ -59,14 +61,41 @@ const PuzzlePlay = () => {
     setWord(cardsShuffle[0]);
   }, [cardsShuffle]);
 
+  //Step 3. Split word and shuffle letters (split 2 times cause if one the shuffleCards always change previous splitWord and correct doesn't work good)
   useEffect(() => {
     const splitWord = word?.lang2.split('');
-    if (splitWord) {
-      const arrayShuffle = shuffleCards(splitWord);
+    const splitWordCorrect = word?.lang2.split('');
+    if (splitWord && splitWordCorrect) {
       setWordArray(splitWord);
+      setWordCorrect(splitWordCorrect);
+      const arrayShuffle = shuffleCards(splitWord);
       setWordShuffle(arrayShuffle);
     }
   }, [word]);
+
+  const clearAnswer = () => {
+    setAnswer([]);
+    setCheckCorrect(false);
+    setCorrect(false);
+  };
+
+  const checkAnswer = () => {
+    setCheckCorrect(true);
+    let correctlyArr = [];
+    for (let i = 0; i < wordArray.length; i++) {
+      correctlyArr.push(answer[i] === wordCorrect[i]);
+    }
+    const correctly = correctlyArr.every((val, i, arr) => val === arr[0]);
+    setCorrect(correctly);
+  };
+
+  //Style of answer correct check
+  const checkCorrectStyle =
+    correct && checkCorrect
+      ? 'bg-green-400'
+      : !correct && checkCorrect
+      ? 'bg-red-400'
+      : 'bg-primaryLight dark:bg-primaryDark';
 
   return (
     <div className="w-screen min-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
@@ -92,12 +121,13 @@ const PuzzlePlay = () => {
           <h3>Find out the word from these letters</h3>
           <article className="flex flex-wrap justify-center items-center w-full p-2">
             <Flag flag={puzzleState.language} />
-            {wordShuffle.map((word) => (
-              <div
-                key={word}
-                className="w-12 h-12 flex flex-col justify-center items-center text-xl bg-secondaryLight dark:bg-secondaryDark m-2 rounded-sm">
-                {word}
-              </div>
+            {wordShuffle.map((letter, i) => (
+              <button
+                key={i}
+                className="w-12 h-12 flex flex-col justify-center items-center text-xl bg-secondaryLight dark:bg-secondaryDark m-2 rounded-sm"
+                onClick={() => setAnswer((prev) => [...prev, letter])}>
+                {letter}
+              </button>
             ))}
           </article>
           <article>
@@ -116,23 +146,34 @@ const PuzzlePlay = () => {
           </article>
           <article className="flex flex-wrap justify-center items-center w-full p-2">
             <h3>Answer:</h3>
-            {wordShuffle.map((word) => (
+            {wordShuffle.map((word, i) => (
               <div
-                key={word}
-                className="w-12 h-12 flex flex-col justify-center items-center text-xl bg-primaryLight dark:bg-primaryDark m-2 rounded-sm"></div>
+                key={i}
+                className={`${checkCorrectStyle} w-12 h-12 flex flex-col justify-center items-center text-xl m-2 rounded-sm`}>
+                {answer[i]}
+              </div>
             ))}
           </article>
           <article className="flex flex-row justify-center items-center w-full">
-            <button className="bg-secondaryLight dark:bg-secondaryDark p-2 m-2 rounded-sm">
+            <button
+              className="bg-primaryLight dark:bg-primaryDark p-2 m-2 rounded-sm"
+              onClick={clearAnswer}>
+              Clear answer
+            </button>
+            <button
+              className="bg-secondaryLight dark:bg-secondaryDark p-2 m-2 rounded-sm"
+              onClick={checkAnswer}>
               Check answer
             </button>
             <button
               className="bg-primaryLight dark:bg-primaryDark p-2 m-2 rounded-sm"
-              onClick={() => setOpenHintAnswer(true)}>
+              onClick={() => {
+                setOpenHintAnswer(!openHintAnswer);
+                setAnswer(wordCorrect);
+              }}>
               Show answer
             </button>
           </article>
-          {openHintAnswer && <span className="text-lg">{word?.lang1}</span>}
         </section>
       </main>
     </div>
