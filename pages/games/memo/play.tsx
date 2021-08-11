@@ -16,6 +16,12 @@ type Cards = {
   lang: string;
   correct: boolean;
 };
+type WordKey = {
+  [key: string]: string;
+};
+type ObjectKey = {
+  [key: string]: boolean;
+};
 
 const shuffleCards = (array: Array<any>) => {
   const length = array.length;
@@ -37,7 +43,7 @@ const MemoPlay = () => {
   const [cardsTwo, setCardsTwo] = useState<Cards[]>([]);
   const [cards, setCards] = useState<Cards[]>([]);
   const [openCards, setOpenCards] = useState<number[]>([]);
-  const [clearedCards, setClearedCards] = useState({});
+  const [clearedCards, setClearedCards] = useState<ObjectKey>({});
   const [shouldDisableAllCards, setShouldDisableAllCards] = useState(false);
   const [points, setPoints] = useState(0);
   const [isFinish, setIsFinish] = useState(false);
@@ -48,7 +54,7 @@ const MemoPlay = () => {
     const langSecond = memoState.secondLang;
     words
       .filter((word) => word.cat === memoState.category)
-      .map((word) => {
+      .map((word: WordKey) => {
         setCardsInit((prev) => [
           ...prev,
           { id: word.id, lang1: word[langFirst], lang2: word[langSecond] }

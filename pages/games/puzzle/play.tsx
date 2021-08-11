@@ -12,6 +12,10 @@ type CardInit = {
   lang1: string;
   lang2: string;
 };
+type WordKey = {
+  [key: string]: string;
+};
+
 const shuffleCards = (array: Array<any>) => {
   const length = array.length;
   for (let i = length; i > 0; i--) {
@@ -30,7 +34,6 @@ const PuzzlePlay = () => {
   const [cardsInit, setCardsInit] = useState<CardInit[]>([]);
   const [cardsShuffle, setCardsShuffle] = useState<CardInit[]>([]);
   const [word, setWord] = useState<CardInit>();
-  const [wordArray, setWordArray] = useState<string[]>([]);
   const [wordCorrect, setWordCorrect] = useState<string[]>([]);
   const [wordShuffle, setWordShuffle] = useState<string[]>([]);
   const [openHintWord, setOpenHintWord] = useState(false);
@@ -42,8 +45,8 @@ const PuzzlePlay = () => {
   useEffect(() => {
     const lang = puzzleState.language;
     words
-      .filter((word) => word[lang].length === puzzleState.lettersQty)
-      .map((word) => {
+      .filter((word: WordKey) => word[lang].length === puzzleState.lettersQty)
+      .map((word: WordKey) => {
         setCardsInit((prev) => [
           ...prev,
           { id: word.id, lang1: word[userLang.short], lang2: word[lang] }
@@ -66,7 +69,6 @@ const PuzzlePlay = () => {
     const splitWord = word?.lang2.split('');
     const splitWordCorrect = word?.lang2.split('');
     if (splitWord && splitWordCorrect) {
-      setWordArray(splitWord);
       setWordCorrect(splitWordCorrect);
       const arrayShuffle = shuffleCards(splitWord);
       setWordShuffle(arrayShuffle);
