@@ -5,6 +5,7 @@ import { useAppSelector } from 'redux/hooks';
 import { selectPuzzleState } from 'redux/slices/gamesSlice';
 import { UserLanguage } from 'redux/slices/settingsSlice';
 import { words } from 'data';
+import Flag from 'components/Flag';
 
 type CardInit = {
   id: string;
@@ -30,7 +31,11 @@ const PuzzlePlay = () => {
   const [cardsInit, setCardsInit] = useState<CardInit[]>([]);
   const [cardsShuffle, setCardsShuffle] = useState<CardInit[]>([]);
   const [word, setWord] = useState<CardInit>();
+  const [wordArray, setWordArray] = useState<string[]>([]);
   const [wordShuffle, setWordShuffle] = useState<string[]>([]);
+  const [openHintWord, setOpenHintWord] = useState(false);
+  const [openHintAnswer, setOpenHintAnswer] = useState(false);
+  const [answer, setAnswer] = useState<string[]>([]);
 
   useEffect(() => {
     const lang = puzzleState.language;
@@ -55,9 +60,10 @@ const PuzzlePlay = () => {
   }, [cardsShuffle]);
 
   useEffect(() => {
-    const wordArray = word?.lang2.split('');
-    if (wordArray) {
-      const arrayShuffle = shuffleCards(wordArray);
+    const splitWord = word?.lang2.split('');
+    if (splitWord) {
+      const arrayShuffle = shuffleCards(splitWord);
+      setWordArray(splitWord);
       setWordShuffle(arrayShuffle);
     }
   }, [word]);
@@ -82,14 +88,51 @@ const PuzzlePlay = () => {
             <span>Back</span>
           </button>
         </Link>
-        <section className="flex flex-wrap justify-center items-center w-full">
-          {wordShuffle.map((word) => (
-            <div
-              key={word}
-              className="w-12 h-12 flex flex-col justify-center items-center text-xl bg-eng text-white m-2 rounded-sm">
-              {word}
-            </div>
-          ))}
+        <section className="flex flex-col justify-center items-center w-full min-h-screen">
+          <h3>Find out the word from these letters</h3>
+          <article className="flex flex-wrap justify-center items-center w-full p-2">
+            <Flag flag={puzzleState.language} />
+            {wordShuffle.map((word) => (
+              <div
+                key={word}
+                className="w-12 h-12 flex flex-col justify-center items-center text-xl bg-secondaryLight dark:bg-secondaryDark m-2 rounded-sm">
+                {word}
+              </div>
+            ))}
+          </article>
+          <article>
+            {!openHintWord ? (
+              <button
+                className="bg-primaryLight dark:bg-primaryDark p-2 rounded-sm"
+                onClick={() => setOpenHintWord(true)}>
+                Hint word
+              </button>
+            ) : (
+              <div className="flex flex-row justify-center items-center">
+                <Flag flag={userLang.short} />
+                <span className="text-lg">{word?.lang1}</span>
+              </div>
+            )}
+          </article>
+          <article className="flex flex-wrap justify-center items-center w-full p-2">
+            <h3>Answer:</h3>
+            {wordShuffle.map((word) => (
+              <div
+                key={word}
+                className="w-12 h-12 flex flex-col justify-center items-center text-xl bg-primaryLight dark:bg-primaryDark m-2 rounded-sm"></div>
+            ))}
+          </article>
+          <article className="flex flex-row justify-center items-center w-full">
+            <button className="bg-secondaryLight dark:bg-secondaryDark p-2 m-2 rounded-sm">
+              Check answer
+            </button>
+            <button
+              className="bg-primaryLight dark:bg-primaryDark p-2 m-2 rounded-sm"
+              onClick={() => setOpenHintAnswer(true)}>
+              Show answer
+            </button>
+          </article>
+          {openHintAnswer && <span className="text-lg">{word?.lang1}</span>}
         </section>
       </main>
     </div>
