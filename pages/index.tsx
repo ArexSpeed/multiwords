@@ -78,13 +78,13 @@ export default function Home() {
             </Link>
           </article>
           <article className="flex flex-row justify-around items-center">
-            <Link href="/game" passHref>
+            <Link href="/games/memo" passHref>
               <div className="w-[100px] h-[100px] m-4 bg-gray-100 dark:bg-gray-800 flex flex-col justify-between items-center rounded-sm shadow-sm">
                 <ViewAgendaIcon style={{ fontSize: '60px' }} />
                 <h5>Memo</h5>
               </div>
             </Link>
-            <Link href="/game" passHref>
+            <Link href="/games/puzzle" passHref>
               <div className="w-[100px] h-[100px] m-4 bg-gray-100 dark:bg-gray-800 flex flex-col justify-between items-center rounded-sm shadow-sm">
                 <BorderAllIcon style={{ fontSize: '60px' }} />
                 <h5>Word Puzzle</h5>
