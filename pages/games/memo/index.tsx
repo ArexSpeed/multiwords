@@ -6,8 +6,7 @@ import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
 import { levels, categories } from 'data';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { selectCategories } from 'redux/slices/mywordsSlice';
+import { useAppDispatch } from 'redux/hooks';
 import { setMemoState } from 'redux/slices/gamesSlice';
 
 const MemoPage = () => {
@@ -18,7 +17,6 @@ const MemoPage = () => {
   const [wordsQty, setWordsQty] = useState(10);
   const [level, setLevel] = useState('1');
   const [categoryGame, setCategoryGame] = useState('Numbers');
-  const mwCategories = useAppSelector(selectCategories);
   const dispatch = useAppDispatch();
 
   const langs = [
@@ -161,34 +159,21 @@ const MemoPage = () => {
                     {level.title}
                   </option>
                 ))}
-                <option value="999">My Words</option>
               </select>
             </div>
             <div className="flex flex-col mx-2">
               Category:
-              {level !== '999' ? (
-                <select
-                  className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
-                  onChange={(e) => setCategoryGame(e.target.value)}>
-                  {categories
-                    .filter((category) => category.lvl === level)
-                    .map((category) => (
-                      <option key={category.id} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))}
-                </select>
-              ) : (
-                <select
-                  className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
-                  onChange={(e) => setCategoryGame(e.target.value)}>
-                  {mwCategories.map((category) => (
+              <select
+                className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
+                onChange={(e) => setCategoryGame(e.target.value)}>
+                {categories
+                  .filter((category) => category.lvl === level)
+                  .map((category) => (
                     <option key={category.id} value={category.name}>
                       {category.name}
                     </option>
                   ))}
-                </select>
-              )}
+              </select>
             </div>
           </article>
         </section>
