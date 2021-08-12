@@ -668,9 +668,7 @@ const WritePage = () => {
                 </div>
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/learn" passHref>
-                    <button
-                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
-                      onClick={() => console.log('')}>
+                    <button className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark">
                       <SchoolIcon />
                     </button>
                   </Link>

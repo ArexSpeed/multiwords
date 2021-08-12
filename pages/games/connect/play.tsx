@@ -128,7 +128,6 @@ const ConnectPlay = () => {
   useEffect(() => {
     if (openCards.length === langQty) {
       const checkOpenIds = openCards.every((val, i, arr) => val === arr[0]);
-      console.log(checkOpenIds, 'check open');
       if (checkOpenIds) {
         setCheckCorrect('correct');
         const Id = openCards[0];

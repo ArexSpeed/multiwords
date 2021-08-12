@@ -32,15 +32,12 @@ const EditWordsPage = () => {
 
   useEffect(() => {
     const word = words.find((word) => word.id === wordId);
-    console.log(word, 'find word');
     if (word) {
       setEditWord(word);
     }
-    console.log(editWord, 'edited words');
   }, [wordId]);
 
   const confirmEdit = () => {
-    console.log(editWord, 'confirm');
     dispatch(editWordControl(editWord));
     setIsConfirm(true);
   };

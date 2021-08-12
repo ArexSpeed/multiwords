@@ -189,8 +189,7 @@ const ShowPage = () => {
                 type: 'fraction'
               }}
               navigation={true}
-              className="w-full h-full"
-              onSlideChange={() => console.log(showAnswer)}>
+              className="w-full h-full">
               {words
                 .filter((word) => word.categoryId === categoryId)
                 .map((word, i) => (

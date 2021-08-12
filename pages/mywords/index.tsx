@@ -56,7 +56,6 @@ const MyWordsPage = () => {
     );
     setNewCategory('');
     handleAddClose();
-    console.log(categories, 'categories');
   };
 
   const handleEditCategory = (id: string) => {

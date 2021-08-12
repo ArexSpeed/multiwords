@@ -115,9 +115,7 @@ const WordsPage = () => {
                 <h3 className="text-lg">What do you want to do next</h3>
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/learn/write" passHref>
-                    <button
-                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
-                      onClick={() => console.log('')}>
+                    <button className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark">
                       <EditIcon />
                     </button>
                   </Link>
@@ -125,9 +123,7 @@ const WordsPage = () => {
                 </div>
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/learn/show" passHref>
-                    <button
-                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
-                      onClick={() => console.log('')}>
+                    <button className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark">
                       <VisibilityOffIcon />
                     </button>
                   </Link>
@@ -135,9 +131,7 @@ const WordsPage = () => {
                 </div>
                 <div className="flex flex-col justify-center items-center">
                   <Link href="/learn" passHref>
-                    <button
-                      className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark"
-                      onClick={() => console.log('')}>
+                    <button className="p-2 bg-primaryLight rounded-full dark:bg-primaryDark">
                       <SchoolIcon />
                     </button>
                   </Link>
