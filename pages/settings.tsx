@@ -12,7 +12,8 @@ import {
   DicoLanguages,
   changeUserLanguage,
   changeLearningLanguages,
-  changeDicoLanguages
+  changeDicoLanguages,
+  toogleTheme
 } from 'redux/slices/settingsSlice';
 //icon
 import SchoolIcon from '@material-ui/icons/School';
@@ -56,6 +57,23 @@ const SettingsPage = () => {
     }
   ];
 
+  const changeTheme = (theme: string) => {
+    switch (theme) {
+      case 'light':
+        dispatch(toogleTheme('light'));
+        document.documentElement.classList.remove('dark');
+        break;
+      case 'dark':
+        dispatch(toogleTheme('dark'));
+        document.documentElement.classList.add('dark');
+        break;
+      default:
+        dispatch(toogleTheme('light'));
+        document.documentElement.classList.remove('dark');
+        break;
+    }
+  };
+
   const changeMainLang = (short: string, name: string) => {
     dispatch(
       changeUserLanguage({
@@ -79,8 +97,23 @@ const SettingsPage = () => {
       <MetaHead />
       <main className="w-full max-h-screen">
         <Search />
-        <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24 overflow-hidden">
+        <section className="flex flex-col w-full h-[80vh] px-3 justify-between items-center pb-24 overflow-hidden">
           <div className="flex flex-col w-full h-full justify-start items-center px-2 border-[1px] border-primary25 rounded-lg overflow-y-auto">
+            <article className="flex flex-row justify-center items-center p-2 mt-2">
+              <h2>Your theme: </h2>
+              <div>
+                <button
+                  className="p-1 mx-1 bg-black text-white rounded-sm"
+                  onClick={() => changeTheme('dark')}>
+                  Dark
+                </button>
+                <button
+                  className="p-1 mx-1 bg-white text-black rounded-sm"
+                  onClick={() => changeTheme('light')}>
+                  Light
+                </button>
+              </div>
+            </article>
             <article className="flex flex-row justify-center items-center">
               <h2>Your main language: </h2>
               <div className="relative">

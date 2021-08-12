@@ -206,7 +206,7 @@ const ShowPage = () => {
             <CategorySwitch />
           </div>
         </section>
-        <section className="flex flex-col flex-grow w-full h-[80vh] px-3 justify-between items-center pb-24">
+        <section className="flex flex-col w-full h-[80vh] px-3 justify-between items-center pb-24">
           <div className="flex flex-col w-full h-full justify-center items-center px-2 border-[1px] border-primary25 rounded-lg">
             <Swiper
               slidesPerView={1}
