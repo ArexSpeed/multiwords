@@ -15,6 +15,7 @@ interface Props {
   isInactive: boolean;
   isFlipped: boolean;
   isDisabled: boolean;
+  isCorrect: string;
 }
 
 const FlipCard: React.FC<Props> = ({
@@ -23,11 +24,14 @@ const FlipCard: React.FC<Props> = ({
   index,
   isInactive,
   isFlipped,
-  isDisabled
+  isDisabled,
+  isCorrect
 }) => {
   const handleClick = () => {
     !isFlipped && handleCardClick(index);
   };
+
+  const correctStyle = isCorrect === 'false' ? 'bg-red-500' : 'bg-primary';
 
   return (
     <button
@@ -39,7 +43,7 @@ const FlipCard: React.FC<Props> = ({
           <Image src={logo} alt="Multiwords" />
         </div>
       </div>
-      <div className="card-back bg-primary">{card.lang}</div>
+      <div className={`card-back ${correctStyle}`}>{card.lang}</div>
     </button>
   );
 };

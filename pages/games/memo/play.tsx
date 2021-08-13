@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import MetaHead from 'components/MetaHead';
 import { useAppSelector } from 'redux/hooks';
-import { selectMemoState } from 'redux/slices/gamesSlice';
+import { selectMemoState, selectMemoPlayers } from 'redux/slices/gamesSlice';
 import FlipCard from 'components/FlipCard';
 import { words } from 'data';
 
@@ -22,6 +22,11 @@ type WordKey = {
 type ObjectKey = {
   [key: string]: boolean;
 };
+type PlayersType = {
+  id: string;
+  name: string;
+  points: number;
+};
 
 const shuffleCards = (array: Array<any>) => {
   const length = array.length;
@@ -37,6 +42,7 @@ const shuffleCards = (array: Array<any>) => {
 
 const MemoPlay = () => {
   const memoState = useAppSelector(selectMemoState);
+  const players = useAppSelector(selectMemoPlayers);
   const [cardsInit, setCardsInit] = useState<CardInit[]>([]);
   const [cardsShuffle, setCardsShuffle] = useState<CardInit[]>([]);
   const [cardsOne, setCardsOne] = useState<Cards[]>([]);
@@ -45,8 +51,24 @@ const MemoPlay = () => {
   const [openCards, setOpenCards] = useState<number[]>([]);
   const [clearedCards, setClearedCards] = useState<ObjectKey>({});
   const [shouldDisableAllCards, setShouldDisableAllCards] = useState(false);
+  const [isCorrect, setIsCorrect] = useState<string>('');
   const [points, setPoints] = useState(0);
+  const [playersPoints, setPlayersPoints] = useState<PlayersType[]>([]);
+  const [playerMoveId, setPlayerMoveId] = useState(0);
   const [isFinish, setIsFinish] = useState(false);
+
+  useEffect(() => {
+    for (let i = 0; i < memoState.playersQty; i++) {
+      setPlayersPoints((prev) => [
+        ...prev,
+        {
+          id: players[i].id,
+          name: players[i].name,
+          points: 0
+        }
+      ]);
+    }
+  }, [memoState.playersQty, players]);
 
   // Step 1. get selected words (in 2 langs) from data words
   useEffect(() => {
@@ -94,12 +116,17 @@ const MemoPlay = () => {
     if (cards[first].id === cards[second].id) {
       setClearedCards((prev) => ({ ...prev, [cards[first].id]: true }));
       setOpenCards([]);
+      playersPoints[playerMoveId].points += 1;
       setPoints((prev) => prev + 1);
       return;
+    } else {
+      setIsCorrect('false');
     }
     // This is to flip the cards back after 500ms duration
     setTimeout(() => {
       setOpenCards([]);
+      setIsCorrect('');
+      nextMove(playerMoveId);
     }, 500);
   };
   const handleCardClick = (index: number) => {
@@ -112,10 +139,18 @@ const MemoPlay = () => {
     }
   };
 
+  const nextMove = (currentPlayer: number) => {
+    if (currentPlayer < memoState.playersQty - 1) {
+      setPlayerMoveId((prev) => prev + 1);
+    } else {
+      setPlayerMoveId(0);
+    }
+  };
+
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     if (openCards.length === 2) {
-      timeout = setTimeout(evaluate, 500);
+      timeout = setTimeout(evaluate, 700);
     }
     return () => {
       clearTimeout(timeout);
@@ -159,6 +194,11 @@ const MemoPlay = () => {
         </Link>
         {!isFinish ? (
           <>
+            <section className="flex justify-center items-center w-full">
+              <span>Current player:</span>
+              <span className="text-lg mx-2">{playersPoints[playerMoveId]?.name}</span>
+              <span>{`(${playersPoints[playerMoveId]?.points}pts)`}</span>
+            </section>
             <section className="flex flex-wrap justify-center items-center w-full">
               {cards.map((card, index) => (
                 <FlipCard
@@ -169,15 +209,33 @@ const MemoPlay = () => {
                   isFlipped={checkIsFlipped(index)}
                   isDisabled={shouldDisableAllCards}
                   handleCardClick={handleCardClick}
+                  isCorrect={isCorrect}
                 />
               ))}
             </section>
-            Points: {points}
+            <section className="flex flex-col justify-center items-center w-full">
+              <div>
+                Points: <span className="text-[10px]">{points}</span>
+              </div>
+              {playersPoints.map((player) => (
+                <div key={player.id}>
+                  {player.name} : {player.points}
+                </div>
+              ))}
+            </section>
           </>
         ) : (
           <section className="flex flex-col justify-center items-center w-full">
             <p>Amazing you found all words!!</p>
             <p>Now you can back to memo with other words</p>
+            <p>Score table:</p>
+            {playersPoints
+              .sort((a, b) => b.points - a.points)
+              .map((player, i) => (
+                <div key={player.id}>
+                  {i + 1}. <span className="text-lg mx-2">{player.name}</span> {player.points}pts
+                </div>
+              ))}
             <Link href="/games/memo" passHref>
               <button className="flex flex-row p-2 m-2 bg-primaryLight rounded-md dark:bg-primaryDark">
                 <svg
