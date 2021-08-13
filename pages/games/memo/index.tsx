@@ -7,7 +7,7 @@ import Search from 'components/Search';
 import Flag from 'components/Flag';
 import { levels, categories } from 'data';
 import { useAppDispatch } from 'redux/hooks';
-import { setMemoState } from 'redux/slices/gamesSlice';
+import { setMemoState, setMemoPlayers } from 'redux/slices/gamesSlice';
 
 type PlayerType = {
   [key: string]: string;
@@ -75,9 +75,11 @@ const MemoPage = () => {
       category: categoryGame,
       wordsQty,
       firstLang: firstLangGame,
-      secondLang: secondLangGame
+      secondLang: secondLangGame,
+      playersQty
     };
     dispatch(setMemoState(memoSettings));
+    dispatch(setMemoPlayers(players));
   };
 
   return (
