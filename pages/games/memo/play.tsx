@@ -45,6 +45,7 @@ const MemoPlay = () => {
   const [openCards, setOpenCards] = useState<number[]>([]);
   const [clearedCards, setClearedCards] = useState<ObjectKey>({});
   const [shouldDisableAllCards, setShouldDisableAllCards] = useState(false);
+  const [isCorrect, setIsCorrect] = useState<string>('');
   const [points, setPoints] = useState(0);
   const [isFinish, setIsFinish] = useState(false);
 
@@ -96,10 +97,13 @@ const MemoPlay = () => {
       setOpenCards([]);
       setPoints((prev) => prev + 1);
       return;
+    } else {
+      setIsCorrect('false');
     }
     // This is to flip the cards back after 500ms duration
     setTimeout(() => {
       setOpenCards([]);
+      setIsCorrect('');
     }, 500);
   };
   const handleCardClick = (index: number) => {
@@ -115,7 +119,7 @@ const MemoPlay = () => {
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     if (openCards.length === 2) {
-      timeout = setTimeout(evaluate, 500);
+      timeout = setTimeout(evaluate, 700);
     }
     return () => {
       clearTimeout(timeout);
@@ -169,6 +173,7 @@ const MemoPlay = () => {
                   isFlipped={checkIsFlipped(index)}
                   isDisabled={shouldDisableAllCards}
                   handleCardClick={handleCardClick}
+                  isCorrect={isCorrect}
                 />
               ))}
             </section>
