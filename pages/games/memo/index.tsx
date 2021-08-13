@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-onchange */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import MobileNav from 'components/Nav/MobileNav';
 import MetaHead from 'components/MetaHead';
@@ -9,12 +9,18 @@ import { levels, categories } from 'data';
 import { useAppDispatch } from 'redux/hooks';
 import { setMemoState } from 'redux/slices/gamesSlice';
 
+type PlayerType = {
+  [key: string]: string;
+};
+
 const MemoPage = () => {
   const [firstLangBox, setFirstLangBox] = useState(false);
   const [secondLangBox, setSecondLangBox] = useState(false);
   const [firstLangGame, setFirstLangGame] = useState('eng');
   const [secondLangGame, setSecondLangGame] = useState('eng');
   const [wordsQty, setWordsQty] = useState(10);
+  const [playersQty, setPlayersQty] = useState(1);
+  const [players, setPlayers] = useState<PlayerType[]>([]);
   const [level, setLevel] = useState('1');
   const [categoryGame, setCategoryGame] = useState('Numbers');
   const dispatch = useAppDispatch();
@@ -49,6 +55,19 @@ const MemoPage = () => {
       name: 'Italiano'
     }
   ];
+
+  useEffect(() => {
+    setPlayers([]);
+    for (let i = 1; i <= playersQty; i++) {
+      setPlayers((prev) => [...prev, { id: i.toString(), name: '' }]);
+    }
+  }, [playersQty]);
+
+  const changePlayerData = (i: number, event: { target: HTMLInputElement }) => {
+    const values = [...players];
+    values[i][event.target.name] = event.target.value;
+    setPlayers(values);
+  };
 
   const handlePlay = () => {
     const memoSettings = {
@@ -196,6 +215,37 @@ const MemoPage = () => {
           </div>
         </section>
         <section className="flex flex-row justify-center items-center w-full p-3">
+          <span className="text-lg mx-2">Players:</span>
+          <div className="flex flex-row justify-center items-center text-lg mx-2">
+            <button
+              className="w-6 h-6 p-2 mx-2 flex justify-center items-center bg-primaryLight rounded-full dark:bg-primaryDark"
+              disabled={playersQty <= 1}
+              onClick={() => setPlayersQty(playersQty - 1)}>
+              -
+            </button>
+            <span className="text-[30px]">{playersQty}</span>
+            <button
+              className="w-6 h-6 p-2 mx-2 flex justify-center items-center bg-secondaryLight rounded-full dark:bg-secondaryDark"
+              disabled={playersQty >= 10}
+              onClick={() => setPlayersQty(playersQty + 1)}>
+              +
+            </button>
+          </div>
+        </section>
+        <section className="flex flex-col justify-center items-center w-full p-3 dark:bg-gray-700">
+          {players.map((player, i) => (
+            <input
+              key={player.id}
+              className="bg-secondaryLight dark:bg-secondaryDark m-1 rounded-sm p-2"
+              type="text"
+              placeholder={`${player.name} name`}
+              value={player.name}
+              name="name"
+              onChange={(e) => changePlayerData(i, e)}
+            />
+          ))}
+        </section>
+        <section className="flex flex-row justify-center items-center w-full p-3 pb-24 dark:bg-gray-700">
           <Link href="/games/memo/play" passHref>
             <button className="bg-secondary p-2 m-2 w-40 text-lg rounded-md" onClick={handlePlay}>
               Play
