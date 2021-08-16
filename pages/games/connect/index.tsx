@@ -5,6 +5,7 @@ import MobileNav from 'components/Nav/MobileNav';
 import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
+import { langs } from 'utils';
 import { levels, categories } from 'data';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import {
@@ -32,37 +33,6 @@ const ConnectPage = () => {
   const checkLanguage = (lang: string) => {
     dispatch(setConnectLanguages(lang));
   };
-
-  const langs = [
-    {
-      short: 'eng',
-      name: 'English'
-    },
-    {
-      short: 'pol',
-      name: 'Polski'
-    },
-    {
-      short: 'ger',
-      name: 'Deutsch'
-    },
-    {
-      short: 'ned',
-      name: 'Nederlande'
-    },
-    {
-      short: 'spa',
-      name: 'Español'
-    },
-    {
-      short: 'fra',
-      name: 'Français'
-    },
-    {
-      short: 'ita',
-      name: 'Italiano'
-    }
-  ];
 
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">

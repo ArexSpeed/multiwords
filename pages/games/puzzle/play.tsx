@@ -6,6 +6,7 @@ import { selectPuzzleState } from 'redux/slices/gamesSlice';
 import { UserLanguage } from 'redux/slices/settingsSlice';
 import { words } from 'data';
 import Flag from 'components/Flag';
+import { shuffleCards } from 'utils';
 
 type CardInit = {
   id: string;
@@ -14,18 +15,6 @@ type CardInit = {
 };
 type WordKey = {
   [key: string]: string;
-};
-
-const shuffleCards = (array: Array<any>) => {
-  const length = array.length;
-  for (let i = length; i > 0; i--) {
-    const randomIndex = Math.floor(Math.random() * i);
-    const currentIndex = i - 1;
-    const temp = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temp;
-  }
-  return array;
 };
 
 const PuzzlePlay = () => {

@@ -302,7 +302,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Write a word"
                               className="border border-eng px-2 text-black rounded-sm mr-2"
                               value={answerValues.eng}
                               onChange={(e) =>
@@ -398,7 +398,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Schreiben Sie ein Wort"
                               className="border border-ger px-2 text-black rounded-sm mr-2"
                               value={answerValues.ger}
                               onChange={(e) =>
@@ -446,7 +446,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Schrijf een woord"
                               className="border border-ned px-2 text-black rounded-sm mr-2"
                               value={answerValues.ned}
                               onChange={(e) =>
@@ -494,7 +494,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Escribe una palabra"
                               className="border border-spa px-2 text-black rounded-sm mr-2"
                               value={answerValues.spa}
                               onChange={(e) =>
@@ -542,7 +542,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Ecrire un mot"
                               className="border border-fra px-2 text-black rounded-sm mr-2"
                               value={answerValues.fra}
                               onChange={(e) =>
@@ -590,7 +590,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Scrivi una parola"
                               className="border border-ita px-2 text-black rounded-sm mr-2"
                               value={answerValues.ita}
                               onChange={(e) =>
@@ -609,7 +609,7 @@ const WritePage = () => {
               <SwiperSlide className="flex flex-col justify-center items-center">
                 <h3 className="text-lg">Your score:</h3>
                 <div className="flex flex-col justify-center items-center">
-                  {learnLanguages.eng && (
+                  {userLanguage.short !== 'eng' && learnLanguages.eng && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="eng" />{' '}
                       <span className="text-lg">
@@ -617,7 +617,7 @@ const WritePage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.pol && (
+                  {userLanguage.short !== 'pol' && learnLanguages.pol && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="pol" />{' '}
                       <span className="text-lg">
@@ -625,7 +625,7 @@ const WritePage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.ger && (
+                  {userLanguage.short !== 'ger' && learnLanguages.ger && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ger" />{' '}
                       <span className="text-lg">
@@ -633,7 +633,7 @@ const WritePage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.ned && (
+                  {userLanguage.short !== 'ned' && learnLanguages.ned && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ned" />{' '}
                       <span className="text-lg">
@@ -641,7 +641,7 @@ const WritePage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.spa && (
+                  {userLanguage.short !== 'spa' && learnLanguages.spa && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="spa" />{' '}
                       <span className="text-lg">
@@ -649,7 +649,7 @@ const WritePage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.fra && (
+                  {userLanguage.short !== 'fra' && learnLanguages.fra && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="fra" />{' '}
                       <span className="text-lg">
@@ -657,7 +657,7 @@ const WritePage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.ita && (
+                  {userLanguage.short !== 'ita' && learnLanguages.ita && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ita" />{' '}
                       <span className="text-lg">
