@@ -270,7 +270,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Write a word"
                               className="border border-eng px-2 text-black rounded-sm mr-2"
                               value={answerValues.eng}
                               onChange={(e) =>

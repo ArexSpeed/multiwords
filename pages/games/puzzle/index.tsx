@@ -4,6 +4,7 @@ import MobileNav from 'components/Nav/MobileNav';
 import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
+import { langs } from 'utils';
 import { useAppDispatch } from 'redux/hooks';
 import { setPuzzleState } from 'redux/slices/gamesSlice';
 
@@ -12,37 +13,6 @@ const PuzzlePage = () => {
   const [firstLangGame, setFirstLangGame] = useState('eng');
   const [lettersQty, setLettersQty] = useState(4);
   const dispatch = useAppDispatch();
-
-  const langs = [
-    {
-      short: 'eng',
-      name: 'English'
-    },
-    {
-      short: 'pol',
-      name: 'Polski'
-    },
-    {
-      short: 'ger',
-      name: 'Deutsch'
-    },
-    {
-      short: 'ned',
-      name: 'Nederlande'
-    },
-    {
-      short: 'spa',
-      name: 'Español'
-    },
-    {
-      short: 'fra',
-      name: 'Français'
-    },
-    {
-      short: 'ita',
-      name: 'Italiano'
-    }
-  ];
 
   const handlePlay = () => {
     const puzzleSettings = {

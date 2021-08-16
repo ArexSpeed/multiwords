@@ -5,6 +5,7 @@ import { useAppSelector } from 'redux/hooks';
 import { selectConnectState, selectConnectLanguages } from 'redux/slices/gamesSlice';
 import { words } from 'data';
 import ConnectCard from 'components/ConnectCard';
+import { shuffleCards } from 'utils';
 
 type Word = {
   id: string;
@@ -14,18 +15,6 @@ type WordCards = {
   id: string;
   word: string;
   correct: boolean;
-};
-
-const shuffleCards = (array: Array<any>) => {
-  const length = array.length;
-  for (let i = length; i > 0; i--) {
-    const randomIndex = Math.floor(Math.random() * i);
-    const currentIndex = i - 1;
-    const temp = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temp;
-  }
-  return array;
 };
 
 const ConnectPlay = () => {

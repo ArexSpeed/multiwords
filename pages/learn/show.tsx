@@ -611,7 +611,7 @@ const ShowPage = () => {
               <SwiperSlide className="flex flex-col justify-center items-center">
                 <h3 className="text-lg">Your score:</h3>
                 <div className="flex flex-col justify-center items-center">
-                  {learnLanguages.eng && (
+                  {userLanguage.short !== 'eng' && learnLanguages.eng && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="eng" />{' '}
                       <span className="text-lg">
@@ -619,7 +619,7 @@ const ShowPage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.pol && (
+                  {userLanguage.short !== 'pol' && learnLanguages.pol && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="pol" />{' '}
                       <span className="text-lg">
@@ -627,7 +627,7 @@ const ShowPage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.ger && (
+                  {userLanguage.short !== 'ger' && learnLanguages.ger && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ger" />{' '}
                       <span className="text-lg">
@@ -635,7 +635,7 @@ const ShowPage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.ned && (
+                  {userLanguage.short !== 'ned' && learnLanguages.ned && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ned" />{' '}
                       <span className="text-lg">
@@ -643,7 +643,7 @@ const ShowPage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.spa && (
+                  {userLanguage.short !== 'spa' && learnLanguages.spa && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="spa" />{' '}
                       <span className="text-lg">
@@ -651,7 +651,7 @@ const ShowPage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.fra && (
+                  {userLanguage.short !== 'fra' && learnLanguages.fra && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="fra" />{' '}
                       <span className="text-lg">
@@ -659,7 +659,7 @@ const ShowPage = () => {
                       </span>
                     </div>
                   )}
-                  {learnLanguages.ita && (
+                  {userLanguage.short !== 'ita' && learnLanguages.ita && (
                     <div className="flex flex-row justify-center items-center">
                       <Flag flag="ita" />{' '}
                       <span className="text-lg">

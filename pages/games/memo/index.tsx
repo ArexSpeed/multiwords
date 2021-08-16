@@ -5,6 +5,7 @@ import MobileNav from 'components/Nav/MobileNav';
 import MetaHead from 'components/MetaHead';
 import Search from 'components/Search';
 import Flag from 'components/Flag';
+import { langs } from 'utils';
 import { levels, categories } from 'data';
 import { useAppDispatch } from 'redux/hooks';
 import { setMemoState, setMemoPlayers } from 'redux/slices/gamesSlice';
@@ -24,37 +25,6 @@ const MemoPage = () => {
   const [level, setLevel] = useState('1');
   const [categoryGame, setCategoryGame] = useState('Numbers');
   const dispatch = useAppDispatch();
-
-  const langs = [
-    {
-      short: 'eng',
-      name: 'English'
-    },
-    {
-      short: 'pol',
-      name: 'Polski'
-    },
-    {
-      short: 'ger',
-      name: 'Deutsch'
-    },
-    {
-      short: 'ned',
-      name: 'Nederlande'
-    },
-    {
-      short: 'spa',
-      name: 'Español'
-    },
-    {
-      short: 'fra',
-      name: 'Français'
-    },
-    {
-      short: 'ita',
-      name: 'Italiano'
-    }
-  ];
 
   useEffect(() => {
     setPlayers([]);
