@@ -3,7 +3,7 @@ import React from 'react';
 import { categories } from 'data';
 //import slice
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { setCategory, selectLevel } from 'redux/slices/learnSlice';
+import { setCategory, selectLevel, selectCategory } from 'redux/slices/learnSlice';
 import { selectCategories, setCategoryId } from 'redux/slices/mywordsSlice';
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
 const CategorySwitch: React.FC<Props> = ({ type }) => {
   const mwCategories = useAppSelector(selectCategories); //for mywords
   const level = useAppSelector(selectLevel);
+  const category = useAppSelector(selectCategory);
   const dispatch = useAppDispatch();
   return type === 'mywords' ? (
     <select
@@ -28,6 +29,7 @@ const CategorySwitch: React.FC<Props> = ({ type }) => {
     <select
       className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
       onChange={(e) => dispatch(setCategory(e.target.value))}>
+      <option value={category}>{category}</option>
       {categories
         .filter((category) => +category.lvl === level)
         .map((item) => (
