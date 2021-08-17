@@ -79,6 +79,7 @@ const ConnectPage = () => {
               <select
                 className="text-md outline-none bg-secondaryLight rounded-sm px-2 dark:bg-secondaryDark"
                 onChange={(e) => setCategoryGame(e.target.value)}>
+                <option value="">-</option>
                 {categories
                   .filter((category) => category.lvl === level)
                   .map((category) => (
