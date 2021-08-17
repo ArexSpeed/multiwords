@@ -70,6 +70,13 @@ const WritePage = () => {
     fra: '',
     ita: ''
   });
+  const [pointsEng, setPointsEng] = useState(0);
+  const [pointsPol, setPointsPol] = useState(0);
+  const [pointsGer, setPointsGer] = useState(0);
+  const [pointsNed, setPointsNed] = useState(0);
+  const [pointsSpa, setPointsSpa] = useState(0);
+  const [pointsFra, setPointsFra] = useState(0);
+  const [pointsIta, setPointsIta] = useState(0);
 
   const resetAnswerValues = {
     eng: '',
@@ -204,6 +211,34 @@ const WritePage = () => {
     setAnswerValues(resetAnswerValues);
   };
 
+  const updatePoints = (index: number) => {
+    if (index === showAnswer.length) {
+      showAnswer.map((answer) => {
+        if (answer.eng.correct) {
+          setPointsEng((prev) => prev + 1);
+        }
+        if (answer.pol.correct) {
+          setPointsPol((prev) => prev + 1);
+        }
+        if (answer.ger.correct) {
+          setPointsGer((prev) => prev + 1);
+        }
+        if (answer.ned.correct) {
+          setPointsNed((prev) => prev + 1);
+        }
+        if (answer.spa.correct) {
+          setPointsSpa((prev) => prev + 1);
+        }
+        if (answer.fra.correct) {
+          setPointsFra((prev) => prev + 1);
+        }
+        if (answer.ita.correct) {
+          setPointsIta((prev) => prev + 1);
+        }
+      });
+    }
+  };
+
   return (
     <div className="w-screen h-screen max-h-screen flex flex-col relative font-baloo dark:bg-gray-700 dark:text-gray-100">
       <MetaHead />
@@ -227,7 +262,10 @@ const WritePage = () => {
               }}
               navigation={true}
               className="w-full h-full"
-              onSlideChange={() => setAnswerValues(resetAnswerValues)}>
+              onSlideChange={(pagination) => {
+                setAnswerValues(resetAnswerValues);
+                updatePoints(pagination.activeIndex);
+              }}>
               {words
                 .filter((word) => word.categoryId === categoryId)
                 .map((word, i) => (
@@ -366,7 +404,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Schreiben Sie ein Wort"
                               className="border border-ger px-2 text-black rounded-sm mr-2"
                               value={answerValues.ger}
                               onChange={(e) =>
@@ -414,7 +452,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Schrijf een woord"
                               className="border border-ned px-2 text-black rounded-sm mr-2"
                               value={answerValues.ned}
                               onChange={(e) =>
@@ -462,7 +500,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Escribe una palabra"
                               className="border border-spa px-2 text-black rounded-sm mr-2"
                               value={answerValues.spa}
                               onChange={(e) =>
@@ -510,7 +548,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Ecrire un mot"
                               className="border border-fra px-2 text-black rounded-sm mr-2"
                               value={answerValues.fra}
                               onChange={(e) =>
@@ -558,7 +596,7 @@ const WritePage = () => {
                             }}>
                             <input
                               type="text"
-                              placeholder="Napisz słowo"
+                              placeholder="Scrivi una parola"
                               className="border border-ita px-2 text-black rounded-sm mr-2"
                               value={answerValues.ita}
                               onChange={(e) =>
@@ -577,39 +615,60 @@ const WritePage = () => {
               <SwiperSlide className="flex flex-col justify-center items-center">
                 <h3 className="text-lg">Your score:</h3>
                 <div className="flex flex-col justify-center items-center">
-                  {learnLanguages.eng && (
+                  {userLanguage.short !== 'eng' && learnLanguages.eng && (
                     <div className="flex flex-row justify-center items-center">
-                      <Flag flag="eng" /> <span className="text-lg">10/20</span>
+                      <Flag flag="eng" />{' '}
+                      <span className="text-lg">
+                        {pointsEng}/{showAnswer.length}
+                      </span>
                     </div>
                   )}
-                  {learnLanguages.pol && (
+                  {userLanguage.short !== 'pol' && learnLanguages.pol && (
                     <div className="flex flex-row justify-center items-center">
-                      <Flag flag="pol" /> <span className="text-lg">10/20</span>
+                      <Flag flag="pol" />{' '}
+                      <span className="text-lg">
+                        {pointsPol}/{showAnswer.length}
+                      </span>
                     </div>
                   )}
-                  {learnLanguages.ger && (
+                  {userLanguage.short !== 'ger' && learnLanguages.ger && (
                     <div className="flex flex-row justify-center items-center">
-                      <Flag flag="ger" /> <span className="text-lg">10/20</span>
+                      <Flag flag="ger" />{' '}
+                      <span className="text-lg">
+                        {pointsGer}/{showAnswer.length}
+                      </span>
                     </div>
                   )}
-                  {learnLanguages.ned && (
+                  {userLanguage.short !== 'ned' && learnLanguages.ned && (
                     <div className="flex flex-row justify-center items-center">
-                      <Flag flag="ned" /> <span className="text-lg">10/20</span>
+                      <Flag flag="ned" />{' '}
+                      <span className="text-lg">
+                        {pointsNed}/{showAnswer.length}
+                      </span>
                     </div>
                   )}
-                  {learnLanguages.spa && (
+                  {userLanguage.short !== 'spa' && learnLanguages.spa && (
                     <div className="flex flex-row justify-center items-center">
-                      <Flag flag="spa" /> <span className="text-lg">10/20</span>
+                      <Flag flag="spa" />{' '}
+                      <span className="text-lg">
+                        {pointsSpa}/{showAnswer.length}
+                      </span>
                     </div>
                   )}
-                  {learnLanguages.fra && (
+                  {userLanguage.short !== 'fra' && learnLanguages.fra && (
                     <div className="flex flex-row justify-center items-center">
-                      <Flag flag="fra" /> <span className="text-lg">10/20</span>
+                      <Flag flag="fra" />{' '}
+                      <span className="text-lg">
+                        {pointsFra}/{showAnswer.length}
+                      </span>
                     </div>
                   )}
-                  {learnLanguages.ita && (
+                  {userLanguage.short !== 'ita' && learnLanguages.ita && (
                     <div className="flex flex-row justify-center items-center">
-                      <Flag flag="ita" /> <span className="text-lg">10/20</span>
+                      <Flag flag="ita" />{' '}
+                      <span className="text-lg">
+                        {pointsIta}/{showAnswer.length}
+                      </span>
                     </div>
                   )}
                 </div>
